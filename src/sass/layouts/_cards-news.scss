@@ -1,0 +1,57 @@
+.cards {
+  @include mobile {
+    padding: 40px 0;
+  }
+  @include tablet {
+    padding: 48px 0;
+  }
+  @include desktop {
+    padding: 60px 0;
+  }
+}
+
+.cards_list {
+  @include mobile {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    row-gap: 28px;
+    :nth-child(1) {
+      margin-top: 658px;
+    }
+  }
+  @include tablet {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    :nth-child(1) {
+      margin-right: 383px;
+      margin-top: 0;
+    }
+  }
+  @include desktop {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 40px;
+    :nth-child(1) {
+      margin-right: 0;
+    }
+    :nth-child(2) {
+      margin-right: 427px;
+    }
+  }
+}
+.cards_list_items {
+  @include mobile {
+    width: 288px;
+    height: 630px;
+  }
+  @include tablet {
+    width: 353px;
+    height: 675px;
+  }
+  @include desktop {
+    width: 395px;
+    height: 675px;
+  }
+}
