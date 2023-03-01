@@ -1,0 +1,154 @@
+.weather {
+  padding: 32px 36px;
+  width: 288px;
+  height: 469px;
+  background: var(--accent-color);
+  mix-blend-mode: normal;
+  border-radius: 4px;
+  @include tablet {
+    padding: 40px 32px;
+    width: 353px;
+    height: 675px;
+  }
+  @include desktop {
+    padding: 40px 53px;
+    width: 395px;
+  }
+}
+
+.weather_UI {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: stretch;
+  height: 346px;
+  @include tablet {
+    height: 500px;
+  }
+  @include desktop {
+    height: 505px;
+  }
+}
+
+.weather_info {
+  display: flex;
+  margin-bottom: 40px;
+  @include tablet {
+    margin-bottom: 90px;
+  }
+}
+
+.weather_temperatura {
+  display: flex;
+  width: 83px;
+  height: 64px;
+  @include tablet {
+    width: 96px;
+    height: 75px;
+  }
+}
+
+.weather_badge {
+  margin: 7px 1px;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 1.16;
+  color: var(--light-text-color);
+}
+
+.weather_temp {
+  margin: 0;
+  font-weight: 400;
+  font-size: 55px;
+  line-height: 1.16;
+  color: var(--light-text-color);
+  @include tablet {
+    font-size: 64px;
+  }
+}
+
+.weathr_position {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+
+.weather_state {
+  margin: 0;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.17;
+  color: var(--light-text-color);
+  @include tablet {
+    font-size: 36px;
+  }
+}
+
+.weather_city {
+  margin: 0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.14;
+  color: var(--light-text-color);
+  @include tablet {
+    font-size: 20px;
+  }
+}
+
+.weather_img {
+  text-align: center;
+  width: 128px;
+  height: 121px;
+  margin-bottom: 40px;
+  @include tablet {
+    width: 165px;
+    height: 156px;
+    margin-bottom: 90px;
+  }
+}
+
+.weather_day {
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1.18;
+  text-align: center;
+  color: var(--light-text-color);
+  @include tablet {
+    font-size: 36px;
+  }
+}
+
+.weather_dayOfWeek {
+  margin: 0;
+}
+
+.weather_date {
+  margin: 0;
+  margin-bottom: 18px;
+  @include tablet {
+    margin-bottom: 28px;
+  }
+}
+
+.weather_week {
+  margin: 0 auto;
+  display: block;
+  border: 0;
+  background: rgba(254, 254, 255, 0.3);
+  border-radius: 10px;
+  padding: 8px 14px;
+  width: 151px;
+  height: 34px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.19;
+  color: var(--light-text-color);
+  @include tablet {
+    padding: 9px 12px;
+    width: 177px;
+    height: 42px;
+    font-size: 20px;
+    line-height: 1.15;
+  }
+}
