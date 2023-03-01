@@ -1,0 +1,56 @@
+@media screen and (max-width: 767px) {
+    .cards_news {
+      padding: 40px 0;
+    }
+    .ul_cards {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      row-gap: 28px;
+      :nth-child(1) {
+        margin-top: 658px;
+      }
+    }
+    .list_cards {
+      width: 288px;
+      height: 630px;
+    }
+  }
+  @media screen and (min-width: 768px) {
+    .cards_news {
+      padding: 48px 0;
+    }
+    .ul_cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      :nth-child(1) {
+        margin-right: 383px;
+      }
+    }
+    .list_cards {
+      width: 353px;
+      height: 675px;
+    }
+  }
+  @media screen and (min-width: 1280px) {
+    .cards_news {
+      padding: 60px 0;
+    }
+    .ul_cards {
+      display: flex;
+      flex-wrap: wrap;
+      row-gap: 40px;
+      :nth-child(1) {
+        margin-right: 0;
+      }
+      :nth-child(2) {
+        margin-right: 427px;
+      }
+    }
+    .list_cards {
+      width: 395px;
+      height: 675px;
+    }
+  }
+  
