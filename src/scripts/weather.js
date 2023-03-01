@@ -1,4 +1,4 @@
-const { default: axios } = require('axios');
+import axios from 'axios';
 
 let weatherToday = new Date();
 let weatherDayOfWeek = weatherToday.toLocaleString('en-US', {
@@ -39,15 +39,21 @@ function showCoordinat(position) {
         `<div class="weather_UI">
             <div class="weather_info">
                 <div class="weather_temperatura">
-                    <p class="weather_temp"> ${Math.round(data.data.main.temp)} </p>
+                    <p class="weather_temp"> ${Math.round(
+                      data.data.main.temp
+                    )} </p>
                     <p class="weather_badge">&#176</p>
                 </div>
                 <div class="weathr_position">
-                    <p class="weather_state">${data.data.weather[0].description}</p>
+                    <p class="weather_state">${
+                      data.data.weather[0].description
+                    }</p>
                     <p class="weather_city">${data.data.name}</p>
                 </div>
             </div>
-            <img class="weather_img" src="https://openweathermap.org/img/wn/${data.data.weather[0].icon}@2x.png" alt="weather img">
+            <img class="weather_img" src="https://openweathermap.org/img/wn/${
+              data.data.weather[0].icon
+            }@2x.png" alt="weather img">
             <div class="weather_day">
                 <p class="weather_dayOfWeek">${weatherDayOfWeek}</p>
                 <p class="weather_date">${weatherDayNow}</p>
