@@ -2,7 +2,7 @@
   padding: 32px 36px;
   width: 288px;
   height: 469px;
-  background: var(--accent-color);
+  background: $accent-color;
   mix-blend-mode: normal;
   border-radius: 4px;
   @include tablet {
@@ -22,8 +22,10 @@
   justify-content: space-around;
   align-items: stretch;
   height: 346px;
+  margin-bottom: 18px;
   @include tablet {
     height: 500px;
+    margin-bottom: 28px;
   }
   @include desktop {
     height: 505px;
@@ -53,7 +55,7 @@
   font-weight: 400;
   font-size: 30px;
   line-height: 1.16;
-  color: var(--light-text-color);
+  color: $light-text-color;
 }
 
 .weather_temp {
@@ -61,7 +63,7 @@
   font-weight: 400;
   font-size: 55px;
   line-height: 1.16;
-  color: var(--light-text-color);
+  color: $light-text-color;
   @include tablet {
     font-size: 64px;
   }
@@ -79,7 +81,7 @@
   font-weight: 400;
   font-size: 24px;
   line-height: 1.17;
-  color: var(--light-text-color);
+  color: $light-text-color;
   @include tablet {
     font-size: 36px;
   }
@@ -90,14 +92,14 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 1.14;
-  color: var(--light-text-color);
+  color: $light-text-color;
   @include tablet {
     font-size: 20px;
   }
 }
 
 .weather_img {
-  text-align: center;
+  margin: 0 auto;
   width: 128px;
   height: 121px;
   margin-bottom: 40px;
@@ -113,7 +115,7 @@
   font-size: 28px;
   line-height: 1.18;
   text-align: center;
-  color: var(--light-text-color);
+  color: $light-text-color;
   @include tablet {
     font-size: 36px;
   }
@@ -125,10 +127,6 @@
 
 .weather_date {
   margin: 0;
-  margin-bottom: 18px;
-  @include tablet {
-    margin-bottom: 28px;
-  }
 }
 
 .weather_week {
@@ -141,14 +139,14 @@
   width: 151px;
   height: 34px;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.19;
-  color: var(--light-text-color);
+  color: $light-text-color;
   @include tablet {
     padding: 9px 12px;
     width: 177px;
     height: 42px;
-    font-size: 20px;
+    font-size: 16px;
     line-height: 1.15;
   }
 }
