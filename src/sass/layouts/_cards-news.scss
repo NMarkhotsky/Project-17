@@ -10,7 +10,7 @@
   }
 }
 
-.cards_list {
+.cards__list {
   @include mobile {
     display: flex;
     justify-content: center;
@@ -41,7 +41,7 @@
     }
   }
 }
-.cards_list_items {
+.cards__list-items {
   @include mobile {
     width: 288px;
     height: 630px;
