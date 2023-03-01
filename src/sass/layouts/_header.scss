@@ -1,0 +1,28 @@
+.form {
+  display: flex;
+  justify-content: center;
+  .form__input {
+    padding: 6px 12px 6px 36px;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.7px;
+    letter-spacing: 0.02em;
+    color: $dark-text-color;
+    opacity: 0.4;
+
+    border: 1px solid $dark-text-color;
+    border-radius: 20px;
+  }
+  .form__label {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .form__search-icon {
+    position: absolute;
+    left: 12px;
+    top: 6px;
+  }
+}
