@@ -1,0 +1,56 @@
+.header {
+    padding-top: 28px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.header__container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    font-family: $basic-font;
+    font-weight: 700;
+    font-size: 42px;
+    line-height: 1.36;
+    color: $dark-text-color;
+    margin-right: 102px;
+}
+
+.navigation {
+    margin-right: 147px;
+}
+
+.menu {
+    display: flex;
+    gap: 69px;
+    align-items: center;
+}
+
+.menu__link {
+    font-family: $basic-font;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 1.39;
+    color: $dark-text-color;
+}
+
+.form {
+    margin-right: 147px;
+}
+
+.form__input {
+    width: 288px;
+    height: 31px;
+    border: 1px solid #111321;
+    border-radius: 20px;
+}
+
+.switch__name {
+    font-family: 'Poppins';
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.33;
+    color: #5F6775;
+}

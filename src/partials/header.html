@@ -1,4 +1,36 @@
-<form class="form">
-  <input class="form__input" placeholder="Search |" type="text">
-</form>
+<header class="header">
+  <div class="container header__container">
+
+    <a class="logo link" href="./index.html">News</a>
+
+    <nav class="navigation">
+      <ul class="menu list">
+        <li class="menu__item">
+          <a class="menu__link link menu__link--current" href="./index.html">Home</a>
+        </li>
+        <li class="menu__item">
+          <a class="menu__link link" href="#">Favorite</a>
+        </li>
+        <li class="menu__item">
+          <a class="menu__link link" href="#">Read</a>
+        </li>
+      </ul>
+    </nav>
+
+    <form class="form">
+      <input class="form__input" placeholder="Search |" type="text">
+    </form>
+
+    <div class="switch">
+      <p class="switch__name">Light</p>
+      <label class="switch">
+        <input type="checkbox">
+        <span class="slider round"></span>
+      </label>
+      <p class="switch__name">Dark</p>
+    </div>
+
+  </div>
+</header>
+
 <script src="./scripts/header.js"></script>
