@@ -17,7 +17,7 @@ let latPosition = 0;
 let lonPosition = 0;
 let tempsOnDay = [];
 
-  let arrDayObjects = [];
+  // let arrDayObjects = [];
 
 
 function getCoordinat() {
@@ -100,11 +100,11 @@ function onClickWeatherBtn() {
 
   weatherContainer.innerHTML = '';
 
-  console.log('Привет бтн');
+  // console.log('Привет бтн');
   // latPosition = position.coords.latitude;
   // lonPosition = position.coords.longitude;
-  console.log(latPosition);
-  console.log(lonPosition);
+  // console.log(latPosition);
+  // console.log(lonPosition);
 
   axios
     .get('https://api.openweathermap.org/data/2.5/forecast', {
@@ -144,60 +144,58 @@ function onClickWeatherBtn() {
             tempsOnDay.push(arreyData[a].main.temp);
           }
         }
-        console.log(tempsOnDay);
+        // console.log(tempsOnDay);
 
-        // console.log(days[i]);
-        // let weatherTodayWeek = days[i];
-        // let weatherDayOfWeeks = weatherTodayWeek.toLocaleString('en-US', {
-        //   weekday: 'long',
-        // });
-        // console.log(weatherDayOfWeek);
+       
+        let weatherTodayWeek = new Date(days[i]);
+        // console.log(weatherTodayWeek);
+        let weatherDayOfWeeks = weatherTodayWeek.toLocaleString('en-US', {
+          weekday: 'long',
+        });
+        // console.log(weatherDayOfWeeks);
 
-        // let weatherTodayOptionsWeek = {
-        //   year: 'numeric',
-        //   month: 'long',
-        //   day: 'numeric',
-        // };
-        // let weatherDayNowWeek = weatherToday.toLocaleString(
-        //   'en-GB',
-        //   weatherTodayOptionsWeek
-        // );
-        // console.log(weatherDayNow);
-  let myDayObject = {};
-        // arrDayObjects[i].dataDay = weatherDayNowWeek;
-        // arrDayObjects[i].weekDay = weatherDayOfWeeks;
-        mayDayObject[i].tempMin = Math.min(...tempsOnDay);
-        mayDayObject[i].tempMax = Math.max(...tempsOnDay);
-// arrDayObjects.push(mayDayObjects[i]);
-          // imgWeather: value5,
-    // };
-        console.log(arrDayObjects[i]);
-      }
+        let weatherTodayOptionsWeek = {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        };
+        let weatherDayNowWeek = weatherTodayWeek.toLocaleString(
+          'en-GB',
+          weatherTodayOptionsWeek
+        );
+        // console.log(weatherDayNowWeek);
 
-      
-      const markup = days
-        .map(
-          () =>
-            `<div class="weather_info_day">
-                    <p class="weather_dayOfWeek_week">Понедельник</p>
-                    <p class="weather_date_week">Дата</p>
+        // console.log(arrDayObjects[i]);
+
+        weatherConteinerOneDay.insertAdjacentHTML(
+          'beforeend',
+          `<div class="weather_info_day">
+                    <p class="weather_dayOfWeek_week">${weatherDayOfWeeks}</p>
+                    <p class="weather_date_week">${weatherDayNowWeek}</p>
                     <img class="weather_img_week" src="#" alt="Погода картинка">
                     <div class="weather_temp_fullday">
                         <div class="weather_temperatura_min">
-                            <p class="weather_temp_week"> 0 </p>
+                            <p class="weather_temp_week"> ${Math.round(Math.min(
+                              ...tempsOnDay)
+                            )} </p>
                             <p class="weather_badge_week">&#176</p>
                         </div>
                         <div class="weather_temperatura_max">
-                            <p class="weather_temp_week"> 0 </p>
+                            <p class="weather_temp_week"> ${Math.round(Math.max(
+                              ...tempsOnDay)
+                            )} </p>
                             <p class="weather_badge_week">&#176</p>
                         </div>
                     </div>
                 </div>
           `
-        )
-        .join('');
+        );
 
-      weatherConteinerOneDay.insertAdjacentHTML('beforeend', markup);
+      }
+
+      weatherConteinerOneDay.insertAdjacentHTML(
+          'beforeend',`<button class="weather_btn">weather for day</button>`)
+
     })
     .catch(error => error);
 }

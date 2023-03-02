@@ -129,8 +129,9 @@
   margin: 0;
 }
 
-.weather_week {
-  margin: 0 auto;
+.weather_week, 
+.weather_btn {
+  margin: 18px auto;
   display: block;
   border: 0;
   background: rgba(254, 254, 255, 0.3);
@@ -167,13 +168,14 @@
   line-height: 1.15;
   color: $light-text-color;
   margin: 0;
-  margin-bottom: 100px;
+  margin-bottom: 30px;
 }
 
 .weather_info_week {
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 105px;
+  margin-bottom: 10px;
+  height: 306px;
   
 }
 
