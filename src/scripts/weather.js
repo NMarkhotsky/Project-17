@@ -76,16 +76,16 @@ function showCoordinat(position) {
 function showError(error) {
   switch (error.code) {
     case error.PERMISSION_DENIED:
-      alert('User prohibited from reading location information');
+      // alert('User prohibited from reading location information');
       break;
     case error.POSITION_UNAVAILABLE:
-      alert('The browser was unable to locate');
+      // alert('The browser was unable to locate');
       break;
     case error.TIMEOUT:
-      alert('Browser has not had time to locate');
+      // alert('Browser has not had time to locate');
       break;
     case error.UNKNOWN_ERROR:
-      alert('An unspecified error has occurred');
+      // alert('An unspecified error has occurred');
       break;
   }
 }
