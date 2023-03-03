@@ -4,21 +4,15 @@ let weatherToday = new Date();
 let weatherDayOfWeek = weatherToday.toLocaleString('en-US', {
   weekday: 'long',
 });
-// console.log(weatherDayOfWeek);
 
 let weatherTodayOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 let weatherDayNow = weatherToday.toLocaleString('en-GB', weatherTodayOptions);
-// console.log(weatherDayNow);
 
 const weatherContainer = document.querySelector('.weather');
-let btnEl = '';
-// console.log(weatherContainer);
+// let btnEl = '';
 let latPosition = 0;
 let lonPosition = 0;
 let tempsOnDay = [];
-
-  // let arrDayObjects = [];
-
 
 function getCoordinat() {
   navigator.geolocation.getCurrentPosition(showCoordinat, showError);
@@ -38,7 +32,6 @@ function showCoordinat(position) {
     })
     .then(response => response)
     .then(data => {
-      // console.log(data);
       weatherContainer.insertAdjacentHTML(
         'beforeend',
         `<div class="weather_UI">
@@ -64,10 +57,10 @@ function showCoordinat(position) {
                 <p class="weather_date">${weatherDayNow}</p>
             </div>
         </div>
-        <button class="weather_week">weather for week</button>
+        <button class="weather_btn">weather for week</button>
 `
       );
-      btnEl = document.querySelector('.weather_week');
+      const btnEl = document.querySelector('.weather_btn');
       btnEl.addEventListener('click', onClickWeatherBtn);
     })
     .catch(error => error);
@@ -94,17 +87,19 @@ function oneStringToArr(str) {
   return str.trim().split(' ');
 }
 
+//  функция поиска элемента в массиве, с большим колличеством одинаковых элементов
+function occurrence(arr) {
+  return arr
+    .sort(
+      (a, b) =>
+        arr.filter(v => v === a).length - arr.filter(v => v === b).length
+    )
+    .pop();
+}
+
 function onClickWeatherBtn() {
   //Создаем массив объекта з данными
-
-
-  weatherContainer.innerHTML = '';
-
-  // console.log('Привет бтн');
-  // latPosition = position.coords.latitude;
-  // lonPosition = position.coords.longitude;
-  // console.log(latPosition);
-  // console.log(lonPosition);
+  clearWeather();
 
   axios
     .get('https://api.openweathermap.org/data/2.5/forecast', {
@@ -119,8 +114,6 @@ function onClickWeatherBtn() {
     .then(data => {
       let arreyData = data.data.list;
       let fullDays = [];
-      // console.log(arreyData);
-      // console.log(data.data.city);
       weatherContainer.insertAdjacentHTML(
         'beforeend',
         `<div class="weather_UI_week">
@@ -131,7 +124,8 @@ function onClickWeatherBtn() {
             `
       );
 
-      const weatherConteinerOneDay = document.querySelector('.weather_info_week');
+      const weatherConteinerOneDay =
+        document.querySelector('.weather_info_week');
       arreyData.forEach(element => {
         dayAndTime = oneStringToArr(element.dt_txt);
         fullDays.push(...oneStringToArr(dayAndTime[0]));
@@ -139,20 +133,21 @@ function onClickWeatherBtn() {
       days = Array.from(new Set(fullDays));
       for (i = 0; i < days.length; i += 1) {
         tempsOnDay = [];
+        tempsWeatherImgKod = [];
         for (a = 0; a < arreyData.length; a += 1) {
           if (oneStringToArr(arreyData[a].dt_txt)[0] === days[i]) {
             tempsOnDay.push(arreyData[a].main.temp);
+            tempsWeatherImgKod.push(arreyData[a].weather[0].icon);
           }
         }
-        // console.log(tempsOnDay);
+        // console.log(tempsOnDay)
+        // температура за день
 
-       
         let weatherTodayWeek = new Date(days[i]);
         // console.log(weatherTodayWeek);
         let weatherDayOfWeeks = weatherTodayWeek.toLocaleString('en-US', {
           weekday: 'long',
         });
-        // console.log(weatherDayOfWeeks);
 
         let weatherTodayOptionsWeek = {
           year: 'numeric',
@@ -163,26 +158,31 @@ function onClickWeatherBtn() {
           'en-GB',
           weatherTodayOptionsWeek
         );
-        // console.log(weatherDayNowWeek);
 
-        // console.log(arrDayObjects[i]);
-
+        // console.log(tempsWeatherImgKod);
+        //картинки за день
+        let WeatherImgDay = occurrence(tempsWeatherImgKod);
+        // console.log(WeatherImgDay);
+        // код картинки температури за день.
         weatherConteinerOneDay.insertAdjacentHTML(
           'beforeend',
           `<div class="weather_info_day">
                     <p class="weather_dayOfWeek_week">${weatherDayOfWeeks}</p>
                     <p class="weather_date_week">${weatherDayNowWeek}</p>
-                    <img class="weather_img_week" src="#" alt="Погода картинка">
+                    <img class="weather_img_week" src="https://openweathermap.org/img/wn/${WeatherImgDay}@2x.png" alt="weather img">
                     <div class="weather_temp_fullday">
                         <div class="weather_temperatura_min">
-                            <p class="weather_temp_week"> ${Math.round(Math.min(
-                              ...tempsOnDay)
+                            <p class="weather_temp_week"> ${Math.round(
+                              Math.min(...tempsOnDay)
                             )} </p>
                             <p class="weather_badge_week">&#176</p>
                         </div>
+                        <div>
+                        <p class="weather_temp_week"> ... </p>
+                        </div>
                         <div class="weather_temperatura_max">
-                            <p class="weather_temp_week"> ${Math.round(Math.max(
-                              ...tempsOnDay)
+                            <p class="weather_temp_week"> ${Math.round(
+                              Math.max(...tempsOnDay)
                             )} </p>
                             <p class="weather_badge_week">&#176</p>
                         </div>
@@ -190,14 +190,24 @@ function onClickWeatherBtn() {
                 </div>
           `
         );
-
       }
-
       weatherConteinerOneDay.insertAdjacentHTML(
-          'beforeend',`<button class="weather_btn">weather for day</button>`)
-
+        'beforeend',
+        `<button class="weather_week_btn">weather for today</button>`
+      );
+      const btnWeekEl = document.querySelector('.weather_week_btn');
+      btnWeekEl.addEventListener('click', returnWeather);
     })
     .catch(error => error);
+}
+
+function returnWeather() {
+  clearWeather();
+  getCoordinat();
+}
+
+function clearWeather() {
+  weatherContainer.innerHTML = '';
 }
 
 // Запуск Геолокации
