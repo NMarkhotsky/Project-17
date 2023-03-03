@@ -1,6 +1,7 @@
 import './scripts/header';
 import './scripts/theme';
 import './scripts/category';
+import './scripts/calendar';
 import './scripts/cards-news';
 import './scripts/card-item';
 import './scripts/weather';

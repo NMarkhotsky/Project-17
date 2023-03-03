@@ -1,5 +1,6 @@
-<div class="container">
-    <button class="category_btn" id="category_btn">Categories
+<div class="container category-container">
+  <section class="category">
+  <button class="category_btn" id="category_btn">Categories
         <svg class="svg-icon" id="arrow" role="img" height="14" width="8" viewBox="0 0 56 32" aria-hidden="true"
             focusable="false">
             <path d="M6.58 0l-6.58 6.089 28 25.911 28-25.911-6.58-6.089-21.42 19.779-21.42-19.779z" />
@@ -17,3 +18,53 @@
         <a href="">asdfasd</a>
         <a href="">asdfasd</a>
     </div>
+</section>
+  <section class="calendar">
+    <div class="calendar__wrap">
+      <form class="calendar__form">
+        <label class="calendar__label" for="input-datepicker"
+          >Search date news</label
+        >
+        <div class="calendar-input flatpickr" id="flatpickr">
+          <input
+            class="calendar-input__input flatpickr-input"
+            type="text"
+            id="input-flatpickr"
+            placeholder="Select a date"
+            data-input
+          />
+          <button
+            class="calendar-input__button calendar-input__button--left"
+            type="button"
+            title="toggle"
+            data-toggle
+          >
+            <svg
+              class="calendar__icon calendar__icon--left"
+              width="17"
+              height="17"
+            >
+              <use href="./img/symbol-defs.svg#icon-calendar"></use>
+            </svg>
+          </button>
+          <button
+            class="calendar-input__button calendar-input__button--right"
+            type="button"
+            title="toggle"
+            data-toggle
+          >
+            <svg
+              class="calendar__icon calendar__icon--right"
+              width="9"
+              height="15"
+              data-toggle
+            >
+              <use href="./img/symbol-defs.svg#icon-arrow-down"></use>
+            </svg>
+          </button>
+        </div>
+        <!-- <div class="flatpickr-container"></div> -->
+      </form>
+    </div>
+  </section>
+</div>
