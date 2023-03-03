@@ -31,16 +31,15 @@ function onSubmit(e) {
 function createMarkup(array) {
   array.map(
     ({ abstract, pub_date, multimedia, section_name, headline, web_url }) => {
-      try {
-        const urlImg = `https://www.nytimes.com/${multimedia[0].url}`;
-      } catch (error) {
-        console.log('No img');
+      let img = null;
+      if (!multimedia[0]) {
+        img = new URL('../img/not-found-desktop.jpg', import.meta.url);
+      } else {
+        img = new URL(
+          `https://www.nytimes.com/${multimedia[0]?.url}`,
+          import.meta.url
+        );
       }
-      console.log(multimedia[0].url);
-      const img = new URL(
-        `https://www.nytimes.com/${multimedia[0].url}`,
-        import.meta.url
-      );
       const markup = `
       <div class="card_item">
         <div class="card_item-header">
