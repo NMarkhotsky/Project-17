@@ -17,8 +17,7 @@ let latPosition = 0;
 let lonPosition = 0;
 let tempsOnDay = [];
 
-  // let arrDayObjects = [];
-
+// let arrDayObjects = [];
 
 function getCoordinat() {
   navigator.geolocation.getCurrentPosition(showCoordinat, showError);
@@ -94,9 +93,25 @@ function oneStringToArr(str) {
   return str.trim().split(' ');
 }
 
+function occurrence(arr1) {
+var mf = 1;
+var m = 0;
+var item;
+for (var i = 0; i < arr1.length; i++) {
+  for (var j = i; j < arr1.length; j++) {
+    if (arr1[i] == arr1[j]) m++;
+    if (mf < m) {
+      mf = m;
+      item = arr1[i];
+    }
+  }
+  m = 0;
+}
+  return item;
+}
+
 function onClickWeatherBtn() {
   //Создаем массив объекта з данными
-
 
   weatherContainer.innerHTML = '';
 
@@ -131,7 +146,8 @@ function onClickWeatherBtn() {
             `
       );
 
-      const weatherConteinerOneDay = document.querySelector('.weather_info_week');
+      const weatherConteinerOneDay =
+        document.querySelector('.weather_info_week');
       arreyData.forEach(element => {
         dayAndTime = oneStringToArr(element.dt_txt);
         fullDays.push(...oneStringToArr(dayAndTime[0]));
@@ -139,14 +155,15 @@ function onClickWeatherBtn() {
       days = Array.from(new Set(fullDays));
       for (i = 0; i < days.length; i += 1) {
         tempsOnDay = [];
+        tempsWeatherImgKod = [];
         for (a = 0; a < arreyData.length; a += 1) {
           if (oneStringToArr(arreyData[a].dt_txt)[0] === days[i]) {
             tempsOnDay.push(arreyData[a].main.temp);
+            tempsWeatherImgKod.push(arreyData[a].weather[0].icon);
           }
         }
         // console.log(tempsOnDay);
 
-       
         let weatherTodayWeek = new Date(days[i]);
         // console.log(weatherTodayWeek);
         let weatherDayOfWeeks = weatherTodayWeek.toLocaleString('en-US', {
@@ -165,24 +182,27 @@ function onClickWeatherBtn() {
         );
         // console.log(weatherDayNowWeek);
 
-        // console.log(arrDayObjects[i]);
+        console.log(tempsWeatherImgKod);
+
+        let WeatherImgDay = occurrence(tempsWeatherImgKod);
+        console.log(WeatherImgDay);
 
         weatherConteinerOneDay.insertAdjacentHTML(
           'beforeend',
           `<div class="weather_info_day">
                     <p class="weather_dayOfWeek_week">${weatherDayOfWeeks}</p>
                     <p class="weather_date_week">${weatherDayNowWeek}</p>
-                    <img class="weather_img_week" src="#" alt="Погода картинка">
+                    <img class="weather_img_week" src="https://openweathermap.org/img/wn/${WeatherImgDay}@2x.png" alt="weather img">
                     <div class="weather_temp_fullday">
                         <div class="weather_temperatura_min">
-                            <p class="weather_temp_week"> ${Math.round(Math.min(
-                              ...tempsOnDay)
+                            <p class="weather_temp_week"> ${Math.round(
+                              Math.min(...tempsOnDay)
                             )} </p>
                             <p class="weather_badge_week">&#176</p>
                         </div>
                         <div class="weather_temperatura_max">
-                            <p class="weather_temp_week"> ${Math.round(Math.max(
-                              ...tempsOnDay)
+                            <p class="weather_temp_week"> ${Math.round(
+                              Math.max(...tempsOnDay)
                             )} </p>
                             <p class="weather_badge_week">&#176</p>
                         </div>
@@ -190,12 +210,12 @@ function onClickWeatherBtn() {
                 </div>
           `
         );
-
       }
 
       weatherConteinerOneDay.insertAdjacentHTML(
-          'beforeend',`<button class="weather_btn">weather for day</button>`)
-
+        'beforeend',
+        `<button class="weather_btn">weather for day</button>`
+      );
     })
     .catch(error => error);
 }
