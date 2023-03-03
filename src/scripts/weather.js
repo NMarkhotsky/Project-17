@@ -4,20 +4,15 @@ let weatherToday = new Date();
 let weatherDayOfWeek = weatherToday.toLocaleString('en-US', {
   weekday: 'long',
 });
-// console.log(weatherDayOfWeek);
 
 let weatherTodayOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 let weatherDayNow = weatherToday.toLocaleString('en-GB', weatherTodayOptions);
-// console.log(weatherDayNow);
 
 const weatherContainer = document.querySelector('.weather');
-let btnEl = '';
-// console.log(weatherContainer);
+// let btnEl = '';
 let latPosition = 0;
 let lonPosition = 0;
 let tempsOnDay = [];
-
-// let arrDayObjects = [];
 
 function getCoordinat() {
   navigator.geolocation.getCurrentPosition(showCoordinat, showError);
@@ -37,7 +32,6 @@ function showCoordinat(position) {
     })
     .then(response => response)
     .then(data => {
-      // console.log(data);
       weatherContainer.insertAdjacentHTML(
         'beforeend',
         `<div class="weather_UI">
@@ -146,6 +140,8 @@ function onClickWeatherBtn() {
             tempsWeatherImgKod.push(arreyData[a].weather[0].icon);
           }
         }
+        // console.log(tempsOnDay)
+        // температура за день
 
         let weatherTodayWeek = new Date(days[i]);
         // console.log(weatherTodayWeek);
@@ -163,7 +159,11 @@ function onClickWeatherBtn() {
           weatherTodayOptionsWeek
         );
 
+        // console.log(tempsWeatherImgKod);
+        //картинки за день
         let WeatherImgDay = occurrence(tempsWeatherImgKod);
+        // console.log(WeatherImgDay);
+        // код картинки температури за день.
         weatherConteinerOneDay.insertAdjacentHTML(
           'beforeend',
           `<div class="weather_info_day">
@@ -176,6 +176,9 @@ function onClickWeatherBtn() {
                               Math.min(...tempsOnDay)
                             )} </p>
                             <p class="weather_badge_week">&#176</p>
+                        </div>
+                        <div>
+                        <p class="weather_temp_week"> ... </p>
                         </div>
                         <div class="weather_temperatura_max">
                             <p class="weather_temp_week"> ${Math.round(
