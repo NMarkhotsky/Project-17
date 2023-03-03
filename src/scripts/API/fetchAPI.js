@@ -8,10 +8,8 @@ async function getSectionList() {
     const results = await newsApi.fetchSectionList();
     results.forEach(({ section, display_name }) => {
       // Назва категорії
-      const displayName = display_name;
-      const sectionName = section;
-      console.log('displayName: ', displayName);
-      console.log('sectionName: ', sectionName);
+      // - display_name;
+      // - section;
     });
   } catch (error) {
     console.log(error);
@@ -32,17 +30,17 @@ async function getPopularNews() {
     results.forEach(
       ({ abstract, published_date, media, section, title, url }) => {
         // Короткий опис
-        const description = abstract;
+        // - abstract;
         // Дата публікації
-        const publishedDate = published_date;
+        // - published_date;
         // Адреса картинки(можна міняти media[...])
-        const urlImg = media[0]['media-metadata'][2].url;
+        // - media[0]['media-metadata'][2].url;
         // Назва категорії
-        const sectionName = section;
+        // - section;
         // Заголовок
-        const articleTitle = title;
+        // - title;
         // Посилання на оригінал статті
-        const originUrl = url;
+        // - url;
       }
     );
     console.log('results: ', results);
@@ -67,17 +65,17 @@ async function onCategoryClick(e) {
     results.forEach(
       ({ abstract, published_date, multimedia, section, title, url }) => {
         // Короткий опис
-        const description = abstract;
+        // - abstract;
         // Дата публікації
-        const publishedDate = published_date;
+        // - published_date;
         // Адреса картинки(можна міняти media[...])
-        const urlImg = multimedia[2].url;
+        // - multimedia[2].url;
         // Назва категорії
-        const sectionName = section;
+        // - section;
         // Заголовок
-        const articleTitle = title;
+        // - title;
         // Посилання на оригінал статті
-        const originUrl = url;
+        // - url;
       }
     );
     console.log('results: ', results);
@@ -89,11 +87,9 @@ async function onCategoryClick(e) {
 // onCategoryClick();
 
 //* Приходять дані за пошуковим значенням по кліку
-async function onSearchInputClick(e) {
+async function onSearchInputSubmit(e) {
   // тут треба записати значення пошукового запиту
   newsApi.searchQuery = 'BMW';
-
-  newsApi.searchSection = 'business';
 
   const { docs, meta } = await newsApi.fetchOnSearchQuery();
   // totalNews це загальна кількість новин що прийшли
@@ -104,16 +100,15 @@ async function onSearchInputClick(e) {
   docs.forEach(
     ({ abstract, pub_date, multimedia, section_name, headline, web_url }) => {
       // Короткий опис
-      const description = abstract;
+      //abstract;
       // Дата публікації
-      const publishedDate = pub_date;
+      //pub_date;
       // Назва категорії
-      const sectionName = section_name;
+      //section_name;
       // Заголовок
-      const articleTitle = headline.main;
+      //headline.main;
       // Посилання на оригінал статті
-      const originUrl = web_url;
-      console.log('originUrl: ', originUrl);
+      //web_url;
 
       // Перевіряємо чи є зображення
       try {
@@ -128,4 +123,15 @@ async function onSearchInputClick(e) {
   console.log('results: ', docs);
 }
 //! ТЕСТОВИЙ ВИКЛИК ФУНКЦІЇ ДЛЯ ПЕРЕВІРКИ
-// onSearchInputClick();
+// onSearchInputSubmit();
+
+export default function formatedDate(date) {
+  const newDate = new Date(date);
+  const day = String(newDate.getDate()).padStart(2, '0');
+  const month = String(newDate.getMonth()).padStart(2, '0');
+  const year = newDate.getFullYear();
+
+  const result = `${day}/${month}/${year}`;
+
+  return result;
+}

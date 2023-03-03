@@ -1,4 +1,5 @@
 import NewsApi from './API/newsAPI';
+import formatedDate from './API/fetchAPI';
 
 const refs = {
   cardList: document.querySelector('.cards__list'),
@@ -33,7 +34,7 @@ function createMarkupForCard({
         <p class="card_item-description">${abstract}</p>
       </div>
       <div class="card_item-info">
-        <span class="card_item-date">${published_date}</span>
+        <span class="card_item-date">${formatedDate(published_date)}</span>
         <a class="card__link-btn" href="${url}" data-title="${title}">
           <button class="button__read-more" type="submit">
             Read more
