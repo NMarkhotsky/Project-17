@@ -1,6 +1,17 @@
+.category {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 10px;
+}
+
 .category-container {
     display: flex;
     justify-content: space-between;
+}
+
+.category_dropbtn_container {
+    position: relative;
 }
 
 .category_btn {
