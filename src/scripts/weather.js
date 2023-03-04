@@ -27,7 +27,7 @@ function getCoordinat() {
 
 function showCoordinat(position) {
   latPosition = position.coords.latitude;
-  lonPosition = position.coords.longitude;
+  lonPosition = position.coords.longitude;  
   axiosRequest(latPosition, lonPosition);
 }
 
@@ -50,7 +50,7 @@ function showError(error) {
 
 async function axiosRequest(latPosition, lonPosition) {
   weatherToday = new Date();
-  infoDay(weatherToday);
+  infoDay(weatherToday);  
   await axios
     .get(URL_WEATHER_TODAY, {
       params: {
@@ -63,6 +63,7 @@ async function axiosRequest(latPosition, lonPosition) {
     .then(response => response)
     .then(data => {
       dataHits = data.data;
+      
       weatherContainer.insertAdjacentHTML(
         'beforeend',
         `<div class="weather_UI">
@@ -130,12 +131,9 @@ async function onClickWeatherBtn() {
       },
     })
     .then(response => response)
-    console.log(response)
     .then(data => {
       dataHits = data.data;
-      // console.log(dataHits);
       arrayData = dataHits.list;  
-      console.log(arrayData);
       weatherContainer.insertAdjacentHTML(
         'beforeend',
         `<div class="weather_UI_week">
@@ -147,12 +145,11 @@ async function onClickWeatherBtn() {
       );
       const weatherConteinerOneDay =
         document.querySelector('.weather_info_week');
-      // console.log(arrayData);
         arrayData.forEach(element => {
-          dayAndTime = element.dt_txt.split(' ');
-          fullDays.push(dayAndTime[0]);
+          dayAndTime = element.dt_txt.split(' ');          
+          fullDays.push(dayAndTime[0]);          
         });
-        days = Array.from(new Set(fullDays));
+      days = Array.from(new Set(fullDays));
         days.forEach(el => {
         tempsOnDay = [];
         tempsWeatherImgKod = [];
