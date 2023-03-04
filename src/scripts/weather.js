@@ -27,7 +27,7 @@ function getCoordinat() {
 
 function showCoordinat(position) {
   latPosition = position.coords.latitude;
-  lonPosition = position.coords.longitude;
+  lonPosition = position.coords.longitude;  
   axiosRequest(latPosition, lonPosition);
 }
 
@@ -50,7 +50,7 @@ function showError(error) {
 
 async function axiosRequest(latPosition, lonPosition) {
   weatherToday = new Date();
-  infoDay(weatherToday);
+  infoDay(weatherToday);  
   await axios
     .get(URL_WEATHER_TODAY, {
       params: {
@@ -63,6 +63,7 @@ async function axiosRequest(latPosition, lonPosition) {
     .then(response => response)
     .then(data => {
       dataHits = data.data;
+      
       weatherContainer.insertAdjacentHTML(
         'beforeend',
         `<div class="weather_UI">
@@ -80,11 +81,9 @@ async function axiosRequest(latPosition, lonPosition) {
                     <div class="weather_geoPosition">
                       <svg class="weather_svg">
                         <use href="${weatherIconSvg}#icon-location"></use>
-                      <svg>
+                      </svg>
                       <p class="weather_city">${dataHits.name}</p>
                     </div>
-
-                    
                 </div>
             </div>
             <img class="weather_img" src="https://openweathermap.org/img/wn/${
@@ -117,8 +116,11 @@ function occurrence(arr) {
 async function onClickWeatherBtn() {
   let tempsWeatherImgKod = [];
   let tempsOnDay = [];
-
+  let arrayData = [];
+  let fullDays = [];
+  
   clearWeather();
+
   await axios
     .get(URL_WEATHER_WEEK, {
       params: {
@@ -131,8 +133,7 @@ async function onClickWeatherBtn() {
     .then(response => response)
     .then(data => {
       dataHits = data.data;
-      let arreyData = dataHits.list;
-      let fullDays = [];
+      arrayData = dataHits.list;  
       weatherContainer.insertAdjacentHTML(
         'beforeend',
         `<div class="weather_UI_week">
@@ -144,15 +145,15 @@ async function onClickWeatherBtn() {
       );
       const weatherConteinerOneDay =
         document.querySelector('.weather_info_week');
-      arreyData.forEach(element => {
-        dayAndTime = element.dt_txt.split(' ');
-        fullDays.push(dayAndTime[0]);
-      });
+        arrayData.forEach(element => {
+          dayAndTime = element.dt_txt.split(' ');          
+          fullDays.push(dayAndTime[0]);          
+        });
       days = Array.from(new Set(fullDays));
-      days.forEach(el => {
+        days.forEach(el => {
         tempsOnDay = [];
         tempsWeatherImgKod = [];
-        arreyData.forEach(element => {
+        arrayData.forEach(element => {
           if (element.dt_txt.split(' ')[0] === el) {
             tempsOnDay.push(element.main.temp);
             tempsWeatherImgKod.push(element.weather[0].icon);
