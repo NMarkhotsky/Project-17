@@ -1,3 +1,8 @@
+// const refs = {
+//   form: document.querySelector('.form'),
+//   input: document.querySelector('.form__input'),
+// };
+
 import NewsApi from './API/newsAPI';
 import formatedDate from './API/fetchAPI';
 
@@ -7,7 +12,28 @@ const refs = {
   list: document.querySelector('.cards__list'),
 };
 
-refs.form.addEventListener('submit', onSubmit);
+// refs.form.addEventListener('submit', onSubmit);
+
+// function onSubmit(e) {
+//   e.preventDefault();
+// }
+
+(() => {
+  const refs = {
+    openMenuBtn: document.querySelector('[data-menu-open]'),
+    closeMenuBtn: document.querySelector('[data-menu-close]'),
+    menu: document.querySelector('[data-menu]'),
+    body: document.querySelector('body'),
+  };
+
+  refs.openMenuBtn.addEventListener('click', toggleMenu);
+  refs.closeMenuBtn.addEventListener('click', toggleMenu);
+
+  function toggleMenu() {
+    refs.menu.classList.toggle('is-hidden');
+    refs.body.classList.toggle('no-scroll');
+  }
+})();
 
 function onSubmit(e) {
   e.preventDefault();
