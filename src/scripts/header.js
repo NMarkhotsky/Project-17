@@ -1,39 +1,20 @@
-// const refs = {
-//   form: document.querySelector('.form'),
-//   input: document.querySelector('.form__input'),
-// };
-
 import NewsApi from './API/newsAPI';
 import formatedDate from './API/fetchAPI';
+import { getFavorite } from './card-item';
 
 const refs = {
   form: document.querySelector('.form'),
   input: document.querySelector('.form__input'),
   list: document.querySelector('.cards__list'),
+  iconSvg: new URL('../img/symbol-defs.svg', import.meta.url),
 };
 
-// refs.form.addEventListener('submit', onSubmit);
+refs.form.addEventListener('submit', onSubmit);
 
-// function onSubmit(e) {
-//   e.preventDefault();
-// }
-
-(() => {
-  const refs = {
-    openMenuBtn: document.querySelector('[data-menu-open]'),
-    closeMenuBtn: document.querySelector('[data-menu-close]'),
-    menu: document.querySelector('[data-menu]'),
-    body: document.querySelector('body'),
-  };
-
-  refs.openMenuBtn.addEventListener('click', toggleMenu);
-  refs.closeMenuBtn.addEventListener('click', toggleMenu);
-
-  function toggleMenu() {
-    refs.menu.classList.toggle('is-hidden');
-    refs.body.classList.toggle('no-scroll');
-  }
-})();
+const addFavoriteBtnHTML = `Add to favorite ${createSvgIcon('icon-heart')}`;
+const removeFavoriteBtnHTML = `Remove from favorite ${createSvgIcon(
+  'icon-heart-full'
+)}`;
 
 function onSubmit(e) {
   e.preventDefault();
@@ -42,7 +23,8 @@ function onSubmit(e) {
   }
   const newsApi = new NewsApi();
   newsApi.searchQuery = refs.input.value;
-  newsApi.fetchOnSearchQuery().then(({ docs, meta }) => {
+  newsApi.fetchOnSearchQuery().then(({ docs }) => {
+    console.log(docs);
     refs.list.innerHTML = '';
     if (docs.length === 0) {
       const img = new URL('../img/not-found-desktop.jpg', import.meta.url);
@@ -56,7 +38,22 @@ function onSubmit(e) {
 
 function createMarkup(array) {
   array.map(
-    ({ abstract, pub_date, multimedia, section_name, headline, web_url }) => {
+    ({
+      abstract,
+      pub_date,
+      multimedia,
+      section_name,
+      headline,
+      web_url,
+      _id,
+    }) => {
+      console.log(_id);
+      const fixedId = _id.replace(/[^+\d]/g, '');
+      console.log(fixedId);
+      setTimeout(() => {
+        const btn = document.querySelector(`.button__add-favorite--${fixedId}`);
+        btn.onclick = handleFavorite(_id, array, btn);
+      }, 0);
       let img = null;
       if (!multimedia[0]) {
         img = new URL('../img/not-found-desktop.jpg', import.meta.url);
@@ -71,8 +68,8 @@ function createMarkup(array) {
         <div class="card_item-header">
           <img class="card_item-image" src="${img}" alt="${`.`}" loading="lazy" />
           <span class="card_item-section">${section_name}</span>
-          <button class="button__add-favorite" type="submit">
-            Add to favorite
+          <button class="button__add-favorite ${`button__add-favorite--${fixedId}`}" data-id="${_id}">
+            ${addFavoriteBtnHTML}
             <svg class="button__icon-svg" width="24" height="24">
             <use href="src/img/symbol-defs.svg#icon-favorite"></use>
             </svg>
@@ -88,7 +85,7 @@ function createMarkup(array) {
         <a class="card__link-btn" href="${web_url}" data-title="${
         headline.main
       }">
-          <button class="button__read-more" type="submit">
+          <button class="button__read-more">
             Read more
           </button>
         </a>
@@ -100,3 +97,27 @@ function createMarkup(array) {
     }
   );
 }
+function createSvgIcon(name) {
+  return `
+    <svg class="button__icon-svg">
+      <use href="${refs.iconSvg}#${name}"></use>
+    </svg>
+  `;
+}
+const handleFavorite = (newsId, data, btn) => () => {
+  btn.classList.toggle('button__add-favorite--active');
+  if (btn.classList.contains('button__add-favorite--active')) {
+    btn.innerHTML = removeFavoriteBtnHTML;
+  } else {
+    btn.innerHTML = addFavoriteBtnHTML;
+  }
+  const favorite = getFavorite();
+
+  const saveFavorite = {
+    [newsId]: data,
+  };
+
+  const newFavorite = { ...favorite, ...saveFavorite };
+
+  localStorage.setItem('favorite', JSON.stringify(newFavorite));
+};
