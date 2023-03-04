@@ -97,7 +97,8 @@ async function axiosRequest(latPosition, lonPosition) {
 }
 
 function oneStringToArr(str) {
-  return str.trim().split(' ');
+  // return str.trim().split(' ');
+  return str.split(' ');
 }
 
 //  функция поиска элемента в массиве, с наибольшим вхождением
@@ -142,7 +143,8 @@ async function onClickWeatherBtn() {
         document.querySelector('.weather_info_week');
       arreyData.forEach(element => {
         dayAndTime = oneStringToArr(element.dt_txt);
-        fullDays.push(...oneStringToArr(dayAndTime[0]));
+        // fullDays.push(...oneStringToArr(dayAndTime[0]));
+        fullDays.push(dayAndTime[0]);
       });
       days = Array.from(new Set(fullDays));
       days.forEach(el => {
@@ -184,7 +186,7 @@ async function onClickWeatherBtn() {
                 </div>
           `
         );
-      })
+      });
       weatherConteinerOneDay.insertAdjacentHTML(
         'beforeend',
         `<button class="weather_week_btn">weather for today</button>`
@@ -206,3 +208,4 @@ function clearWeather() {
 
 // Запуск Геолокации
 getCoordinat();
+
