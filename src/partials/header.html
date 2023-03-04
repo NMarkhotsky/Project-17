@@ -30,12 +30,13 @@
     </div>
     </form> -->
 
-    <button type="button" class="menu-close-btn" data-menu-button>
-      <svg class="menu__icon-close" aria-label="перемикач меню" width="24" height="24">
-        <use class="icon-close" href="./img/symbol-defs.svg#icon-close"></use>
+    <button type="button" class="menu-open-btn" data-menu-open>
+      <svg class="menu-open-icon" width="24" height="24">
         <use class="icon-menu" href="./img/symbol-defs.svg#icon-menu"></use>
       </svg>
     </button>
+
+    
 
     <!-- <div class="switch">
       <p class="switch__name">Light</p>
@@ -46,5 +47,42 @@
       <p class="switch__name">Dark</p>
     </div> -->
 
+  </div>
+  <div class="mob-menu is-hidden" data-menu>
+    <div class="menu-container container">
+      <div class="mob-menu-top">
+        <a class="logo link" href="./index.html">News</a>
+        <button type="button" class="menu-close-btn" data-menu-close>
+          <svg class="menu-close-icon" width="12" height="12">
+            <use href="./img/symbol-defs.svg#icon-menuclose"></use>
+          </svg>
+        </button>
+      </div>
+      <div>
+        <ul class="mob-menu-list list">
+          <li class="mob-menu__item">
+            <a class="mob-menu__link link mob-menu__link--current" href="./index.html">
+              <svg class="mob-menu__icon home" width="32" height="32">
+              <use href="./img/symbol-defs.svg#icon-home">
+              </use>
+            </svg>Home</a>
+          </li>
+          <li class="mob-menu__item">
+            <a class="mob-menu__link link" href="#">
+              <svg class="mob-menu__icon favorite" width="32" height="32">
+                <use href="./img/symbol-defs.svg#icon-favorite">
+                </use>
+              </svg>Favorite</a>
+          </li>
+          <li class="mob-menu__item">
+            <a class="mob-menu__link link" href="#">
+              <svg class="mob-menu__icon read" width="32" height="32">
+                <use href="./img/symbol-defs.svg#icon-read">
+                </use>
+              </svg>Read</a>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </header>
