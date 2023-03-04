@@ -3,6 +3,9 @@ import axios from 'axios';
 const dropdownBtn = document.querySelector(".category_btn");
 const dropdownMenu = document.querySelector(".category_dropdown");
 const toggleArrow = document.querySelector(".svg-icon");
+const categoryContainer = document.querySelector(".category")
+const body = document.querySelector('body');
+
 
 const toggleDropdown = function () {
   dropdownMenu.classList.toggle("show");
@@ -16,25 +19,91 @@ dropdownBtn.addEventListener("click", function (e) {
 
 window.addEventListener('load', getInformation);
 const apiKey = 'u4NcxmWo2uFBK0OuatwBNClB29lN33d8';
-console.log(window.innerWidth)
+
 
 function getInformation(e) {
     const response = axios.get(`https://api.nytimes.com/svc/news/v3/content/section-list.json?api-key=${apiKey}`)
         .then(({ data }) => {
-            const categories = data.results;
-            const markup = categories.reduce((acc, category) => {
+            const dataObjects = data.results;
+            const categoriesAll = dataObjects.map(dataObject => dataObject.display_name);
+
+            const categoriesForLaptopBtn = dataObjects.reduce((acc,dataObject) => {
+                if (dataObjects.indexOf(dataObject) <= 3) {
+                    acc.push(dataObject.display_name)
+                }
+                return acc;
+            }, []);
+
+            const categoriesForDesktopBtn = dataObjects.reduce((acc,dataObject) => {
+                if (dataObjects.indexOf(dataObject) <= 5) {
+                    acc.push(dataObject.display_name)
+                }
+                return acc;
+            }, []);
+
+            const categoriesForLaptopList = dataObjects.reduce((acc,dataObject) => {
+                if (dataObjects.indexOf(dataObject) > 3) {
+                    acc.push(dataObject.display_name)
+                }
+                return acc;
+            }, []);
+
+             const categoriesForDesktopList = dataObjects.reduce((acc,dataObject) => {
+                if (dataObjects.indexOf(dataObject) > 5) {
+                    acc.push(dataObject.display_name)
+                }
+                return acc;
+            }, []);
+            if (body.clientWidth <= 320) {
+            const markup = categoriesAll.reduce((acc, category) => {
                 return acc += createMarkup(category);
             }, '');
             return markup;
+            }
+            else if (body.clientWidth > 320 & body.clientWidth <= 768) {
+                const markupBtn = categoriesForLaptopBtn.reduce((acc, category) => {
+                       return acc += createButtons(category);
+                }, '');
+
+                const markupList = categoriesForLaptopList.reduce((acc, category) => {
+                        return acc += createMarkup(category);
+                }, '');
+
+                const markup = [markupBtn, markupList];
+                return markup;
+            } else {
+                 const markupBtn = categoriesForDesktopBtn.reduce((acc, category) => {
+                       return acc += createButtons(category);
+                }, '');
+
+                const markupList = categoriesForDesktopList.reduce((acc, category) => {
+                        return acc += createMarkup(category);
+                }, '');
+
+                const markup = [markupBtn, markupList];
+                return markup;
+           }
         })
         .then(markup => {
-            addMarkup(markup)
+            if (markup.length === 2) {
+                 addButtons(markup[0]);
+                addMarkup(markup[1]);
+                dropdownBtn.firstChild.textContent='Others'
+            } else {
+                addMarkup(markup);
+
+            }
         })
 };
 
 function createMarkup(category) {
-       return `<a class="dropdown-item" href="#">${category.display_name}</a>`
-    }
+       return `<a class="dropdown-item" href="#">${category}</a>`
+}
+    
+function createButtons(category) {
+    return `<button href="#">${category}</button>`
+}
+
 
 function addMarkup(markup) {
     dropdownMenu.innerHTML = `${markup}`
@@ -49,9 +118,9 @@ function getNewsByCategory(e) {
 `);
     dropdownMenu.classList.toggle("show");
       toggleArrow.classList.toggle("arrow");
-    response.then(({data}) => console.log(data.results));
 }
 
-function createButtons(category) {
-    return `<button class="dropbtn">${category.display_name}</button>`
+
+function addButtons(markup) {
+   categoryContainer.insertAdjacentHTML('afterbegin', markup)
 }
