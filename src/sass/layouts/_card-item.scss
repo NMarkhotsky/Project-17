@@ -1,0 +1,131 @@
+$cart_item_height_desktop: 675px;
+$cart_item_height_mobile: 630px;
+
+.card_item {
+  position: relative;
+  height: $cart_item_height_mobile;
+  width: 288px;
+  @include tablet {
+    height: $cart_item_height_desktop;
+    width: 353px;
+  }
+  @include desktop {
+    height: $cart_item_height_desktop;
+    width: 353px;
+  }
+}
+
+.card_item-image {
+  width: 100%;
+  height: 395px;
+  object-fit: cover;
+}
+
+.card_item-section {
+  position: absolute;
+  top: 40px;
+  padding: 4px 8px;
+
+  color: $light-text-color;
+  font-family: $basic-font;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+
+  border-radius: 0 5px 5px 0;
+  background-color: rgba($accent-color, 0.7);
+}
+
+.button__add-favorite {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  bottom: 12px;
+  right: 8px;
+  padding: 6px 12px;
+
+  height: 28px;
+  font-family: $basic-font;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+  background-color: $light-text-color;
+  border: none;
+  border-radius: 20px;
+  @include tablet {
+    right: 12px;
+  }
+  @include desktop {
+    right: 12px;
+  }
+
+  .button__icon-svg {
+    width: 18px;
+    height: 16px;
+    margin-left: 5px;
+  }
+}
+.card_item-title {
+  width: 100%;
+  height: 99px;
+  margin-top: 20px;
+  color: $dark-text-color;
+  font-family: $basic-font;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.38;
+  letter-spacing: -0.01em;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card_item-description {
+  width: 100%;
+  height: 57px;
+  margin: 20px 0;
+  color: $dark-text-color;
+  font-family: $basic-font;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.36;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card_item-info {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.button__read-more {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.36;
+  color: $accent-color;
+  border: none;
+  background-color: transparent;
+}
+
+.card_item-date {
+  margin-right: 0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.36;
+  color: $secondary-text-color;
+}
+
+.card_item-header {
+  position: relative;
+}
+
+.cart_item-content {
+  width: 100%;
+  height: 280px;
+}

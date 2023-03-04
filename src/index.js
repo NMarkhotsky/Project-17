@@ -1,8 +1,10 @@
 import './scripts/header';
 import './scripts/theme';
 import './scripts/category';
+import './scripts/calendar';
 import './scripts/cards-news';
+import './scripts/card-item';
 import './scripts/weather';
 import './scripts/pagination';
-import './scripts/favorite';
 import './scripts/read';
+import './scripts/API/fetchAPI';
