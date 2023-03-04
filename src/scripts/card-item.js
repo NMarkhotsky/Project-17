@@ -3,6 +3,7 @@ import formatedDate from './API/fetchAPI';
 
 const refs = {
   cardList: document.querySelector('.cards__list'),
+  iconSvg: new URL('../img/symbol-defs.svg', import.meta.url),
 };
 
 const newsApi = new NewsApi();
@@ -24,7 +25,7 @@ function createMarkupForCard({
       <button class="button__add-favorite" type="submit">
         Add to favorite
         <svg class="button__icon-svg" width="24" height="24">
-          <use href="src/img/symbol-defs.svg#icon-favorite"></use>
+          <use href="${refs.iconSvg}#icon-heart"></use>
         </svg>
       </button>
     </div>
