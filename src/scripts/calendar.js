@@ -4,7 +4,7 @@ const FLATPICKR_INPUT = document.querySelector('.flatpickr-input');
 const ARROW_BTN_DOWN = document.querySelector('.arrow-down');
 const ARROW_BTN_UP = document.querySelector('.arrow-up');
 const CALENDAR_ICON = document.querySelector('.calendar__button--left');
-const calendarIconSvg = new URL('../img/symbol-defs.svg', import.meta.url);
+const ICONS_URL = new URL('../img/symbol-defs.svg', import.meta.url);
 let requestDate;
 let filterDate;
 
@@ -12,19 +12,13 @@ const DATEPICKER_OPTIONS = {
   wrap: true,
   maxDate: 'today',
   closeOnSelect: false,
-  nextArrow: `<svg class="flatpickr-icon flatpickr-icon--next">
-<use href="${calendarIconSvg}#icon-arrow-up"></use>
-<svg>`,
-  prevArrow: `<svg class="flatpickr-icon flatpickr-icon--prev">
-<use href="${calendarIconSvg}#icon-arrow-down"></use>
-<svg>`,
+  nextArrow: `<svg class="flatpickr-icon flatpickr-icon--next"><use href="${ICONS_URL}#icon-arrow-up"></use><svg>`,
+  prevArrow: `<svg class="flatpickr-icon flatpickr-icon--prev"><use href="${ICONS_URL}#icon-arrow-down"></use><svg>`,
   disable: [
     function (date) {
       return date > Date.now();
     },
   ],
-  // altInput: true,
-  // altFormat: 'd/m/Y',
   dateFormat: 'd/m/Y',
   // positionElement: document.querySelector(".calendar-input"),
   position: 'below right',
@@ -35,9 +29,10 @@ const DATEPICKER_OPTIONS = {
   onClose(dateObj) {
     changeBtnStyles();
     if (dateObj) {
-    formatFilterDate(dateObj);
-    filterByDate(filterDate, articlesArray);
-    formatRequestDate(dateObj);
+      formatFilterDate(dateObj);
+      filterByDate(filterDate, articlesArray);
+      // renderFiltredMarkup(filtredArticles);
+      formatRequestDate(dateObj);
     }
     console.log(requestDate);
     return requestDate;
@@ -51,22 +46,6 @@ function changeBtnStyles() {
   ARROW_BTN_DOWN.classList.toggle('is-hidden');
   ARROW_BTN_UP.classList.toggle('is-hidden');
   CALENDAR_ICON.classList.toggle('is-clicked');
-}
-
-// array for test
-let articlesArray = [
-  { name: 'article 1', published_date: '2023-03-01' },
-  { name: 'article 2', published_date: '2022-03-04' },
-  { name: 'article 3', published_date: '2020-07-01' },
-];
-function filterByDate(selectedDate, articlesArray) {
-  if (document.querySelector('.cards__list').children) {
-    let filtredArticles = articlesArray.filter(
-      article => article.published_date === selectedDate
-    );
-    console.log(filtredArticles);
-    return filtredArticles;
-  }
 }
 
 function formatRequestDate(dateObj) {
@@ -86,6 +65,26 @@ function formatFilterDate(dateObj) {
   filterDate = `${year}-${month}-${day}`;
   // console.log('filter', filterDate);
   return filterDate;
+}
+
+// array for test
+let articlesArray = [
+  { name: 'article 1', published_date: '2023-03-01' },
+  { name: 'article 2', published_date: '2022-03-04' },
+  { name: 'article 3', published_date: '2020-07-01' },
+];
+function filterByDate(selectedDate, articlesArray) {
+  if (document.querySelector('.cards__list').children) {
+    let filtredArticles = articlesArray.filter(
+      article => article.published_date === selectedDate
+    );
+    console.log(filtredArticles);
+    return filtredArticles;
+  }
+}
+
+function renderFiltredMarkup(filtredArticles) {
+  
 }
 
 export default requestDate;
