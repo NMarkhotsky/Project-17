@@ -18,17 +18,22 @@
     </nav>
 
     <form class="form">
-      <input class="form__input" placeholder="Search |" type="text">
+      <div class="input__wrap">
+      <input class="form__input" placeholder="Search |" type="text" />
+      <svg class="search__input__icon" width="20" height="19">
+        <use href="./img/symbol-defs.svg#icon-search"></use>
+      </svg>
+    </div>
     </form>
 
-    <div class="switch">
+    <!-- <div class="switch">
       <p class="switch__name">Light</p>
       <label class="switch">
         <input type="checkbox">
         <span class="slider round"></span>
       </label>
       <p class="switch__name">Dark</p>
-    </div>
+    </div> -->
 
   </div>
 </header>

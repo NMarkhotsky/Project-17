@@ -6,7 +6,7 @@
 
 .header__container {
     display: flex;
-    align-items: center;
+    align-items: baseline;
 }
 
 .logo {
@@ -36,8 +36,27 @@
     color: $dark-text-color;
 }
 
+.menu__link--current {
+    position: relative;
+
+    &::after {
+        content: " ";
+        position: absolute;
+        bottom: -7px;
+        left: -2px;
+        display: inline-block;
+        width: 110%;
+        height: 0px;
+        border: 1px solid #4440F7;
+    }
+}
+
 .form {
     margin-right: 147px;
+}
+
+.input__wrap {
+    position: relative;
 }
 
 .form__input {
@@ -45,12 +64,26 @@
     height: 31px;
     border: 1px solid #111321;
     border-radius: 20px;
-}
-
-.switch__name {
+    padding-left: 48px;
     font-family: 'Poppins';
     font-weight: 400;
-    font-size: 18px;
-    line-height: 1.33;
-    color: #5F6775;
+    font-size: 14px;
+    line-height: 1.71;
+    letter-spacing: 0.02em;
+    color: #111321;
 }
+
+.search__input__icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 12px;
+}
+
+// .switch__name {
+//     font-family: 'Poppins';
+//     font-weight: 400;
+//     font-size: 18px;
+//     line-height: 1.33;
+//     color: #5F6775;
+// }
