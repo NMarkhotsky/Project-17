@@ -1,12 +1,20 @@
 import axios from 'axios';
+import NewsApi from '../scripts/API/newsAPI';
+const newsApi = new NewsApi();
+import _ from 'lodash';
+import { newsAdapter, createMarkupForCard} from './card-item';
+import formatedDate from './API/fetchAPI';
 
+const refs = {
+  cardList: document.querySelector('.cards__list'),
+};
 const dropdownBtn = document.querySelector(".category_btn");
 const dropdownMenu = document.querySelector(".category_dropdown");
 const toggleArrow = document.querySelector(".svg-icon");
-const categoryContainer = document.querySelector(".category")
+const categoryContainer = document.querySelector(".category");
+const notDropdownBtnContainer = document.querySelector('.category_notdropdownbtn_container');
 const body = document.querySelector('body');
-
-
+const nonDropdownBtn = document.querySelectorAll('.category_nondropdown_btn')
 const toggleDropdown = function () {
   dropdownMenu.classList.toggle("show");
   toggleArrow.classList.toggle("arrow");
@@ -17,110 +25,140 @@ dropdownBtn.addEventListener("click", function (e) {
   toggleDropdown();
 });
 
-window.addEventListener('load', getInformation);
-const apiKey = 'u4NcxmWo2uFBK0OuatwBNClB29lN33d8';
+window.addEventListener('load', getSectionList);
+window.addEventListener('resize', _.debounce(() => {
+    getSectionList()
+}, 1000))
 
 
-function getInformation(e) {
-    const response = axios.get(`https://api.nytimes.com/svc/news/v3/content/section-list.json?api-key=${apiKey}`)
-        .then(({ data }) => {
-            const dataObjects = data.results;
-            const categoriesAll = dataObjects.map(dataObject => dataObject.display_name);
-
-            const categoriesForLaptopBtn = dataObjects.reduce((acc,dataObject) => {
-                if (dataObjects.indexOf(dataObject) <= 3) {
-                    acc.push(dataObject.display_name)
+async function getSectionList(e) {
+  try {
+      const results = await newsApi.fetchSectionList();
+    const categoriesAll = results.map(({section, display_name }) => {
+     return display_name
+    });
+      const categoriesForLaptopBtn = results.reduce((acc,result) => {
+                if (results.indexOf(result) <= 3) {
+                    acc.push(result.display_name)
                 }
                 return acc;
-            }, []);
+      }, []);
 
-            const categoriesForDesktopBtn = dataObjects.reduce((acc,dataObject) => {
-                if (dataObjects.indexOf(dataObject) <= 5) {
-                    acc.push(dataObject.display_name)
+
+      const categoriesForDesktopBtn = results.reduce((acc,result) => {
+                if (results.indexOf(result) <= 5) {
+                    acc.push(result.display_name)
                 }
                 return acc;
-            }, []);
+      }, []);
+      
 
-            const categoriesForLaptopList = dataObjects.reduce((acc,dataObject) => {
-                if (dataObjects.indexOf(dataObject) > 3) {
-                    acc.push(dataObject.display_name)
+      const categoriesForLaptopList = results.reduce((acc,result) => {
+                if (results.indexOf(result) > 3) {
+                    acc.push(result.display_name)
                 }
                 return acc;
-            }, []);
-
-             const categoriesForDesktopList = dataObjects.reduce((acc,dataObject) => {
-                if (dataObjects.indexOf(dataObject) > 5) {
-                    acc.push(dataObject.display_name)
+      }, []);
+      
+      const categoriesForDesktopList = results.reduce((acc,result) => {
+                if (results.indexOf(result) > 5) {
+                    acc.push(result.display_name)
                 }
                 return acc;
-            }, []);
-            if (body.clientWidth <= 320) {
+      }, []);
+      
+      if (body.clientWidth <= 320) {
+            dropdownBtn.firstChild.textContent = 'Categories';       
             const markup = categoriesAll.reduce((acc, category) => {
                 return acc += createMarkup(category);
             }, '');
-            return markup;
-            }
-            else if (body.clientWidth > 320 & body.clientWidth <= 768) {
-                const markupBtn = categoriesForLaptopBtn.reduce((acc, category) => {
+          notDropdownBtnContainer.innerHTML = '';
+          addMarkup(markup);
+      }
+      else if (body.clientWidth > 320 & body.clientWidth <= 768) {
+          dropdownBtn.firstChild.textContent = 'Others';
+          const markupBtn = categoriesForLaptopBtn.reduce((acc, category) => {
                        return acc += createButtons(category);
                 }, '');
+                addButtons(markupBtn);
 
                 const markupList = categoriesForLaptopList.reduce((acc, category) => {
                         return acc += createMarkup(category);
                 }, '');
 
-                const markup = [markupBtn, markupList];
-                return markup;
-            } else {
-                 const markupBtn = categoriesForDesktopBtn.reduce((acc, category) => {
+                addMarkup(markupList);
+      }
+      else {
+                    dropdownBtn.firstChild.textContent = 'Others';       
+          const markupBtn = categoriesForDesktopBtn.reduce((acc, category) => {
                        return acc += createButtons(category);
                 }, '');
-
+                                    addButtons(markupBtn);
                 const markupList = categoriesForDesktopList.reduce((acc, category) => {
                         return acc += createMarkup(category);
                 }, '');
-
-                const markup = [markupBtn, markupList];
-                return markup;
-           }
-        })
-        .then(markup => {
-            if (markup.length === 2) {
-                 addButtons(markup[0]);
-                addMarkup(markup[1]);
-                dropdownBtn.firstChild.textContent='Others'
-            } else {
-                addMarkup(markup);
-
-            }
-        })
-};
+                          addMarkup(markupList);
+      }
+      
+      
+  } catch (error) {
+  }
+}
 
 function createMarkup(category) {
-       return `<a class="dropdown-item" href="#">${category}</a>`
+       return `<a class="category_dropdown_item" href="#">${category}</a>`
 }
     
 function createButtons(category) {
-    return `<button href="#">${category}</button>`
+    return `<button class="category_btn category_nondropdown_btn" href="#">${category}</button>`
 }
-
 
 function addMarkup(markup) {
     dropdownMenu.innerHTML = `${markup}`
 }
 
-dropdownMenu.addEventListener('click', getNewsByCategory);
-
-function getNewsByCategory(e) {
-    const queryByCategory = e.target.textContent.toLowerCase();
-    dropdownBtn.firstChild.textContent = e.target.textContent;
-    const response = axios.get(`https://api.nytimes.com/svc/news/v3/content/nyt/${queryByCategory}.json?api-key=${apiKey}
-`);
-    dropdownMenu.classList.toggle("show");
-      toggleArrow.classList.toggle("arrow");
-}
-
-
 function addButtons(markup) {
-   categoryContainer.insertAdjacentHTML('afterbegin', markup)
+    notDropdownBtnContainer.innerHTML = `${markup}`
 }
+
+dropdownMenu.addEventListener('click', onCategoryClick);
+notDropdownBtnContainer.addEventListener('click', onClick);
+
+async function onClick(e) {
+    try {
+        dropdownBtn.classList.add('category_btn-active');
+        newsApi.searchSection = e.target.textContent.toLowerCase();
+        newsApi.fetchOnSection().then(data => {
+            console.log(data);
+            const list = data.results.map(item => createMarkupForCard(newsAdapter(item)))
+    .join('');
+
+  refs.cardList.innerHTML = list;
+});
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+async function onCategoryClick(e) {
+    try {
+    dropdownBtn.firstChild.textContent = e.target.textContent; 
+    dropdownMenu.classList.toggle("show");
+        toggleArrow.classList.toggle("arrow");
+        dropdownBtn.classList.add('category_btn-active');
+        console.log(dropdownBtn.firstChild)
+        newsApi.searchSection = e.target.textContent.toLowerCase();
+        newsApi.fetchOnSection().then(data => {
+            const list = data.results.map(item => createMarkupForCard(newsAdapter(item)))
+    .join('');
+
+  refs.cardList.innerHTML = list;
+});
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+

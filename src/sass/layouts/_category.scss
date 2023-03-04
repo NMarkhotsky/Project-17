@@ -4,6 +4,12 @@
     flex-wrap: nowrap;
     gap: 10px;
 }
+.category_notdropdownbtn_container {
+display: flex;
+flex-direction: row;
+flex-wrap: nowrap;
+gap: 14px;
+}
 
 .category-container {
     display: flex;
@@ -15,16 +21,20 @@
 }
 
 .category_btn {
-    background-color: white;
+    background-color: transparent;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     gap: 10px;
     padding: 8px 21px;
     cursor: pointer;
     border-radius: 20px;
     border: 1px solid #4440F7;
     position: relative;
+}
+
+.category_nondropdown_btn {
+    max-width: 112px;
 }
 
 .category_dropdown {
