@@ -117,8 +117,11 @@ function occurrence(arr) {
 async function onClickWeatherBtn() {
   let tempsWeatherImgKod = [];
   let tempsOnDay = [];
-
+  let arreyData = [];
+  let fullDays = [];
+  
   clearWeather();
+
   await axios
     .get(URL_WEATHER_WEEK, {
       params: {
@@ -131,8 +134,7 @@ async function onClickWeatherBtn() {
     .then(response => response)
     .then(data => {
       dataHits = data.data;
-      let arreyData = dataHits.list;
-      let fullDays = [];
+      arreyData = dataHits.list;      
       weatherContainer.insertAdjacentHTML(
         'beforeend',
         `<div class="weather_UI_week">
@@ -144,12 +146,12 @@ async function onClickWeatherBtn() {
       );
       const weatherConteinerOneDay =
         document.querySelector('.weather_info_week');
-      arreyData.forEach(element => {
-        dayAndTime = element.dt_txt.split(' ');
-        fullDays.push(dayAndTime[0]);
-      });
-      days = Array.from(new Set(fullDays));
-      days.forEach(el => {
+        arreyData.forEach(element => {
+          dayAndTime = element.dt_txt.split(' ');
+          fullDays.push(dayAndTime[0]);
+        });
+        days = Array.from(new Set(fullDays));
+        days.forEach(el => {
         tempsOnDay = [];
         tempsWeatherImgKod = [];
         arreyData.forEach(element => {
