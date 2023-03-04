@@ -1,8 +1,3 @@
-// const refs = {
-//   form: document.querySelector('.form'),
-//   input: document.querySelector('.form__input'),
-// };
-
 import NewsApi from './API/newsAPI';
 import formatedDate from './API/fetchAPI';
 
@@ -12,11 +7,7 @@ const refs = {
   list: document.querySelector('.cards__list'),
 };
 
-// refs.form.addEventListener('submit', onSubmit);
-
-// function onSubmit(e) {
-//   e.preventDefault();
-// }
+refs.form.addEventListener('submit', onSubmit);
 
 (() => {
   const refs = {
