@@ -10,12 +10,37 @@ export default class NewsApi {
     this.searchSection = '';
     // Для пошуку за введеним пошуковим значенням
     this.searchQuery = '';
+    this.begin_date = '';
+    this.end_date = '';
     // Для пагінації за пошуковим словом
     this.page = 0;
     // Для пагінації
     this.offset = 0;
     // Періоди популярних новин за 1, 7 або 30 днів
     this.period = 1;
+
+    this.total = 0;
+  }
+
+  incrementPage() {
+    return (this.page += 1);
+  }
+
+  dercementPage() {
+    return (this.page -= 1);
+  }
+
+  resetPage() {
+    this.page = 0;
+  }
+
+  getTotal(newTotal) {
+    console.log('newTotal: ', newTotal);
+    return (this.total = newTotal);
+  }
+
+  resetTotal() {
+    return (this.total = 0);
   }
 
   //* Функція запиту категорій
@@ -50,7 +75,7 @@ export default class NewsApi {
     const {
       data: { response },
     } = await axios.get(
-      `${BASE_URL}/search/v2/articlesearch.json?q=${this.searchQuery}&page=${this.page}&${KEY}`
+      `${BASE_URL}/search/v2/articlesearch.json?q=${this.searchQuery}&offset=${this.offset}&page=${this.page}&${KEY}`
     );
     // console.log(response);
     return response;
