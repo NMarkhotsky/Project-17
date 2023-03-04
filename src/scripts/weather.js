@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const URL_WEATHER_TODAY = 'https://api.openweathermap.org/data/2.5/weather';
 const URL_WEATHER_WEEK = 'https://api.openweathermap.org/data/2.5/forecast';
+const weatherIconSvg = new URL('../img/symbol-defs.svg', import.meta.url);
 
 let weatherDayNow = '';
 let weatherDayOfWeek = '';
@@ -76,7 +77,14 @@ async function axiosRequest(latPosition, lonPosition) {
                     <p class="weather_state">${
                       dataHits.weather[0].description
                     }</p>
-                    <p class="weather_city">${dataHits.name}</p>
+                    <div class="weather_geoPosition">
+                      <svg class="weather_svg">
+                        <use href="${weatherIconSvg}#icon-location"></use>
+                      <svg>
+                      <p class="weather_city">${dataHits.name}</p>
+                    </div>
+
+                    
                 </div>
             </div>
             <img class="weather_img" src="https://openweathermap.org/img/wn/${
@@ -94,11 +102,6 @@ async function axiosRequest(latPosition, lonPosition) {
       btnEl.addEventListener('click', onClickWeatherBtn);
     })
     .catch(error => error);
-}
-
-function oneStringToArr(str) {
-  // return str.trim().split(' ');
-  return str.split(' ');
 }
 
 //  функция поиска элемента в массиве, с наибольшим вхождением
@@ -142,8 +145,7 @@ async function onClickWeatherBtn() {
       const weatherConteinerOneDay =
         document.querySelector('.weather_info_week');
       arreyData.forEach(element => {
-        dayAndTime = oneStringToArr(element.dt_txt);
-        // fullDays.push(...oneStringToArr(dayAndTime[0]));
+        dayAndTime = element.dt_txt.split(' ');
         fullDays.push(dayAndTime[0]);
       });
       days = Array.from(new Set(fullDays));
@@ -151,7 +153,7 @@ async function onClickWeatherBtn() {
         tempsOnDay = [];
         tempsWeatherImgKod = [];
         arreyData.forEach(element => {
-          if (oneStringToArr(element.dt_txt)[0] === el) {
+          if (element.dt_txt.split(' ')[0] === el) {
             tempsOnDay.push(element.main.temp);
             tempsWeatherImgKod.push(element.weather[0].icon);
           }
@@ -208,4 +210,3 @@ function clearWeather() {
 
 // Запуск Геолокации
 getCoordinat();
-
