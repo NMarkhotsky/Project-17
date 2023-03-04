@@ -44,9 +44,8 @@ $cart_item_height_mobile: 630px;
   position: absolute;
   bottom: 12px;
   right: 8px;
-  padding: 4px 8px;
+  padding: 6px 12px;
 
-  width: 126px;
   height: 28px;
   font-family: $basic-font;
   font-weight: 500;
@@ -56,11 +55,16 @@ $cart_item_height_mobile: 630px;
   border: none;
   border-radius: 20px;
   @include tablet {
-    width: 168px;
     right: 12px;
   }
   @include desktop {
     right: 12px;
+  }
+
+  .button__icon-svg {
+    width: 18px;
+    height: 16px;
+    margin-left: 5px;
   }
 }
 .card_item-title {
@@ -73,6 +77,10 @@ $cart_item_height_mobile: 630px;
   font-size: 24px;
   line-height: 1.38;
   letter-spacing: -0.01em;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .card_item-description {
@@ -84,6 +92,9 @@ $cart_item_height_mobile: 630px;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.36;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
