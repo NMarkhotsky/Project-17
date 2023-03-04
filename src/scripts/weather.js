@@ -80,11 +80,9 @@ async function axiosRequest(latPosition, lonPosition) {
                     <div class="weather_geoPosition">
                       <svg class="weather_svg">
                         <use href="${weatherIconSvg}#icon-location"></use>
-                      <svg>
+                      </svg>
                       <p class="weather_city">${dataHits.name}</p>
                     </div>
-
-                    
                 </div>
             </div>
             <img class="weather_img" src="https://openweathermap.org/img/wn/${
@@ -117,7 +115,7 @@ function occurrence(arr) {
 async function onClickWeatherBtn() {
   let tempsWeatherImgKod = [];
   let tempsOnDay = [];
-  let arreyData = [];
+  let arrayData = [];
   let fullDays = [];
   
   clearWeather();
@@ -132,9 +130,12 @@ async function onClickWeatherBtn() {
       },
     })
     .then(response => response)
+    console.log(response)
     .then(data => {
       dataHits = data.data;
-      arreyData = dataHits.list;      
+      // console.log(dataHits);
+      arrayData = dataHits.list;  
+      console.log(arrayData);
       weatherContainer.insertAdjacentHTML(
         'beforeend',
         `<div class="weather_UI_week">
@@ -146,7 +147,8 @@ async function onClickWeatherBtn() {
       );
       const weatherConteinerOneDay =
         document.querySelector('.weather_info_week');
-        arreyData.forEach(element => {
+      // console.log(arrayData);
+        arrayData.forEach(element => {
           dayAndTime = element.dt_txt.split(' ');
           fullDays.push(dayAndTime[0]);
         });
@@ -154,7 +156,7 @@ async function onClickWeatherBtn() {
         days.forEach(el => {
         tempsOnDay = [];
         tempsWeatherImgKod = [];
-        arreyData.forEach(element => {
+        arrayData.forEach(element => {
           if (element.dt_txt.split(' ')[0] === el) {
             tempsOnDay.push(element.main.temp);
             tempsWeatherImgKod.push(element.weather[0].icon);
