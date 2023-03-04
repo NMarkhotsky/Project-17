@@ -17,22 +17,22 @@
         <label class="calendar__label" for="input-datepicker"
           >Search date news</label
         >
-        <div class="calendar-input flatpickr" id="flatpickr">
+        <div class="calendar__input flatpickr" id="flatpickr">
           <input
-            class="calendar-input__input flatpickr-input"
+            class="flatpickr-input"
             type="text"
             id="input-flatpickr"
             placeholder="Select a date"
             data-input
           />
           <button
-            class="calendar-input__button calendar-input__button--left"
+            class="calendar__button calendar__button--left"
             type="button"
             title="toggle"
             data-toggle
           >
             <svg
-              class="calendar__icon calendar__icon--left"
+              class="calendar__icon"
               width="17"
               height="17"
             >
@@ -40,18 +40,31 @@
             </svg>
           </button>
           <button
-            class="calendar-input__button calendar-input__button--right"
+            class="calendar__button calendar__button--right arrow-down"
             type="button"
-            title="toggle"
-            data-toggle
+            title="open"
+            data-open
           >
             <svg
-              class="calendar__icon calendar__icon--right"
+              class="calendar__icon"
               width="9"
               height="15"
-              data-toggle
             >
               <use href="./img/symbol-defs.svg#icon-arrow-down"></use>
+            </svg>
+          </button>
+          <button
+            class="calendar__button calendar__button--right arrow-up is-hidden"
+            type="button"
+            title="close"
+            data-close
+          >
+            <svg
+              class="calendar__icon"
+              width="9"
+              height="15"
+            >
+              <use href="./img/symbol-defs.svg#icon-arrow-up"></use>
             </svg>
           </button>
         </div>
