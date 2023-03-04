@@ -5,6 +5,8 @@ const ARROW_BTN_DOWN = document.querySelector('.arrow-down');
 const ARROW_BTN_UP = document.querySelector('.arrow-up');
 const CALENDAR_ICON = document.querySelector('.calendar__button--left');
 const calendarIconSvg = new URL('../img/symbol-defs.svg', import.meta.url);
+let requestDate;
+let filterDate;
 
 const DATEPICKER_OPTIONS = {
   wrap: true,
@@ -21,6 +23,8 @@ const DATEPICKER_OPTIONS = {
       return date > Date.now();
     },
   ],
+  // altInput: true,
+  // altFormat: 'd/m/Y',
   dateFormat: 'd/m/Y',
   // positionElement: document.querySelector(".calendar-input"),
   position: 'below right',
@@ -28,14 +32,19 @@ const DATEPICKER_OPTIONS = {
   onOpen() {
     changeBtnStyles();
   },
-  onClose(dateStr) {
+  onClose(dateObj) {
     changeBtnStyles();
-    console.log(dateStr);
-    return dateStr;
+    if (dateObj) {
+    formatFilterDate(dateObj);
+    filterByDate(filterDate, articlesArray);
+    formatRequestDate(dateObj);
+    }
+    console.log(requestDate);
+    return requestDate;
   },
 };
 
-const DATEPICKER = flatpickr('#flatpickr', DATEPICKER_OPTIONS);
+const FP = flatpickr('#flatpickr', DATEPICKER_OPTIONS);
 
 function changeBtnStyles() {
   FLATPICKR_INPUT.classList.toggle('is-clicked');
@@ -44,14 +53,41 @@ function changeBtnStyles() {
   CALENDAR_ICON.classList.toggle('is-clicked');
 }
 
-// function createYearInputStyles() {
-//   document.querySelector("arrow-up").innerHTML
-// }
+// array for test
+let articlesArray = [
+  { name: 'article 1', published_date: '2023-03-01' },
+  { name: 'article 2', published_date: '2022-03-04' },
+  { name: 'article 3', published_date: '2020-07-01' },
+];
+function filterByDate(selectedDate, articlesArray) {
+  if (document.querySelector('.cards__list').children) {
+    let filtredArticles = articlesArray.filter(
+      article => article.published_date === selectedDate
+    );
+    console.log(filtredArticles);
+    return filtredArticles;
+  }
+}
 
-// let articlesArray = [{ name: 'article 1', published_date: "2023-03-04" }, { name: 'article 2', published_date: "2022-03-04" }, { name: 'article 3', published_date: "2020 -07-01" }];
-// let date = "2023-03-04";
-// function filterByDate(date, articlesArray) {
-//   let filtredArticles = articlesArray.filter(article => article.published_date === date);
-//   console.log (filtredArticles)
-// }
-// filterByDate(date, articlesArray)()
+function formatRequestDate(dateObj) {
+  date = new Date(dateObj);
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  requestDate = `${year}${month}${day}`;
+  return requestDate;
+}
+
+function formatFilterDate(dateObj) {
+  date = new Date(dateObj);
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  filterDate = `${year}-${month}-${day}`;
+  // console.log('filter', filterDate);
+  return filterDate;
+}
+
+export default requestDate;
+// import requestDate from '../calendar';
+// console.log (requestDate);
