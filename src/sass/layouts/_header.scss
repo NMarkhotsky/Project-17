@@ -12,10 +12,55 @@
 .logo {
     font-family: $basic-font;
     font-weight: 700;
-    font-size: 42px;
-    line-height: 1.36;
+    font-size: 24px;
+    line-height: 1.38;
     color: $dark-text-color;
-    margin-right: 102px;
+    margin-right: 167px;
+    @include tablet {
+        font-size: 32px;
+        margin-right: 48px;
+    }
+
+    @include desktop {
+        font-size: 42px;
+        line-height: 1.36;
+        margin-right: 102px;
+    }
+}
+
+.menu__desktop {
+    @media screen and (max-width: 767px) {
+        display: none;
+    }
+}
+
+.menu-close-btn {
+    display: block;
+    margin-left: auto;
+    background-color: transparent;
+    border: none;
+    z-index: 3;
+
+    @include tablet {
+            display: none;
+    }
+}
+
+.icon-menu {
+    fill: #111321;
+}
+
+.menu-close-btn .icon-close {
+    display: none;
+
+}
+
+.menu-close-btn.is-open .icon-close {
+    display: block;
+}
+
+.menu-close-btn.is-open .icon-open {
+    display: none;
 }
 
 .navigation {

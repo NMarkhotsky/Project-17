@@ -3,28 +3,39 @@
 
     <a class="logo link" href="./index.html">News</a>
 
-    <nav class="navigation">
-      <ul class="menu list">
-        <li class="menu__item">
-          <a class="menu__link link menu__link--current" href="./index.html">Home</a>
-        </li>
-        <li class="menu__item">
-          <a class="menu__link link" href="#">Favorite</a>
-        </li>
-        <li class="menu__item">
-          <a class="menu__link link" href="#">Read</a>
-        </li>
-      </ul>
-    </nav>
+<div class="menu__desktop">
+  <nav class="navigation">
+    <ul class="menu list">
+      <li class="menu__item">
+        <a class="menu__link link menu__link--current" href="./index.html">Home</a>
+      </li>
+      <li class="menu__item">
+        <a class="menu__link link" href="#">Favorite</a>
+      </li>
+      <li class="menu__item">
+        <a class="menu__link link" href="#">Read</a>
+      </li>
+    </ul>
+  </nav>
+</div>
 
-    <form class="form">
+  
+
+    <!-- <form class="form">
       <div class="input__wrap">
       <input class="form__input" placeholder="Search |" type="text" />
       <svg class="search__input__icon" width="20" height="19">
         <use href="./img/symbol-defs.svg#icon-search"></use>
       </svg>
     </div>
-    </form>
+    </form> -->
+
+    <button type="button" class="menu-close-btn" data-menu-button>
+      <svg class="menu__icon-close" aria-label="перемикач меню" width="24" height="24">
+        <use class="icon-close" href="./img/symbol-defs.svg#icon-close"></use>
+        <use class="icon-menu" href="./img/symbol-defs.svg#icon-menu"></use>
+      </svg>
+    </button>
 
     <!-- <div class="switch">
       <p class="switch__name">Light</p>
