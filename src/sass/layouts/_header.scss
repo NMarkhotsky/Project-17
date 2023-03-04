@@ -58,22 +58,31 @@
     height: 100%;
     // padding-top: 24px;
     // padding-bottom: 18px;
+    transform: translateY(0%);
+    transition: transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mob-menu.is-hidden {
+    transform: translateY(-100%);
+    transition: transform 300ms linear;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(0%) linear(0.3) opacity(0.3);
 }
 
 .mob-menu-top {
     display: flex;
-    align-items: baseline;
     margin-bottom: 68px;
 }
 
 .menu-close-btn {
-    width: 24px;
-    height: 24px;
-    margin-left: auto;
-    border: none;
-    background-color: transparent;
-    // cursor: pointer;
     display: block;
+    margin-left: auto;
+    margin-right: 16px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 }
 
 .mob-menu-list {
@@ -81,10 +90,6 @@
     flex-direction: column;
     gap: 24px;
 }
-
-// .mob-menu__item{
-//     align-items: center;
-// }
 
 .mob-menu__link {
     font-family: 'Manrope';
@@ -101,7 +106,7 @@
 }
 
 .menu-container {
-    // padding-left: 40px;
+    padding-left: 16px;
     padding-top: 24px;
     height: 100%;
     display: flex;
@@ -109,14 +114,13 @@
     overflow: auto;
 }
 
-.navigation {
-    margin-right: 147px;
-}
-
 .menu {
     display: flex;
-    gap: 69px;
+    gap: 44px;
     align-items: center;
+    @include desktop {
+        gap: 69px;
+    }
 }
 
 .menu__link {
@@ -143,7 +147,21 @@
 }
 
 .form {
-    margin-right: 147px;
+    @media screen and (max-width: 767px) {
+        display: none;
+    }
+
+    @include tablet {
+        margin-left: 32px;
+        margin-right: 24px;
+    }
+
+    @include desktop {
+        margin-right: 147px;
+        margin-left: 147px;
+        
+    }
+    
 }
 
 .input__wrap {
@@ -151,7 +169,7 @@
 }
 
 .form__input {
-    width: 288px;
+    width: 213px;
     height: 31px;
     border: 1px solid #111321;
     border-radius: 20px;
@@ -162,6 +180,9 @@
     line-height: 1.71;
     letter-spacing: 0.02em;
     color: #111321;
+    @include desktop {
+        width: 288px;
+    }
 }
 
 .search__input__icon {
@@ -171,10 +192,3 @@
     left: 12px;
 }
 
-// .switch__name {
-//     font-family: 'Poppins';
-//     font-weight: 400;
-//     font-size: 18px;
-//     line-height: 1.33;
-//     color: #5F6775;
-// }
