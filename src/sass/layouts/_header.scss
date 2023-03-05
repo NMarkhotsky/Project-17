@@ -12,7 +12,9 @@
 
 .header__container {
   display: flex;
-  align-items: baseline;
+  align-items: center;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
 .logo {
@@ -21,7 +23,8 @@
   font-size: 24px;
   line-height: 1.38;
   color: $dark-text-color;
-  margin-right: 167px;
+  margin-right: 14px;
+
   @include tablet {
     font-size: 32px;
     margin-right: 48px;
@@ -75,6 +78,7 @@
 .mob-menu-top {
   display: flex;
   margin-bottom: 68px;
+  padding-top: 24px;
 }
 
 .menu-close-btn {
@@ -100,15 +104,31 @@
   color: $dark-text-color;
   display: flex;
   align-items: center;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 16px;
+  &:hover {
+    background-color: $accent-color;
+    color: #F4F4F4;
+  }
 }
 
 .mob-menu__icon {
   margin-right: 14px;
+  stroke: $light-bg-color;
+}
+
+.mob-menu__icon__right {
+  display: block;
+  margin-left: auto;
+  margin-right: 20px;
+  fill: $light-bg-color;
+  
 }
 
 .menu-container {
-  padding-left: 16px;
-  padding-top: 24px;
+  // padding-left: 16px;
+  // padding-top: 24px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -127,9 +147,14 @@
 .menu__link {
   font-family: $basic-font;
   font-weight: 700;
-  font-size: 18px;
-  line-height: 1.39;
+  font-size: 16px;
+  line-height: 1.38;
   color: $dark-text-color;
+
+  @include desktop {
+    font-size: 18px;
+    line-height: 1.39;
+  }
 }
 
 .menu__link--current {
@@ -148,13 +173,10 @@
 }
 
 .form {
-  @media screen and (max-width: 767px) {
-    display: none;
-  }
-
+  
   @include tablet {
     margin-left: 32px;
-    margin-right: 24px;
+    // margin-right: 24px;
   }
 
   @include desktop {
@@ -168,17 +190,27 @@
 }
 
 .form__input {
-  width: 213px;
-  height: 31px;
-  border: 1px solid #111321;
-  border-radius: 20px;
-  padding-left: 48px;
-  font-family: 'Poppins';
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 1.71;
-  letter-spacing: 0.02em;
-  color: #111321;
+  @include mobile {
+    height: 31px;
+    visibility: hidden;
+    width: 0;
+    border: 1px solid #111321;
+    border-radius: 20px;
+    padding-left: 48px;
+    font-family: 'Poppins';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.71;
+    letter-spacing: 0.02em;
+    color: #111321;
+    background-color: transparent;
+  }
+
+  @include tablet {
+    width: 213px;
+    visibility: visible;
+  }
+
   @include desktop {
     width: 288px;
   }
@@ -189,4 +221,11 @@
   top: 50%;
   transform: translateY(-50%);
   left: 12px;
+}
+
+.input__open {
+  @include mobile {
+    width: 173px;
+    visibility: visible;
+  }
 }

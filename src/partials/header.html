@@ -29,11 +29,6 @@
       </div>
     </form>
 
-    <button type="button" class="menu-open-btn" data-menu-open>
-      <svg class="menu-open-icon" width="24" height="24">
-        <use class="icon-menu" href="./img/symbol-defs.svg#icon-menu"></use>
-      </svg>
-    </button>
     <div class="theme">
       <svg class="theme__svg sun" width="21" height="21">
         <use href="./img/symbol-defs.svg#icon-theme-light"></use>
@@ -48,6 +43,13 @@
         <use href="./img/symbol-defs.svg#icon-theme-dark"></use>
       </svg>
     </div>
+
+    <button type="button" class="menu-open-btn" data-menu-open>
+      <svg class="menu-open-icon" width="24" height="24">
+        <use class="icon-menu" href="./img/symbol-defs.svg#icon-menu"></use>
+      </svg>
+    </button>
+    
   </div>
   <div class="mob-menu is-hidden" data-menu>
     <div class="menu-container container">
@@ -62,28 +64,32 @@
       <div>
         <ul class="mob-menu-list list">
           <li class="mob-menu__item">
-            <a
-              class="mob-menu__link link mob-menu__link--current"
-              href="./index.html"
-            >
+            <a class="mob-menu__link link mob-menu__link--current"
+              href="./index.html">
               <svg class="mob-menu__icon home" width="32" height="32">
-                <use href="./img/symbol-defs.svg#icon-home"></use></svg
-              >Home</a
-            >
+                <use href="./img/symbol-defs.svg#icon-home"></use></svg>Home
+              <svg class="mob-menu__icon__right" width="9" height="12">
+                <use href="./img/symbol-defs.svg#icon-chevron-right"></use>
+              </svg>
+            </a>
           </li>
           <li class="mob-menu__item">
             <a class="mob-menu__link link" href="#">
               <svg class="mob-menu__icon favorite" width="32" height="32">
-                <use href="./img/symbol-defs.svg#icon-favorite"></use></svg
-              >Favorite</a
-            >
+                <use href="./img/symbol-defs.svg#icon-favorite"></use></svg>Favorite
+              <svg class="mob-menu__icon__right" width="9" height="12">
+                <use href="./img/symbol-defs.svg#icon-chevron-right"></use>
+              </svg>
+            </a>
           </li>
           <li class="mob-menu__item">
             <a class="mob-menu__link link" href="#">
               <svg class="mob-menu__icon read" width="32" height="32">
-                <use href="./img/symbol-defs.svg#icon-read"></use></svg
-              >Read</a
-            >
+                <use href="./img/symbol-defs.svg#icon-read"></use></svg>Read
+              <svg class="mob-menu__icon__right" width="9" height="12">
+                <use href="./img/symbol-defs.svg#icon-chevron-right"></use>
+              </svg>
+            </a>
           </li>
         </ul>
       </div>
