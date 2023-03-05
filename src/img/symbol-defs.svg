@@ -51,5 +51,8 @@
     <symbol id="icon-location" viewBox="0 0 32 32">
       <path fill="#fff" d="M16 2A11.018 11.018 0 0 0 5 13a10.892 10.892 0 0 0 2.216 6.6s.3.395.349.452L16 30l8.439-9.953c.044-.053.345-.447.345-.447l.001-.003A10.89 10.89 0 0 0 27 13 11.018 11.018 0 0 0 16 2zm0 15a4.004 4.004 0 0 1-3.695-2.469A4 4 0 1 1 20 13a4.004 4.004 0 0 1-4 4z" style="fill:var(--color1, #fff)"/>
     </symbol>
+    <symbol id="icon-chevron-right" viewBox="0 0 18 32">
+      <path fill="none" stroke="#f4f4f4" stroke-width="4.5714" stroke-miterlimit="4" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--color1, #f4f4f4)" d="M2.286 29.714l13.714-13.714-13.714-13.714"></path>
+    </symbol>
   </defs>
 </svg>

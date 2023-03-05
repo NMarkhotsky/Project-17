@@ -75,6 +75,8 @@
 .mob-menu-top {
   display: flex;
   margin-bottom: 68px;
+  padding-left: 16px;
+  padding-top: 24px;
 }
 
 .menu-close-btn {
@@ -100,15 +102,31 @@
   color: $dark-text-color;
   display: flex;
   align-items: center;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 16px;
+  &:hover {
+    background-color: $accent-color;
+    color: #F4F4F4;
+  }
 }
 
 .mob-menu__icon {
   margin-right: 14px;
+  stroke: $light-bg-color;
+}
+
+.mob-menu__icon__right {
+  display: block;
+  margin-left: auto;
+  margin-right: 20px;
+  fill: $light-bg-color;
+  
 }
 
 .menu-container {
-  padding-left: 16px;
-  padding-top: 24px;
+  // padding-left: 16px;
+  // padding-top: 24px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -179,6 +197,7 @@
   line-height: 1.71;
   letter-spacing: 0.02em;
   color: #111321;
+  background-color: transparent;
   @include desktop {
     width: 288px;
   }
