@@ -132,7 +132,9 @@ async function axiosRequestWeek(latPosition, lonPosition){
   let tempsWeatherImgKod = [];
   let tempsOnDay = [];
   let arrayData = [];
+  let days = [];
   let fullDays = [];
+  let dayAndTime = '';
   await axios
     .get(URL_WEATHER_WEEK, {
       params: {

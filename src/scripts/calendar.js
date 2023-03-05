@@ -1,4 +1,6 @@
 import flatpickr from 'flatpickr';
+import { articlesArray } from './home';
+import { newsAdapter, createMarkupForCard } from './card-item';
 
 const FLATPICKR_INPUT = document.querySelector('.flatpickr-input');
 const ARROW_BTN_DOWN = document.querySelector('.arrow-down');
@@ -30,11 +32,11 @@ const DATEPICKER_OPTIONS = {
     changeBtnStyles();
     if (dateObj) {
       formatFilterDate(dateObj);
-      filterByDate(filterDate, articlesArray);
-      // renderFiltredMarkup(filtredArticles);
+      const filtredArticles = filterByDate(filterDate, articlesArray);
+      // console.log(filtredArticles);
+      renderFiltredMarkup(filtredArticles);
       formatRequestDate(dateObj);
     }
-    console.log(requestDate);
     return requestDate;
   },
 };
@@ -63,30 +65,31 @@ function formatFilterDate(dateObj) {
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const year = date.getFullYear();
   filterDate = `${year}-${month}-${day}`;
-  // console.log('filter', filterDate);
   return filterDate;
 }
 
-// array for test
-let articlesArray = [
-  { name: 'article 1', published_date: '2023-03-01' },
-  { name: 'article 2', published_date: '2022-03-04' },
-  { name: 'article 3', published_date: '2020-07-01' },
-];
-function filterByDate(selectedDate, articlesArray) {
-  if (document.querySelector('.cards__list').children) {
-    let filtredArticles = articlesArray.filter(
-      article => article.published_date === selectedDate
-    );
-    console.log(filtredArticles);
-    return filtredArticles;
-  }
+function filterByDate(filterDate, articlesArray) {
+  const filtredArticles = articlesArray.filter(
+    article => article.published_date === filterDate
+  );
+  console.log(filtredArticles);
+  return filtredArticles;
 }
 
 function renderFiltredMarkup(filtredArticles) {
-  
+  if (filtredArticles.length === 0) {
+    const img = new URL('../img/not-found-desktop.jpg', import.meta.url);
+    const markupWithNotFoundImg = `<img src="${img}" alt="No news found">`;
+    document.querySelector('.cards__list').innerHTML = markupWithNotFoundImg;
+  } else {
+    list = filtredArticles
+      .map(item => createMarkupForCard(newsAdapter(item)))
+      .join('');
+    document.querySelector('.cards__list').innerHTML = list;
+  }
 }
 
-export default requestDate;
-// import requestDate from '../calendar';
+// console.log(requestDate);
+export { requestDate };
+// import { requestDate } from '../calendar';
 // console.log (requestDate);
