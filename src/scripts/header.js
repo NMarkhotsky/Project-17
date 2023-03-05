@@ -14,3 +14,11 @@
     refs.body.classList.toggle('no-scroll');
   }
 })();
+
+
+  let searchIcon = document.querySelector(".search__input__icon");
+  let searchInput = document.querySelector(".form__input");
+
+  searchIcon.addEventListener("click", () => {
+      searchInput.classList.add("input__open");
+  })
