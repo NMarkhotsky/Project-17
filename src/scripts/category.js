@@ -1,7 +1,7 @@
 import axios from 'axios';
 import NewsApi from '../scripts/API/newsAPI';
 const newsApi = new NewsApi();
-import _ from 'lodash';
+import _, { add } from 'lodash';
 // import { newsAdapter, createMarkupForCard} from './card-item';
 import formatedDate from './API/fetchAPI';
 
@@ -11,7 +11,7 @@ const ref = {
 
 const dropdownBtn = document.querySelector(".category_btn");
 const dropdownMenu = document.querySelector(".category_dropdown");
-const toggleArrow = document.querySelector(".svg-icon");
+const toggleArrow = document.querySelector(".category_svg_icon");
 const categoryContainer = document.querySelector(".category");
 const notDropdownBtnContainer = document.querySelector('.category_notdropdownbtn_container');
 const body = document.querySelector('body');
@@ -126,8 +126,11 @@ dropdownMenu.addEventListener('click', onCategoryClick);
 notDropdownBtnContainer.addEventListener('click', onClick);
 
 async function onClick(e) {
-    try {
-        dropdownBtn.classList.add('category_btn-active');
+  try {
+    console.log(e.target);
+    clearActiveBtn();
+    toggleArrow.style.fill = '#4440F7';
+      addActiveBtn(e.target);
         newsApi.searchSection = e.target.textContent.toLowerCase();
         newsApi.fetchOnSection().then(data => {
             const list = data.results.map(item => createMarkupForCard(newsAdapter(item)))
@@ -145,8 +148,10 @@ async function onCategoryClick(e) {
     try {
     dropdownBtn.firstChild.textContent = e.target.textContent; 
     dropdownMenu.classList.toggle("show");
-        toggleArrow.classList.toggle("arrow");
-        dropdownBtn.classList.add('category_btn-active');
+      toggleArrow.classList.toggle("arrow");
+          toggleArrow.style.fill = '#FFFFFF';
+      clearActiveBtn();
+      addActiveBtn(dropdownBtn);
         newsApi.searchSection = e.target.textContent.toLowerCase();
         newsApi.fetchOnSection().then(data => {
             const list = data.results.map(item => createMarkupForCard(newsAdapter(item)))
@@ -264,3 +269,15 @@ export function newsAdapter(item) {
     id,
   };
 }
+
+function clearActiveBtn() {
+  const allBtns = document.querySelectorAll('.category_btn-active');
+  if (allBtns.length !== 0) {
+    allBtns.forEach((btn) => btn.classList.remove('category_btn-active'))
+  }
+}
+
+function addActiveBtn(btn) {
+  btn.classList.add('category_btn-active');
+}
+
