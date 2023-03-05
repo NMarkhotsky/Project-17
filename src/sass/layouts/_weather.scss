@@ -92,7 +92,7 @@
   }
 }
 
-.weather_geoPosition{
+.weather_geoPosition {
   display: flex;
   align-items: center;
   margin: 0;
@@ -101,14 +101,13 @@
   border-radius: 10px;
 }
 
-.weather_svg{
+.weather_svg {
   width: 27px;
-height: 27px;
-margin-right: 8px;
+  height: 27px;
+  margin-right: 8px;
 }
 
 .weather_city {
-  
   font-weight: 400;
   font-size: 14px;
   line-height: 1.14;
