@@ -1,8 +1,21 @@
+.category-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+
+    @include tablet {
+        margin-top: 28px;
+    }
+}
+
 .category {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: 10px;
+
+    @include tablet {
+        gap: 10px;
+    }
 }
 
 .category_notdropdownbtn_container {
@@ -12,16 +25,12 @@
     gap: 14px;
 }
 
-.category-container {
-    display: flex;
-    justify-content: space-between;
-}
-
 .category_dropbtn_container {
     position: relative;
 }
 
 .category_btn {
+    height: 31px;
     background-color: #FFFFFF;
     display: flex;
     align-items: center;

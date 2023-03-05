@@ -1,6 +1,10 @@
 .calendar__wrap {
   position: relative;
-  width: 200px;
+  width: 151px;
+
+  @include tablet {
+    width: 168px;
+  }
   @include desktop {
     width: 395px;
     margin-right: 36px;

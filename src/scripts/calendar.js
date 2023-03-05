@@ -16,13 +16,7 @@ const DATEPICKER_OPTIONS = {
   closeOnSelect: false,
   nextArrow: `<svg class="flatpickr-icon flatpickr-icon--next"><use href="${ICONS_URL}#icon-arrow-up"></use><svg>`,
   prevArrow: `<svg class="flatpickr-icon flatpickr-icon--prev"><use href="${ICONS_URL}#icon-arrow-down"></use><svg>`,
-  disable: [
-    function (date) {
-      return date > Date.now();
-    },
-  ],
   dateFormat: 'd/m/Y',
-  // positionElement: document.querySelector(".calendar-input"),
   position: 'below right',
   monthSelectorType: 'static',
   onOpen() {
@@ -33,7 +27,6 @@ const DATEPICKER_OPTIONS = {
     if (dateObj) {
       formatFilterDate(dateObj);
       const filtredArticles = filterByDate(filterDate, articlesArray);
-      // console.log(filtredArticles);
       renderFiltredMarkup(filtredArticles);
       formatRequestDate(dateObj);
     }
@@ -72,7 +65,6 @@ function filterByDate(filterDate, articlesArray) {
   const filtredArticles = articlesArray.filter(
     article => article.published_date === filterDate
   );
-  console.log(filtredArticles);
   return filtredArticles;
 }
 
