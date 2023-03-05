@@ -140,3 +140,13 @@ const handleFavorite = (newsId, data, btn) => () => {
 
   localStorage.setItem('favorite', JSON.stringify(newFavorite));
 };
+
+
+// let search = document.querySelector(".form");
+// let searchIcon = document.querySelector(".search__input__icon");
+// let searchInput = document.querySelector(".form__input");
+
+// searchIcon.addEventListener("click", () => {
+//     search.classList.add("form__open");
+//     searchInput.focus();
+// })
