@@ -17,6 +17,10 @@ body.dark {
     background-color: $dark-bg-color;
   }
 
+  .moon {
+    fill: $accent-color;
+  }
+
   .form {
     border-color: $light-bg-color;
   }
@@ -44,7 +48,6 @@ body.dark {
 .menu__theme {
   position: absolute;
   bottom: 18px;
-  // left: 16px;
 }
 
 .theme {
@@ -183,8 +186,4 @@ input:checked + .slider:before {
 
 .theme__light {
   color: $accent-color;
-}
-
-.sun {
-  fill: $accent-color;
 }
