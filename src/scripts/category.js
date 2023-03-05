@@ -29,7 +29,7 @@ dropdownBtn.addEventListener("click", function (e) {
 window.addEventListener('load', getSectionList);
 window.addEventListener('resize', _.debounce(() => {
     getSectionList()
-}, 1000))
+}, 300))
 
 
 async function getSectionList(e) {
@@ -68,7 +68,7 @@ async function getSectionList(e) {
                 return acc;
       }, []);
       
-      if (body.clientWidth <= 320) {
+      if (body.clientWidth <= 767) {
             dropdownBtn.firstChild.textContent = 'Categories';       
             const markup = categoriesAll.reduce((acc, category) => {
                 return acc += createMarkup(category);
@@ -76,7 +76,7 @@ async function getSectionList(e) {
           notDropdownBtnContainer.innerHTML = '';
           addMarkup(markup);
       }
-      else if (body.clientWidth > 320 & body.clientWidth <= 768) {
+      else if (body.clientWidth > 767 & body.clientWidth <= 1279) {
           dropdownBtn.firstChild.textContent = 'Others';
           const markupBtn = categoriesForLaptopBtn.reduce((acc, category) => {
                        return acc += createButtons(category);
@@ -131,11 +131,17 @@ async function onClick(e) {
     toggleArrow.style.fill = '#4440F7';
       addActiveBtn(e.target);
         newsApi.searchSection = e.target.textContent.toLowerCase();
-        newsApi.fetchOnSection().then(data => {
-            const list = data.results.map(item => createMarkupForCard(newsAdapter(item)))
-    .join('');
+    newsApi.fetchOnSection().then(data => {
+      if (data.results === null) {
+        const img = new URL('../img/not-found-desktop.jpg', import.meta.url);
+        const markupWithNotFoundImg = `<img src="${img}" alt="We not found news at your request">`;
+        ref.cardList.innerHTML = markupWithNotFoundImg;
+      } else {
+        const list = data.results.map(item => createMarkupForCard(newsAdapter(item)))
+          .join('');
 
-  ref.cardList.innerHTML = list;
+        ref.cardList.innerHTML = list;
+      }
 });
   } catch (error) {
     console.log(error);
@@ -151,12 +157,18 @@ async function onCategoryClick(e) {
           toggleArrow.style.fill = '#FFFFFF';
       clearActiveBtn();
       addActiveBtn(dropdownBtn);
-        newsApi.searchSection = e.target.textContent.toLowerCase();
-        newsApi.fetchOnSection().then(data => {
-            const list = data.results.map(item => createMarkupForCard(newsAdapter(item)))
-    .join('');
+      newsApi.searchSection = e.target.textContent.toLowerCase();
+      newsApi.fetchOnSection().then(data => {
+        if (data.results === null) {
+          const img = new URL('../img/not-found-desktop.jpg', import.meta.url);
+          const markupWithNotFoundImg = `<img src="${img}" alt="We not found news at your request">`;
+          ref.cardList.innerHTML = markupWithNotFoundImg;
+        } else {
+          const list = data.results.map(item => createMarkupForCard(newsAdapter(item)))
+            .join('');
 
-  ref.cardList.innerHTML = list;
+          ref.cardList.innerHTML = list;
+        }
 });
         
   } catch (error) {
