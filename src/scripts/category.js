@@ -49,40 +49,43 @@ async function getSectionList(e) {
       return acc;
     }, []);
 
-    const categoriesForDesktopBtn = results.reduce((acc, result) => {
-      if (results.indexOf(result) <= 5) {
-        acc.push(result.display_name);
-      }
-      return acc;
-    }, []);
 
-    const categoriesForLaptopList = results.reduce((acc, result) => {
-      if (results.indexOf(result) > 3) {
-        acc.push(result.display_name);
-      }
-      return acc;
-    }, []);
+      const categoriesForDesktopBtn = results.reduce((acc,result) => {
+                if (results.indexOf(result) <= 5) {
+                    acc.push(result.display_name)
+                }
+                return acc;
+      }, []);
+      
 
-    const categoriesForDesktopList = results.reduce((acc, result) => {
-      if (results.indexOf(result) > 5) {
-        acc.push(result.display_name);
+      const categoriesForLaptopList = results.reduce((acc,result) => {
+                if (results.indexOf(result) > 3) {
+                    acc.push(result.display_name)
+                }
+                return acc;
+      }, []);
+      
+      const categoriesForDesktopList = results.reduce((acc,result) => {
+                if (results.indexOf(result) > 5) {
+                    acc.push(result.display_name)
+                }
+                return acc;
+      }, []);
+      
+      if (body.clientWidth <= 767) {
+            dropdownBtn.firstChild.textContent = 'Categories';       
+            const markup = categoriesAll.reduce((acc, category) => {
+                return acc += createMarkup(category);
+            }, '');
+          notDropdownBtnContainer.innerHTML = '';
+          addMarkup(markup);
       }
-      return acc;
-    }, []);
-
-    if (body.clientWidth <= 320) {
-      dropdownBtn.firstChild.textContent = 'Categories';
-      const markup = categoriesAll.reduce((acc, category) => {
-        return (acc += createMarkup(category));
-      }, '');
-      notDropdownBtnContainer.innerHTML = '';
-      addMarkup(markup);
-    } else if ((body.clientWidth > 320) & (body.clientWidth <= 768)) {
-      dropdownBtn.firstChild.textContent = 'Others';
-      const markupBtn = categoriesForLaptopBtn.reduce((acc, category) => {
-        return (acc += createButtons(category));
-      }, '');
-      addButtons(markupBtn);
+      else if (body.clientWidth > 767 & body.clientWidth <= 1279) {
+          dropdownBtn.firstChild.textContent = 'Others';
+          const markupBtn = categoriesForLaptopBtn.reduce((acc, category) => {
+                       return acc += createButtons(category);
+                }, '');
+                addButtons(markupBtn);
 
       const markupList = categoriesForLaptopList.reduce((acc, category) => {
         return (acc += createMarkup(category));
@@ -126,36 +129,47 @@ async function onClick(e) {
   try {
     clearActiveBtn();
     toggleArrow.style.fill = '#4440F7';
-    addActiveBtn(e.target);
-    newsApi.searchSection = e.target.textContent.toLowerCase();
+      addActiveBtn(e.target);
+        newsApi.searchSection = e.target.textContent.toLowerCase();
     newsApi.fetchOnSection().then(data => {
-      const list = data.results
-        .map(item => createMarkupForCard(newsAdapter(item)))
-        .join('');
+      if (data.results === null) {
+        const img = new URL('../img/not-found-desktop.jpg', import.meta.url);
+        const markupWithNotFoundImg = `<img src="${img}" alt="We not found news at your request">`;
+        ref.cardList.innerHTML = markupWithNotFoundImg;
+      } else {
+        const list = data.results.map(item => createMarkupForCard(newsAdapter(item)))
+          .join('');
 
-      ref.cardList.innerHTML = list;
-    });
+        ref.cardList.innerHTML = list;
+      }
+});
   } catch (error) {
     console.log(error);
   }
 }
 
 async function onCategoryClick(e) {
-  try {
-    dropdownBtn.firstChild.textContent = e.target.textContent;
-    dropdownMenu.classList.toggle('show');
-    toggleArrow.classList.toggle('arrow');
-    toggleArrow.style.fill = '#FFFFFF';
-    clearActiveBtn();
-    addActiveBtn(dropdownBtn);
-    newsApi.searchSection = e.target.textContent.toLowerCase();
-    newsApi.fetchOnSection().then(data => {
-      const list = data.results
-        .map(item => createMarkupForCard(newsAdapter(item)))
-        .join('');
+    try {
+    dropdownBtn.firstChild.textContent = e.target.textContent; 
+    dropdownMenu.classList.toggle("show");
+      toggleArrow.classList.toggle("arrow");
+          toggleArrow.style.fill = '#FFFFFF';
+      clearActiveBtn();
+      addActiveBtn(dropdownBtn);
+        newsApi.searchSection = e.target.textContent.toLowerCase();
+      newsApi.fetchOnSection().then(data => {
+        if (data.results === null) {
+          const img = new URL('../img/not-found-desktop.jpg', import.meta.url);
+          const markupWithNotFoundImg = `<img src="${img}" alt="We not found news at your request">`;
+          ref.cardList.innerHTML = markupWithNotFoundImg;
+        } else {
+          const list = data.results.map(item => createMarkupForCard(newsAdapter(item)))
+            .join('');
 
-      ref.cardList.innerHTML = list;
-    });
+          ref.cardList.innerHTML = list;
+        }
+});
+        
   } catch (error) {
     console.log(error);
   }
