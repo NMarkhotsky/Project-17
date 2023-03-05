@@ -27,8 +27,18 @@ function getCoordinat() {
 
 function showCoordinat(position) {
   latPosition = position.coords.latitude;
-  lonPosition = position.coords.longitude;  
+  lonPosition = position.coords.longitude;
   axiosRequest(latPosition, lonPosition);
+}
+
+function getCoordinatWeek() {
+  navigator.geolocation.getCurrentPosition(showCoordinatWeek, showError);
+}
+
+function showCoordinatWeek(position) {
+  latPosition = position.coords.latitude;
+  lonPosition = position.coords.longitude;
+  axiosRequestWeek(latPosition, lonPosition);
 }
 
 function showError(error) {
@@ -50,7 +60,7 @@ function showError(error) {
 
 async function axiosRequest(latPosition, lonPosition) {
   weatherToday = new Date();
-  infoDay(weatherToday);  
+  infoDay(weatherToday);
   await axios
     .get(URL_WEATHER_TODAY, {
       params: {
@@ -63,7 +73,7 @@ async function axiosRequest(latPosition, lonPosition) {
     .then(response => response)
     .then(data => {
       dataHits = data.data;
-      
+
       weatherContainer.insertAdjacentHTML(
         'beforeend',
         `<div class="weather_UI">
@@ -113,14 +123,16 @@ function occurrence(arr) {
     .pop();
 }
 
-async function onClickWeatherBtn() {
+function onClickWeatherBtn() {
+  clearWeather();
+  getCoordinatWeek();
+}
+  
+async function axiosRequestWeek(latPosition, lonPosition){
   let tempsWeatherImgKod = [];
   let tempsOnDay = [];
   let arrayData = [];
   let fullDays = [];
-  
-  clearWeather();
-
   await axios
     .get(URL_WEATHER_WEEK, {
       params: {
