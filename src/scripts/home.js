@@ -6,12 +6,16 @@ const refs = {
 };
 
 const newsApi = new NewsApi();
+let articlesArray;
 
 newsApi.fetchPopularNews().then(data => {
   console.log(data);
-  const list = data.results
+  articlesArray = data.results;
+  const list = articlesArray
     .map(item => createMarkupForCard(newsAdapter(item)))
     .join('');
-
   refs.cardList.innerHTML = list;
+  return data.results;
 });
+
+export { articlesArray };
