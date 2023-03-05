@@ -4,7 +4,5 @@ import './scripts/theme';
 import './scripts/calendar';
 import './scripts/cards-news';
 import './scripts/card-item';
-import './scripts/weather';
 import './scripts/pagination';
-import './scripts/read';
 import './scripts/API/fetchAPI';
