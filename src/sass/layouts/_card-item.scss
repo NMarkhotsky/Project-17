@@ -5,6 +5,7 @@ $cart_item_height_mobile: 630px;
   position: relative;
   height: $cart_item_height_mobile;
   width: 288px;
+  margin: 0 auto;
   @include tablet {
     height: $cart_item_height_desktop;
     width: 353px;
@@ -41,6 +42,7 @@ $cart_item_height_mobile: 630px;
   justify-content: center;
   align-items: center;
 
+  cursor: pointer;
   position: absolute;
   bottom: 12px;
   right: 8px;

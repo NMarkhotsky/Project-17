@@ -33,7 +33,8 @@ transition-timing-function: linear;
 }
 
 .read__article__container--active {
-  display:block;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }
 // .cards {
 //   background-color: #f1b3b3;

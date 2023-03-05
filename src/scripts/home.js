@@ -9,7 +9,6 @@ const newsApi = new NewsApi();
 let articlesArray;
 
 newsApi.fetchPopularNews().then(data => {
-  console.log(data);
   articlesArray = data.results;
   const list = articlesArray
     .map(item => createMarkupForCard(newsAdapter(item)))
