@@ -100,7 +100,7 @@ async function axiosRequest(latPosition, lonPosition) {
       const btnEl = document.querySelector('.weather_btn');
       btnEl.addEventListener('click', onClickWeatherBtn);
     })
-    .catch(error => error);
+    .catch(error => console.log(error));
 }
 
 //  функция поиска элемента в массиве, с наибольшим вхождением
@@ -133,7 +133,7 @@ async function onClickWeatherBtn() {
     .then(response => response)
     .then(data => {
       dataHits = data.data;
-      arrayData = dataHits.list;  
+      arrayData = dataHits.list;
       weatherContainer.insertAdjacentHTML(
         'beforeend',
         `<div class="weather_UI_week">
@@ -145,12 +145,12 @@ async function onClickWeatherBtn() {
       );
       const weatherConteinerOneDay =
         document.querySelector('.weather_info_week');
-        arrayData.forEach(element => {
-          dayAndTime = element.dt_txt.split(' ');          
-          fullDays.push(dayAndTime[0]);          
-        });
+      arrayData.forEach(element => {
+        dayAndTime = element.dt_txt.split(' ');
+        fullDays.push(dayAndTime[0]);
+      });
       days = Array.from(new Set(fullDays));
-        days.forEach(el => {
+      days.forEach(el => {
         tempsOnDay = [];
         tempsWeatherImgKod = [];
         arrayData.forEach(element => {
@@ -197,7 +197,7 @@ async function onClickWeatherBtn() {
       const btnWeekEl = document.querySelector('.weather_week_btn');
       btnWeekEl.addEventListener('click', returnWeather);
     })
-    .catch(error => error);
+    .catch(error => console.log(error));
 }
 
 function returnWeather() {
