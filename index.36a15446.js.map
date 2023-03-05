@@ -1,0 +1,1 @@
+{"mappings":"oeAAAA,EAAA,S","sources":["src/home-page.js"],"sourcesContent":["import './scripts/API/fetchAPI';\nimport './scripts/card-item';\nimport './scripts/home';\n"],"names":["parcelRequire"],"version":3,"file":"index.36a15446.js.map"}
