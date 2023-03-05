@@ -127,7 +127,6 @@ notDropdownBtnContainer.addEventListener('click', onClick);
 
 async function onClick(e) {
   try {
-    console.log(e.target);
     clearActiveBtn();
     toggleArrow.style.fill = '#4440F7';
       addActiveBtn(e.target);
