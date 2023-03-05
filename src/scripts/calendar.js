@@ -80,12 +80,12 @@ function renderFiltredMarkup(filtredArticles) {
   if (filtredArticles.length === 0) {
     const img = new URL('../img/not-found-desktop.jpg', import.meta.url);
     const markupWithNotFoundImg = `<img src="${img}" alt="No news found">`;
-    document.querySelector('.cards__list').innerHTML = markupWithNotFoundImg;
+    document.querySelector('.cards__list--home').innerHTML = markupWithNotFoundImg;
   } else {
     list = filtredArticles
       .map(item => createMarkupForCard(newsAdapter(item)))
       .join('');
-    document.querySelector('.cards__list').innerHTML = list;
+    document.querySelector('.cards__list--home').innerHTML = list;
   }
 }
 
