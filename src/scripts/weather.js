@@ -27,8 +27,18 @@ function getCoordinat() {
 
 function showCoordinat(position) {
   latPosition = position.coords.latitude;
-  lonPosition = position.coords.longitude;  
+  lonPosition = position.coords.longitude;
   axiosRequest(latPosition, lonPosition);
+}
+
+function getCoordinatWeek() {
+  navigator.geolocation.getCurrentPosition(showCoordinatWeek, showError);
+}
+
+function showCoordinatWeek(position) {
+  latPosition = position.coords.latitude;
+  lonPosition = position.coords.longitude;
+  axiosRequestWeek(latPosition, lonPosition);
 }
 
 function showError(error) {
@@ -50,7 +60,7 @@ function showError(error) {
 
 async function axiosRequest(latPosition, lonPosition) {
   weatherToday = new Date();
-  infoDay(weatherToday);  
+  infoDay(weatherToday);
   await axios
     .get(URL_WEATHER_TODAY, {
       params: {
@@ -63,7 +73,7 @@ async function axiosRequest(latPosition, lonPosition) {
     .then(response => response)
     .then(data => {
       dataHits = data.data;
-      
+
       weatherContainer.insertAdjacentHTML(
         'beforeend',
         `<div class="weather_UI">
@@ -100,7 +110,7 @@ async function axiosRequest(latPosition, lonPosition) {
       const btnEl = document.querySelector('.weather_btn');
       btnEl.addEventListener('click', onClickWeatherBtn);
     })
-    .catch(error => error);
+    .catch(error => console.log(error));
 }
 
 //  функция поиска элемента в массиве, с наибольшим вхождением
@@ -113,14 +123,16 @@ function occurrence(arr) {
     .pop();
 }
 
-async function onClickWeatherBtn() {
+function onClickWeatherBtn() {
+  clearWeather();
+  getCoordinatWeek();
+}
+  
+async function axiosRequestWeek(latPosition, lonPosition){
   let tempsWeatherImgKod = [];
   let tempsOnDay = [];
   let arrayData = [];
   let fullDays = [];
-  
-  clearWeather();
-
   await axios
     .get(URL_WEATHER_WEEK, {
       params: {
@@ -133,7 +145,7 @@ async function onClickWeatherBtn() {
     .then(response => response)
     .then(data => {
       dataHits = data.data;
-      arrayData = dataHits.list;  
+      arrayData = dataHits.list;
       weatherContainer.insertAdjacentHTML(
         'beforeend',
         `<div class="weather_UI_week">
@@ -145,12 +157,12 @@ async function onClickWeatherBtn() {
       );
       const weatherConteinerOneDay =
         document.querySelector('.weather_info_week');
-        arrayData.forEach(element => {
-          dayAndTime = element.dt_txt.split(' ');          
-          fullDays.push(dayAndTime[0]);          
-        });
+      arrayData.forEach(element => {
+        dayAndTime = element.dt_txt.split(' ');
+        fullDays.push(dayAndTime[0]);
+      });
       days = Array.from(new Set(fullDays));
-        days.forEach(el => {
+      days.forEach(el => {
         tempsOnDay = [];
         tempsWeatherImgKod = [];
         arrayData.forEach(element => {
@@ -197,7 +209,7 @@ async function onClickWeatherBtn() {
       const btnWeekEl = document.querySelector('.weather_week_btn');
       btnWeekEl.addEventListener('click', returnWeather);
     })
-    .catch(error => error);
+    .catch(error => console.log(error));
 }
 
 function returnWeather() {
