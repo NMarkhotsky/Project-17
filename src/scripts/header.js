@@ -20,5 +20,6 @@
   let searchInput = document.querySelector(".form__input");
 
   searchIcon.addEventListener("click", () => {
-      searchInput.classList.add("input__open");
+    searchInput.classList.add("input__open");
+    searchIcon.setAttribute('style','left: 12px')
   })
