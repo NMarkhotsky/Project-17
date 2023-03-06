@@ -23,7 +23,7 @@ const removeFavoriteBtnHTML = `Remove from favorite ${createSvgIcon(
   'icon-heart-full'
 )}`;
 
-export function createMarkupForCard(news) {
+export function createMarkupForCard(news, inFavourite, deleteFromDom = false) {
   const {
     abstract,
     published_date,
@@ -35,31 +35,49 @@ export function createMarkupForCard(news) {
     id,
   } = news;
 
-  setTimeout(() => {
+  const toggleFavourite = () => {
     const btn = document.querySelector(`.button__add-favorite--${id}`);
-    btn.onclick = handleFavorite(id, news, btn);
-  }, 0);
-
-  const handleFavorite = (newsId, data, btn) => () => {
     btn.classList.toggle('button__add-favorite--active');
     if (btn.classList.contains('button__add-favorite--active')) {
       btn.innerHTML = removeFavoriteBtnHTML;
     } else {
       btn.innerHTML = addFavoriteBtnHTML;
     }
+  };
+
+  setTimeout(() => {
+    if (inFavourite) {
+      toggleFavourite();
+    }
+    const btn = document.querySelector(`.button__add-favorite--${id}`);
+    btn.onclick = handleFavorite(id, news);
+  }, 0);
+
+  const handleFavorite = (newsId, data) => () => {
+    toggleFavourite();
     const favorite = getFavorite();
 
-    const saveFavorite = {
-      [newsId]: data,
-    };
+    let newFavourite = favorite;
 
-    const newFavorite = { ...favorite, ...saveFavorite };
+    if (favorite.hasOwnProperty(newsId)) {
+      delete newFavourite[newsId];
+      if (deleteFromDom) {
+        const cardElement = document.querySelector(`.card_item-${newsId}`);
+        cardElement.remove();
+      }
+    } else {
+      const saveFavorite = {
+        [newsId]: data,
+      };
 
-    localStorage.setItem('favorite', JSON.stringify(newFavorite));
+      newFavourite = { ...favorite, ...saveFavorite };
+    }
+
+    localStorage.setItem('favorite', JSON.stringify(newFavourite));
   };
 
   return `
-  <div class="card_item">
+  <div class="card_item card_item-${id}">
     <div class="card_item-header">
       <img class="card_item-image" src="${imageUrl}" alt="${imageCaption}" loading="lazy" />
       <span class="card_item-section">${section}</span>

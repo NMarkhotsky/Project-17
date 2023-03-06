@@ -6,10 +6,11 @@ const refs = {
 
 const favorite = getFavorite();
 
-console.log(Object.values(favorite));
-
 const list = Object.values(favorite)
-  .map(item => createMarkupForCard(item))
+  .map(item => {
+    const inFavourite = Boolean(favorite?.hasOwnProperty(item.id));
+    return createMarkupForCard(item, inFavourite, true);
+  })
   .join('');
 
 refs.cardListFavorite.innerHTML = list;
