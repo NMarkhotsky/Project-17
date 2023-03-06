@@ -1,5 +1,6 @@
 import flatpickr from 'flatpickr';
-import { articlesArray } from './home';
+import { popularNewsArray } from './home';
+import { categoriesNewsArray } from './category';
 import { newsAdapter, createMarkupForCard } from './card-item';
 
 const FLATPICKR_INPUT = document.querySelector('.flatpickr-input');
@@ -26,8 +27,16 @@ const DATEPICKER_OPTIONS = {
     changeBtnStyles();
     if (dateObj) {
       formatFilterDate(dateObj);
-      const filtredArticles = filterByDate(filterDate, articlesArray);
+      if (categoriesNewsArray) {
+        console.log("in-array", categoriesNewsArray);
+        const filtredArticles = filterByDate(filterDate, categoriesNewsArray);
+        console.log("out-array", filtredArticles);
+        renderFiltredMarkup(filtredArticles);
+      }
+      if (!categoriesNewsArray) {
+      const filtredArticles = filterByDate(filterDate, popularNewsArray);
       renderFiltredMarkup(filtredArticles);
+      }
       formatRequestDate(dateObj);
     }
     return requestDate;
@@ -81,7 +90,6 @@ function renderFiltredMarkup(filtredArticles) {
   }
 }
 
-// console.log(requestDate);
 export { requestDate };
 // import { requestDate } from '../calendar';
 // console.log (requestDate);
