@@ -1,6 +1,7 @@
 import NewsApi from './API/newsAPI';
 import formatedDate from './API/fetchAPI';
 import { getFavorite } from './card-item';
+import { requestDate } from './calendar';
 
 const refs = {
   form: document.querySelector('.form'),
@@ -23,16 +24,31 @@ function onSubmit(e) {
   }
   const newsApi = new NewsApi();
   newsApi.searchQuery = refs.input.value;
-  newsApi.fetchOnSearchQuery().then(({ docs }) => {
+  newsApi.begin_date = requestDate;
+  newsApi.end_date = requestDate;
+  if (requestDate) {
+    newsApi.fetchOnSearchQueryByDate().then(({ docs }) => {
     refs.list.innerHTML = '';
     if (docs.length === 0) {
       const img = new URL('../img/not-found-desktop.jpg', import.meta.url);
-      const markupWithNotFoundImg = `<img src="${img}" alt="We not found news at your request">`;
+      const markupWithNotFoundImg = `<img src="${img}" alt="We haven't found news at your request">`;
+      refs.list.innerHTML = markupWithNotFoundImg;
+    } else {
+      createMarkup(docs);
+    }
+  })
+  } else {
+newsApi.fetchOnSearchQuery().then(({ docs }) => {
+    refs.list.innerHTML = '';
+    if (docs.length === 0) {
+      const img = new URL('../img/not-found-desktop.jpg', import.meta.url);
+      const markupWithNotFoundImg = `<img src="${img}" alt="We haven't found news at your request">`;
       refs.list.innerHTML = markupWithNotFoundImg;
     } else {
       createMarkup(docs);
     }
   });
+  }
 }
 
 function createMarkup(array) {
