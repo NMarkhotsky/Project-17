@@ -2,7 +2,6 @@ import axios from 'axios';
 import NewsApi from '../scripts/API/newsAPI';
 const newsApi = new NewsApi();
 import _, { add } from 'lodash';
-// import { newsAdapter, createMarkupForCard} from './card-item';
 import formatedDate from './API/fetchAPI';
 
 const ref = {
@@ -16,6 +15,7 @@ const categoryContainer = document.querySelector(".category");
 const notDropdownBtnContainer = document.querySelector('.category_notdropdownbtn_container');
 const body = document.querySelector('body');
 const nonDropdownBtn = document.querySelectorAll('.category_nondropdown_btn')
+
 const toggleDropdown = function () {
   dropdownMenu.classList.toggle("show");
   toggleArrow.classList.toggle("arrow");
@@ -25,7 +25,11 @@ dropdownBtn.addEventListener("click", function (e) {
   e.stopPropagation();
   toggleDropdown();
 });
-
+window.addEventListener('click', () => {
+  if (dropdownMenu.classList.contains('show')) {
+    dropdownMenu.classList.remove('show');
+  }
+})
 window.addEventListener('load', getSectionList);
 window.addEventListener('resize', _.debounce(() => {
     getSectionList()
