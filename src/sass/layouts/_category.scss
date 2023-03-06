@@ -1,13 +1,28 @@
+.category-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+
+    @include tablet {
+        margin-top: 28px;
+    }
+}
+
 .category {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: 10px;
+
+    @include tablet {
+        gap: 10px;
+    }
 }
 
-.category-container {
+.category_notdropdownbtn_container {
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 14px;
 }
 
 .category_dropbtn_container {
@@ -15,16 +30,41 @@
 }
 
 .category_btn {
-    background-color: white;
+    height: 31px;
+    background-color: #FFFFFF;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     gap: 10px;
     padding: 8px 21px;
     cursor: pointer;
     border-radius: 20px;
     border: 1px solid #4440F7;
     position: relative;
+    color: #4440F7;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    font-family: 'Manrope';
+}
+
+.category_btn-active {
+    background-color: #4B48DB;
+    color: #FFFFFF;
+    
+}
+
+.category_svg_icon {
+    fill: #4440F7;
+}
+
+.category_svg_icon-active {
+    fill:#FFFFFF
+}
+
+
+.category_nondropdown_btn {
+    max-width: 112px;
 }
 
 .category_dropdown {
@@ -60,10 +100,14 @@
     column-gap: 10px;
     padding: 0.8rem 1rem;
     text-decoration: none;
-    color: black;
+    background-color: #F8F8F8;
+    color: #4440F7;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    font-family: 'Manrope'
 }
 
 .category_dropdown a:hover {
-    background-color: white;
-    color: black;
+    text-decoration: underline;
 }

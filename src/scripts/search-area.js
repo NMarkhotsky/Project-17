@@ -5,7 +5,7 @@ import { getFavorite } from './card-item';
 const refs = {
   form: document.querySelector('.form'),
   input: document.querySelector('.form__input'),
-  list: document.querySelector('.cards__list'),
+  list: document.querySelector('.cards__list--home'),
   iconSvg: new URL('../img/symbol-defs.svg', import.meta.url),
 };
 

@@ -2,7 +2,7 @@ import NewsApi from './API/newsAPI';
 import { newsAdapter, createMarkupForCard } from './card-item';
 
 const refs = {
-  cardList: document.querySelector('.cards__list'),
+  cardList: document.querySelector('.cards__list--home'),
 };
 
 const newsApi = new NewsApi();
