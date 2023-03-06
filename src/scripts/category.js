@@ -2,7 +2,6 @@ import axios from 'axios';
 import NewsApi from '../scripts/API/newsAPI';
 const newsApi = new NewsApi();
 import _, { add } from 'lodash';
-// import { newsAdapter, createMarkupForCard} from './card-item';
 import formatedDate from './API/fetchAPI';
 
 const ref = {
@@ -17,6 +16,7 @@ const categoryContainer = document.querySelector(".category");
 const notDropdownBtnContainer = document.querySelector('.category_notdropdownbtn_container');
 const body = document.querySelector('body');
 const nonDropdownBtn = document.querySelectorAll('.category_nondropdown_btn')
+
 const toggleDropdown = function () {
   dropdownMenu.classList.toggle("show");
   toggleArrow.classList.toggle("arrow");
@@ -26,7 +26,11 @@ dropdownBtn.addEventListener("click", function (e) {
   e.stopPropagation();
   toggleDropdown();
 });
-
+window.addEventListener('click', () => {
+  if (dropdownMenu.classList.contains('show')) {
+    dropdownMenu.classList.remove('show');
+  }
+})
 window.addEventListener('load', getSectionList);
 window.addEventListener('resize', _.debounce(() => {
     getSectionList()
@@ -216,10 +220,10 @@ export function createMarkupForCard(news) {
     imageCaption,
     id,
   } = news;
-
+  const newId = url.replace(/[^a-zA-Z0-9 ]/g, '');
   setTimeout(() => {
-    const btn = document.querySelector(`.button__add-favorite--${id}`);
-    btn.onclick = handleFavorite(id, news, btn);
+    const btn = document.querySelector(`.button__add-favorite--${newId}`);
+    btn.onclick = handleFavorite(newId, news, btn);
   }, 0);
 
   const handleFavorite = (newsId, data, btn) => () => {
@@ -245,7 +249,7 @@ export function createMarkupForCard(news) {
     <div class="card_item-header">
       <img class="card_item-image" src="${imageUrl}" alt="${imageCaption}" loading="lazy" />
       <span class="card_item-section">${section}</span>
-      <button class="button__add-favorite ${`button__add-favorite--${id}`}" data-id="${id}">
+      <button class="button__add-favorite ${`button__add-favorite--${newId}`}" data-id="${newId}">
         ${addFavoriteBtnHTML}
       </button>
     </div>
