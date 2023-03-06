@@ -174,8 +174,8 @@
 
 .form {
   @include tablet {
-    margin-left: 32px;
-    // margin-right: 24px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   @include desktop {
