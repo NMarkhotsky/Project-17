@@ -6,7 +6,7 @@ const refs = {
 };
 
 const newsApi = new NewsApi();
-let articlesArray;
+let popularNewsArray;
 
 newsApi.fetchPopularNews().then(data => {
   const favorite = getFavorite();
@@ -21,4 +21,4 @@ newsApi.fetchPopularNews().then(data => {
   return data.results;
 });
 
-export { articlesArray };
+export { popularNewsArray };

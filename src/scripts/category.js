@@ -7,6 +7,7 @@ import formatedDate from './API/fetchAPI';
 const ref = {
   cardList: document.querySelector('.cards__list'),
 };
+let categoriesNewsArray;
 
 const dropdownBtn = document.querySelector(".category_btn");
 const dropdownMenu = document.querySelector(".category_dropdown");
@@ -136,17 +137,20 @@ async function onClick(e) {
       addActiveBtn(e.target);
         newsApi.searchSection = e.target.textContent.toLowerCase();
     newsApi.fetchOnSection().then(data => {
+      console.log("1", data.results);
       if (data.results === null) {
         const img = new URL('../img/not-found-desktop.jpg', import.meta.url);
         const markupWithNotFoundImg = `<img src="${img}" alt="We not found news at your request">`;
         ref.cardList.innerHTML = markupWithNotFoundImg;
       } else {
+        categoriesNewsArray = data.result;
         const list = data.results.map(item => createMarkupForCard(newsAdapter(item)))
           .join('');
 
         ref.cardList.innerHTML = list;
       }
-});
+      return categoriesNewsArray;
+    });
   } catch (error) {
     console.log(error);
   }
@@ -163,21 +167,23 @@ async function onCategoryClick(e) {
       addActiveBtn(dropdownBtn);
       newsApi.searchSection = e.target.textContent.toLowerCase();
       newsApi.fetchOnSection().then(data => {
+        console.log("2", data.results);
         if (data.results === null) {
           const img = new URL('../img/not-found-desktop.jpg', import.meta.url);
           const markupWithNotFoundImg = `<img src="${img}" alt="We not found news at your request">`;
           ref.cardList.innerHTML = markupWithNotFoundImg;
         } else {
+          categoriesNewsArray = data.result;
           const list = data.results.map(item => createMarkupForCard(newsAdapter(item)))
             .join('');
 
           ref.cardList.innerHTML = list;
         }
+        return categoriesNewsArray;
 });
-        
   } catch (error) {
     console.log(error);
-  }
+    }
 }
 
 const refs = {
@@ -296,3 +302,5 @@ function addActiveBtn(btn) {
   btn.classList.add('category_btn-active');
 }
 
+console.log(categoriesNewsArray);
+export { categoriesNewsArray }
