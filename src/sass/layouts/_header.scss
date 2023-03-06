@@ -109,13 +109,14 @@
   padding-left: 16px;
   &:hover {
     background-color: $accent-color;
-    color: #F4F4F4;
+    color: #f4f4f4;
   }
 }
 
 .mob-menu__icon {
   margin-right: 14px;
   stroke: $light-bg-color;
+  border-radius: 50%;
 }
 
 .mob-menu__icon__right {
@@ -123,7 +124,6 @@
   margin-left: auto;
   margin-right: 20px;
   fill: $light-bg-color;
-  
 }
 
 .menu-container {
@@ -173,15 +173,14 @@
 }
 
 .form {
-  
   @include tablet {
     margin-left: 32px;
     // margin-right: 24px;
   }
 
   @include desktop {
-    margin-right: 147px;
-    margin-left: 147px;
+    margin-right: auto;
+    margin-left: auto;
   }
 }
 
