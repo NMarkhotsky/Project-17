@@ -21,6 +21,7 @@ const DATEPICKER_OPTIONS = {
   prevArrow: `<svg class="flatpickr-icon flatpickr-icon--prev"><use href="${ICONS_URL}#icon-arrow-down"></use><svg>`,
   dateFormat: 'd/m/Y',
   position: 'below right',
+  monthSelectorType: "static",
   onOpen() {
     changeBtnStyles();
   },
@@ -52,19 +53,19 @@ function changeBtnStyles() {
 }
 
 function formatRequestDate(dateObj) {
-  date = new Date(dateObj);
-  const day = String(date.getDate()).padStart(2, '0');
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const year = date.getFullYear();
+  const [fullDate] = dateObj;
+  const day = String(fullDate.getDate()).padStart(2, '0');
+  const month = String(fullDate.getMonth() + 1).padStart(2, '0');
+  const year = fullDate.getFullYear();
   requestDate = `${year}${month}${day}`;
   return requestDate;
 }
 
 function formatFilterDate(dateObj) {
-  date = new Date(dateObj);
-  const day = String(date.getDate()).padStart(2, '0');
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const year = date.getFullYear();
+  const [fullDate] = dateObj;
+  const day = String(fullDate.getDate()).padStart(2, '0');
+  const month = String(fullDate.getMonth() + 1).padStart(2, '0');
+  const year = fullDate.getFullYear();
   filterDate = `${year}-${month}-${day}`;
   return filterDate;
 }
