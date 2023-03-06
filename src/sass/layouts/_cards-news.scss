@@ -1,6 +1,7 @@
 .cards {
   @include mobile {
-    padding: 40px 0;
+    padding: 537px 0 40px;
+    position: relative;
   }
   @include tablet {
     padding: 48px 0;
