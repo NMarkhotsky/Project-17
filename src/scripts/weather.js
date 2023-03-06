@@ -56,6 +56,22 @@ function showError(error) {
   switch (error.code) {
     case error.PERMISSION_DENIED:
       // alert('User prohibited from reading location information');
+      weatherContainer.insertAdjacentHTML(
+        'beforeend',
+        `<div class="weather_error">
+            <div>This is where the<br>
+            WEATHER FORECAST<br>
+            banner is located.<br>
+            Activate LOCATION,<br>
+            press the CONNECT button to view.
+            </div>
+        </div>
+        <button class="weather_btn">Connect</button>
+  `
+      );
+      const btnErrorConnectEl = document.querySelector('.weather_btn');
+      btnErrorConnectEl.addEventListener('click', returnWeather);
+
       break;
     case error.POSITION_UNAVAILABLE:
       // alert('The browser was unable to locate');
@@ -93,7 +109,7 @@ async function parsWeatherToday() {
         </div>
         <img class="weather_img" src="https://openweathermap.org/img/wn/${
           dataHits.weather[0].icon
-        }@2x.png" alt="weather img">
+        }@4x.png" alt="weather img">
         <div class="weather_day">
           <p class="weather_dayOfWeek">${weatherDayOfWeek}</p>
           <p class="weather_date">${weatherDayNow}</p>
