@@ -21,7 +21,6 @@ const DATEPICKER_OPTIONS = {
   prevArrow: `<svg class="flatpickr-icon flatpickr-icon--prev"><use href="${ICONS_URL}#icon-arrow-down"></use><svg>`,
   dateFormat: 'd/m/Y',
   position: 'below right',
-  monthSelectorType: 'static',
   onOpen() {
     changeBtnStyles();
   },
