@@ -1,6 +1,9 @@
 import flatpickr from 'flatpickr';
-import { articlesArray } from './home';
+import { popularNewsArray } from './home';
+import { categoriesNewsArray } from './category';
 import { newsAdapter, createMarkupForCard } from './card-item';
+
+console.log("calendar",categoriesNewsArray);
 
 const FLATPICKR_INPUT = document.querySelector('.flatpickr-input');
 const ARROW_BTN_DOWN = document.querySelector('.arrow-down');
@@ -18,7 +21,6 @@ const DATEPICKER_OPTIONS = {
   prevArrow: `<svg class="flatpickr-icon flatpickr-icon--prev"><use href="${ICONS_URL}#icon-arrow-down"></use><svg>`,
   dateFormat: 'd/m/Y',
   position: 'below right',
-  monthSelectorType: 'static',
   onOpen() {
     changeBtnStyles();
   },
@@ -26,9 +28,15 @@ const DATEPICKER_OPTIONS = {
     changeBtnStyles();
     if (dateObj) {
       formatFilterDate(dateObj);
-      const filtredArticles = filterByDate(filterDate, articlesArray);
+      if (categoriesNewsArray) {
+        const filtredArticles = filterByDate(filterDate, categoriesNewsArray);
+        renderFiltredMarkup(filtredArticles);
+      }
+      if (!categoriesNewsArray) {
+      const filtredArticles = filterByDate(filterDate, popularNewsArray);
       renderFiltredMarkup(filtredArticles);
-      formatRequestDate(dateObj);
+      }
+      const requestDate = formatRequestDate(dateObj);
     }
     return requestDate;
   },
@@ -71,7 +79,7 @@ function filterByDate(filterDate, articlesArray) {
 function renderFiltredMarkup(filtredArticles) {
   if (filtredArticles.length === 0) {
     const img = new URL('../img/not-found-desktop.jpg', import.meta.url);
-    const markupWithNotFoundImg = `<img src="${img}" alt="No news found">`;
+    const markupWithNotFoundImg = `<div class="no-news"><p class="no-news__text">We haven't found news for this date</p><img class="no-news__img" src="${img}" alt="No news found"></div>`;
     document.querySelector('.cards__list--home').innerHTML = markupWithNotFoundImg;
   } else {
     list = filtredArticles
@@ -81,7 +89,4 @@ function renderFiltredMarkup(filtredArticles) {
   }
 }
 
-// console.log(requestDate);
-export { requestDate };
-// import { requestDate } from '../calendar';
-// console.log (requestDate);
+export {requestDate}

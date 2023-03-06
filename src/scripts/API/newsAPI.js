@@ -80,4 +80,14 @@ export default class NewsApi {
     // console.log(response);
     return response;
   }
+
+  async fetchOnSearchQueryByDate() {
+    const {
+      data: { response },
+    } = await axios.get(
+      `${BASE_URL}/search/v2/articlesearch.json?q=${this.searchQuery}&begin_date=${this.begin_date}&end_date=${this.end_date}&offset=${this.offset}&page=${this.page}&${KEY}`
+    );
+    // console.log(response);
+    return response;
+  }
 }

@@ -16,6 +16,19 @@
   }
 }
 
+.weather_error {
+    display: block;
+    margin: 50px 10px;
+    text-align: center;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 2;
+    color: $light-text-color;
+      @include tablet {
+    font-size: 20px;
+  }
+}
+
 .weather_UI {
   display: flex;
   flex-direction: column;
