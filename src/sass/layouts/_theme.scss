@@ -1,12 +1,27 @@
 body.dark {
   background-color: $dark-bg-color;
 
+  .header {
+    border-bottom: 1px solid rgba(244, 244, 244, 0.2);
+  }
+
   .card_item-title,
   .logo,
   .card_item-description,
   .calendar__label,
-  .menu__link {
+  .menu__link,
+  .mob-menu__link,
+  .form__input {
     color: $light-bg-color;
+  }
+
+  .menu-close-icon,
+  .menu-open-icon {
+    fill: $light-bg-color;
+  }
+
+  .menu-container {
+    background-color: $dark-bg-color;
   }
 
   .form {
@@ -24,12 +39,23 @@ body.dark {
 
   .theme__dark {
     color: $accent-color;
+    opacity: 1;
   }
 
   .theme__light {
     color: $light-bg-color;
     opacity: 0.4;
   }
+}
+
+.menu__theme {
+  z-index: 6;
+  opacity: 1;
+  pointer-events: all;
+  visibility: inherit;
+  display: flex;
+  position: absolute;
+  bottom: 18px;
 }
 
 .theme {
@@ -55,16 +81,14 @@ body.dark {
   @include tablet {
     display: flex;
     width: 98px;
-    
+
     margin-left: 24px;
-   
   }
 
   @include desktop {
     gap: 12px;
     width: 148px;
-    margin-left:0;
-    
+    margin-left: 0;
   }
 }
 
@@ -165,8 +189,4 @@ input:checked + .slider:before {
 
 .theme__light {
   color: $accent-color;
-}
-
-.sun {
-  fill: $accent-color;
 }
