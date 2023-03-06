@@ -5,7 +5,9 @@ $cart_item_height_mobile: 630px;
   position: relative;
   height: $cart_item_height_mobile;
   width: 288px;
-  margin: 0 auto;
+  border-radius: 4px;
+  overflow: hidden;
+
   @include tablet {
     height: $cart_item_height_desktop;
     width: 353px;
@@ -107,6 +109,7 @@ $cart_item_height_mobile: 630px;
 }
 
 .button__read-more {
+  margin-right: 19px;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.36;
