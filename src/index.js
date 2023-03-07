@@ -1,14 +1,9 @@
-import './scripts/API/newsAPI';
-import './scripts/API/fetchAPI';
-import './scripts/card-item';
-
 import './scripts/header';
-import './scripts/theme';
-import './scripts/home'
-import './scripts/category'
-import './scripts/calendar';
 import './scripts/search-area';
-
+import './scripts/theme';
+import './scripts/category';
+import './scripts/calendar';
+import './scripts/cards-news';
+import './scripts/card-item';
 import './scripts/pagination';
-import './scripts/weather';
-
+import './scripts/API/fetchAPI';
