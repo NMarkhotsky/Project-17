@@ -1,0 +1,1 @@
+{"mappings":"gfAAAA,EAAA,S","sources":["src/read-page.js"],"sourcesContent":["import './scripts/API/fetchAPI';\nimport './scripts/header';\nimport './scripts/card-item';\nimport './scripts/theme';\n"],"names":["parcelRequire"],"version":3,"file":"read.cca5c9db.js.map"}
