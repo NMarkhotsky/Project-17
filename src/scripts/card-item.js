@@ -92,7 +92,7 @@ export function createMarkupForCard(news, inFavourite, deleteFromDom = false) {
       </div>
       <div class="card_item-info">
         <span class="card_item-date">${formatedDate(published_date)}</span>
-        <a class="card__link-btn" href="${url}" data-title="${title}">
+        <a class="card__link-btn" href="${url}" data-title="${title}" target="_blank">
           <button class="button__read-more">
             Read more
           </button>

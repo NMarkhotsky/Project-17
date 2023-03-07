@@ -15,20 +15,20 @@
   }
 })();
 
+let searchIcon = document.querySelector('.search__input__icon');
+let searchInput = document.querySelector('.form__input');
 
-  let searchIcon = document.querySelector(".search__input__icon");
-  let searchInput = document.querySelector(".form__input");
+searchIcon.addEventListener('click', () => {
+  searchInput.classList.add('input__open');
+  searchIcon.setAttribute('style', 'left: 12px');
+});
 
-  searchIcon.addEventListener("click", () => {
-    searchInput.classList.add("input__open");
-    searchIcon.setAttribute('style','left: 12px')
-  })
-
-
-document.querySelectorAll('.menu__link')
-  .forEach(n => {
-  if (n.href === document.URL ||
-    n.href.substring(n.href.lastIndexOf('/')) === '/index.html' && (window.location.origin + '/') === document.URL) {
-    n.classList.add('menu__link--current')
+document.querySelectorAll('.menu__link').forEach(n => {
+  if (
+    n.href === document.URL ||
+    (n.href.substring(n.href.lastIndexOf('/')) === '/index.html' &&
+      window.location.origin + '/' === document.URL)
+  ) {
+    n.classList.add('menu__link--current');
   }
 });
