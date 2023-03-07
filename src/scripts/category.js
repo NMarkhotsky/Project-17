@@ -7,7 +7,7 @@ import formatedDate from './API/fetchAPI';
 const ref = {
   cardList: document.querySelector('.cards__list'),
 };
-let categoriesNewsArray;
+let categoriesNewsArray = [];
 
 const dropdownBtn = document.querySelector(".category_btn");
 const dropdownMenu = document.querySelector(".category_dropdown");
