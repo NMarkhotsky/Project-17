@@ -1,4 +1,3 @@
-import formatedDate from './API/fetchAPI';
 import NewsApi from './API/newsAPI';
 import { newsAdapter, createMarkupForCard } from './card-item';
 
@@ -11,7 +10,6 @@ const refs = {
   articleContainerEl: document.querySelectorAll('.read__article__container'),
   articleSectionList: document.querySelector('.read__article-section-list')
 };
-// console.log(refs.iconReadEl);
 
 document.addEventListener("DOMContentLoaded", () => {
   newsApi.fetchPopularNews().then((data) => {
