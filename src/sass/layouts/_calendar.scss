@@ -291,9 +291,11 @@ position: relative;
 //   opacity: 0 !important;
 // }
 
-input[type="hidden"]{
-  -webkit-appearance: auto !important;
-  -moz-appearance: auto !important;
-  appearance: auto !important;
+input[type="hidden"] {
+  // -webkit-appearance: auto !important;
+  // -moz-appearance: auto !important;
+  // appearance: auto !important;
   opacity: 1 !important;
+  // position: relative;
+  // z-index: 1000;
 }
