@@ -3,6 +3,7 @@ import axios from 'axios';
 const BASE_URL = 'https://api.nytimes.com/svc/';
 // Апі ключ
 const KEY = 'api-key=u4NcxmWo2uFBK0OuatwBNClB29lN33d8';
+const KEY1 = 'api-key=sLtf4cvcFr9o8f66KLLXb1LPw0gDwyx2';
 
 export default class NewsApi {
   constructor() {
@@ -64,7 +65,7 @@ export default class NewsApi {
   //* Функція запиту новин по категорії
   async fetchOnSection() {
     const { data } = await axios.get(
-      `${BASE_URL}news/v3/content/inyt/${this.searchSection}.json?offset=${this.offset}&${KEY}`
+      `${BASE_URL}news/v3/content/inyt/${this.searchSection}.json?offset=${this.offset}&${KEY1}`
     );
     // console.log(data);
     return data;
