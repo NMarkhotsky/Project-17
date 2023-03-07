@@ -28,12 +28,14 @@ body.dark {
     border-color: $light-bg-color;
   }
 
-  .form__input {
+  .form__input,
+  input.flatpickr-input {
     background: $dark-bg-color;
     border: 1px solid $light-bg-color;
   }
 
-  .search__input__icon {
+  .search__input__icon,
+  .calendar__button--right {
     fill: $light-bg-color;
   }
 
