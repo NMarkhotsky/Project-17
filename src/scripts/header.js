@@ -23,3 +23,12 @@
     searchInput.classList.add("input__open");
     searchIcon.setAttribute('style','left: 12px')
   })
+
+
+document.querySelectorAll('.menu__link')
+  .forEach(n => {
+  if (n.href === document.URL ||
+    n.href.substring(n.href.lastIndexOf('/')) === '/index.html' && (window.location.origin + '/') === document.URL) {
+    n.classList.add('menu__link--current')
+  }
+});

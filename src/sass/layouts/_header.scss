@@ -109,8 +109,14 @@
   &:hover {
     background-color: $accent-color;
     color: #f4f4f4;
+
+    .mob-menu__icon__right {
+      visibility: visible;
+    }
   }
+  
 }
+
 
 .mob-menu__icon {
   margin-right: 14px;
@@ -122,18 +128,14 @@
   display: block;
   margin-left: auto;
   margin-right: 20px;
-  // stroke: transparent;
+  visibility: hidden;
+  // opacity: 0;
   // &:hover {
-  //   stroke: $light-bg-color;
+  //   opacity: 1;
   // }
 }
 
-// symbol#icon-chevron-right {
-//   stroke: transparent;
-//     &:hover {
-//       stroke: $light-bg-color;
-//     }
-// }
+
 
 .menu-container {
   // padding-left: 16px;
