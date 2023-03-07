@@ -144,6 +144,7 @@ fill: $light-text-color;
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .flatpickr-prev-month {
@@ -178,7 +179,7 @@ position: relative;
   font-feature-settings: 'case' on;
 }
 
-.cur-month {margin-right: 20px;}
+.cur-month {margin-right: 5px;}
 
 .numInputWrapper {
   display: flex;

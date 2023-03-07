@@ -1,7 +1,7 @@
 import flatpickr from 'flatpickr';
-import { popularNewsArray } from './home';
-import { categoriesNewsArray } from './category';
 import { newsAdapter, createMarkupForCard } from './card-item';
+import { popularNewsArray } from './home';
+import { categoriesNewsArray, clearActiveBtn } from './category';
 
 const FLATPICKR_INPUT = document.querySelector('.flatpickr-input');
 const ARROW_BTN_DOWN = document.querySelector('.arrow-down');
@@ -9,11 +9,6 @@ const ARROW_BTN_UP = document.querySelector('.arrow-up');
 const CALENDAR_ICON = document.querySelector('.calendar__button--left');
 const CARDS_LIST = document.querySelector('.cards__list--home');
 const ICONS_URL = new URL('../img/symbol-defs.svg', import.meta.url);
-let requestDate;
-let filterDate;
-
-console.log("popular", popularNewsArray);
-console.log("category", categoriesNewsArray)
 
 
 const DATEPICKER_OPTIONS = {
@@ -24,21 +19,22 @@ const DATEPICKER_OPTIONS = {
   dateFormat: 'd/m/Y',
   position: 'below right',
   monthSelectorType: 'static',
-  altInput: false,
   onOpen() {
     changeBtnStyles();
+    document.querySelector(".flatpickr-icon--next").classList.add("is-hidden");
   },
   onClose(dateObj) {
-    console.log('calendar', categoriesNewsArray);
     changeBtnStyles();
     if (dateObj) {
-      formatFilterDate(dateObj);
-      if (categoriesNewsArray) {
-        const filtredArticles = filterByDate(filterDate, categoriesNewsArray);
-        renderFiltredMarkup(filtredArticles);
-      }
-      if (!categoriesNewsArray || categoriesNewsArray.length === 0) {
+      const filterDate = formatFilterDate(dateObj);
+      if (!categoriesNewsArray) {
+        // console.log('popular-in-calendar', popularNewsArray);
         const filtredArticles = filterByDate(filterDate, popularNewsArray);
+        renderFiltredMarkup(filtredArticles);
+        clearActiveBtn();
+      } else {
+        // console.log('categories-in-calendar', categoriesNewsArray);
+        const filtredArticles = filterByDateCategory(filterDate, categoriesNewsArray);
         renderFiltredMarkup(filtredArticles);
       }
       const requestDate = formatRequestDate(dateObj);
@@ -78,6 +74,12 @@ function filterByDate(filterDate, articlesArray) {
   const filtredArticles = articlesArray.filter(
     article => article.published_date === filterDate
   );
+  return filtredArticles;
+}
+
+function filterByDateCategory(filterDate, articlesArray) {
+  const filtredArticles = articlesArray.filter(
+    article => article.published_date.slice(0, 10) === filterDate);
   return filtredArticles;
 }
 
