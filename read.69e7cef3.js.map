@@ -1,0 +1,1 @@
+{"mappings":"gfAAAA,EAAA,S","sources":["src/read-page.js"],"sourcesContent":["import './scripts/API/fetchAPI';\nimport './scripts/card-item';\nimport './scripts/theme';\n"],"names":["parcelRequire"],"version":3,"file":"read.69e7cef3.js.map"}
