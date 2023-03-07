@@ -1,7 +1,6 @@
 import NewsApi from './API/newsAPI';
 import formatedDate from './API/fetchAPI';
-//import { getFavorite } from './card-item';
-import { requestDate } from './calendar';
+//import { requestDate } from './calendar';
 
 const refs = {
   form: document.querySelector('.form'),
@@ -18,14 +17,6 @@ const removeFavoriteBtnHTML = `Remove from favorite ${createSvgIcon(
   'icon-heart-full'
 )}`;
 
-//const searchList = Object.values(favorite)
-//  .map(item => {
-//    const inFavourite = Boolean(favorite?.hasOwnProperty(item.id));
-//    return createMarkupForCardOnSearch(item, inFavourite, true);
-//  })
-//  .join('');
-//refs.cardListFavorite.insertAdjacentHTML('beforeend', searchList);
-
 function onSubmit(e) {
   e.preventDefault();
   if (refs.input.value.trim() === '') {
@@ -33,25 +24,25 @@ function onSubmit(e) {
   }
   const newsApi = new NewsApi();
   newsApi.searchQuery = refs.input.value;
-  newsApi.begin_date = requestDate;
-  newsApi.end_date = requestDate;
-  if (requestDate) {
-    newsApi.fetchOnSearchQueryByDate().then(({ docs }) => {
-      refs.list.innerHTML = '';
-      if (docs.length === 0) {
-        const img = new URL('../img/not-found-desktop.jpg', import.meta.url);
-        const markupWithNotFoundImg = `<img src="${img}" alt="We haven't found news at your request">`;
-        refs.list.innerHTML = markupWithNotFoundImg;
-      } else {
-        //createMarkup(docs);
-      }
-    });
+  //newsApi.begin_date = requestDate;
+  //newsApi.end_date = requestDate;
+  if (false) {
+    //newsApi.fetchOnSearchQueryByDate().then(({ docs }) => {
+    //  refs.list.innerHTML = '';
+    //  if (docs.length === 0) {
+    //    const img = new URL('../img/not-found-desktop.png', import.meta.url);
+    //    const markupWithNotFoundImg = `<img src="${img}" alt="We haven't found news at your request">`;
+    //    refs.list.innerHTML = markupWithNotFoundImg;
+    //  } else {
+    //createMarkup(docs);
+    //  }
+    //});
   } else {
     newsApi.fetchOnSearchQuery().then(({ docs }) => {
       refs.list.innerHTML = '';
       const favorite = getFavorite();
       if (docs.length === 0) {
-        const img = new URL('../img/not-found-desktop.jpg', import.meta.url);
+        const img = new URL('../img/not-found-desktop.png', import.meta.url);
         const markupWithNotFoundImg = `<img src="${img}" alt="We haven't found news at your request">`;
         refs.list.innerHTML = markupWithNotFoundImg;
       } else {
@@ -97,7 +88,7 @@ export function createMarkupForCardOnSearch(
   };
   let imageUrl = null;
   if (!multimedia[0]) {
-    imageUrl = new URL('../img/not-found-desktop.jpg', import.meta.url);
+    imageUrl = new URL('../img/not-found-desktop.png', import.meta.url);
   } else {
     imageUrl = new URL(
       `https://www.nytimes.com/${multimedia[0]?.url}`,
@@ -128,10 +119,8 @@ export function createMarkupForCardOnSearch(
       const saveFavorite = {
         [newsId]: data,
       };
-
       newFavourite = { ...favorite, ...saveFavorite };
     }
-
     localStorage.setItem('favoriteBySearch', JSON.stringify(newFavourite));
   };
 
@@ -172,7 +161,4 @@ export function getFavorite() {
   const favorite = JSON.parse(localStorage.getItem('favoriteBySearch')) || {};
 
   return favorite;
-}
-export function qwew() {
-  console.log('wedsx');
 }

@@ -36,12 +36,18 @@ const DATEPICKER_OPTIONS = {
       filterDate = formatFilterDate(dateObj);
       if (!categoriesNewsArray) {
         // console.log('popular-in-calendar', popularNewsArray);
-        const filtredArticles = filterByDatePopular(filterDate, popularNewsArray);
+        const filtredArticles = filterByDatePopular(
+          filterDate,
+          popularNewsArray
+        );
         renderFiltredMarkupPopular(filtredArticles);
         clearActiveBtn();
       } else {
         // console.log('categories-in-calendar', categoriesNewsArray);
-        const filtredArticles = filterByDateCategory(filterDate,categoriesNewsArray);
+        const filtredArticles = filterByDateCategory(
+          filterDate,
+          categoriesNewsArray
+        );
         renderFiltredMarkupCategory(filtredArticles);
       }
       requestDate = formatRequestDate(dateObj);
@@ -93,7 +99,7 @@ function filterByDateCategory(filterDate, articlesArray) {
 
 function renderFiltredMarkupPopular(filtredArticles) {
   if (filtredArticles.length === 0) {
-    const img = new URL('../img/not-found-desktop.jpg', import.meta.url);
+    const img = new URL('../img/not-found-desktop.png', import.meta.url);
     const markupWithNotFoundImg = `<div class="no-news"><p class="no-news__text">We haven't found any popular news for this date. Try searching by key word</p><img class="no-news__img" src="${img}" alt="No news found"></div>`;
     CARDS_LIST.innerHTML = markupWithNotFoundImg;
   } else {
@@ -106,7 +112,7 @@ function renderFiltredMarkupPopular(filtredArticles) {
 
 function renderFiltredMarkupCategory(filtredArticles) {
   if (filtredArticles.length === 0) {
-    const img = new URL('../img/not-found-desktop.jpg', import.meta.url);
+    const img = new URL('../img/not-found-desktop.png', import.meta.url);
     const markupWithNotFoundImg = `<div class="no-news"><p class="no-news__text">We haven't found any news from this category for this date. Try searching by key word</p><img class="no-news__img" src="${img}" alt="No news found"></div>`;
     CARDS_LIST.innerHTML = markupWithNotFoundImg;
   } else {
