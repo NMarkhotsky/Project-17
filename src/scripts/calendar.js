@@ -1,7 +1,7 @@
 import flatpickr from 'flatpickr';
-import { popularNewsArray } from './home';
-import { categoriesNewsArray } from './category';
 import { newsAdapter, createMarkupForCard } from './card-item';
+import { popularNewsArray } from './home';
+import { categoriesNewsArray, clearActiveBtn } from './category';
 
 const FLATPICKR_INPUT = document.querySelector('.flatpickr-input');
 const ARROW_BTN_DOWN = document.querySelector('.arrow-down');
@@ -9,8 +9,6 @@ const ARROW_BTN_UP = document.querySelector('.arrow-up');
 const CALENDAR_ICON = document.querySelector('.calendar__button--left');
 const CARDS_LIST = document.querySelector('.cards__list--home');
 const ICONS_URL = new URL('../img/symbol-defs.svg', import.meta.url);
-let requestDate;
-let filterDate;
 
 const DATEPICKER_OPTIONS = {
   wrap: true,
@@ -20,22 +18,28 @@ const DATEPICKER_OPTIONS = {
   dateFormat: 'd/m/Y',
   position: 'below right',
   monthSelectorType: 'static',
-  altInput: false,
   onOpen() {
     changeBtnStyles();
+    document.querySelector('.flatpickr-icon--next').classList.add('is-hidden');
+  },
+  onMonthChange() {
+    document
+      .querySelector('.flatpickr-icon--next')
+      .classList.remove('is-hidden');
   },
   onClose(dateObj) {
-    console.log('calendar', categoriesNewsArray);
     changeBtnStyles();
     if (dateObj) {
-      formatFilterDate(dateObj);
-      if (categoriesNewsArray) {
-        const filtredArticles = filterByDate(filterDate, categoriesNewsArray);
-        renderFiltredMarkup(filtredArticles);
-      }
+      const filterDate = formatFilterDate(dateObj);
       if (!categoriesNewsArray) {
-        const filtredArticles = filterByDate(filterDate, popularNewsArray);
-        renderFiltredMarkup(filtredArticles);
+        // console.log('popular-in-calendar', popularNewsArray);
+        const filtredArticles = filterByDatePopular(filterDate, popularNewsArray);
+        renderFiltredMarkupPopular(filtredArticles);
+        clearActiveBtn();
+      } else {
+        // console.log('categories-in-calendar', categoriesNewsArray);
+        const filtredArticles = filterByDateCategory(filterDate,categoriesNewsArray);
+        renderFiltredMarkupCategory(filtredArticles);
       }
       const requestDate = formatRequestDate(dateObj);
     }
@@ -70,17 +74,37 @@ function formatFilterDate(dateObj) {
   return filterDate;
 }
 
-function filterByDate(filterDate, articlesArray) {
+function filterByDatePopular(filterDate, articlesArray) {
   const filtredArticles = articlesArray.filter(
     article => article.published_date === filterDate
   );
   return filtredArticles;
 }
 
-function renderFiltredMarkup(filtredArticles) {
+function filterByDateCategory(filterDate, articlesArray) {
+  const filtredArticles = articlesArray.filter(
+    article => article.published_date.slice(0, 10) === filterDate
+  );
+  return filtredArticles;
+}
+
+function renderFiltredMarkupPopular(filtredArticles) {
   if (filtredArticles.length === 0) {
     const img = new URL('../img/not-found-desktop.jpg', import.meta.url);
-    const markupWithNotFoundImg = `<div class="no-news"><p class="no-news__text">We haven't found news for this date</p><img class="no-news__img" src="${img}" alt="No news found"></div>`;
+    const markupWithNotFoundImg = `<div class="no-news"><p class="no-news__text">We haven't found any popular news for this date. Try searching by key word</p><img class="no-news__img" src="${img}" alt="No news found"></div>`;
+    CARDS_LIST.innerHTML = markupWithNotFoundImg;
+  } else {
+    const list = filtredArticles
+      .map(item => createMarkupForCard(newsAdapter(item)))
+      .join('');
+    CARDS_LIST.innerHTML = list;
+  }
+}
+
+function renderFiltredMarkupCategory(filtredArticles) {
+  if (filtredArticles.length === 0) {
+    const img = new URL('../img/not-found-desktop.jpg', import.meta.url);
+    const markupWithNotFoundImg = `<div class="no-news"><p class="no-news__text">We haven't found any news from this category for this date. Try searching by key word</p><img class="no-news__img" src="${img}" alt="No news found"></div>`;
     CARDS_LIST.innerHTML = markupWithNotFoundImg;
   } else {
     const list = filtredArticles

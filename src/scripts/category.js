@@ -7,7 +7,7 @@ import formatedDate from './API/fetchAPI';
 const ref = {
   cardList: document.querySelector('.cards__list'),
 };
-let categoriesNewsArray = [];
+let categoriesNewsArray;
 
 const dropdownBtn = document.querySelector(".category_btn");
 const dropdownMenu = document.querySelector(".category_dropdown");
@@ -137,16 +137,14 @@ async function onClick(e) {
       addActiveBtn(e.target);
         newsApi.searchSection = e.target.textContent.toLowerCase();
     newsApi.fetchOnSection().then(data => {
-      console.log("1", data.results);
       if (data.results === null) {
         const img = new URL('../img/not-found-desktop.jpg', import.meta.url);
         const markupWithNotFoundImg = `<img src="${img}" alt="We not found news at your request">`;
         ref.cardList.innerHTML = markupWithNotFoundImg;
       } else {
-        categoriesNewsArray = data.result;
+        categoriesNewsArray = data.results;
         const list = data.results.map(item => createMarkupForCard(newsAdapter(item)))
           .join('');
-
         ref.cardList.innerHTML = list;
       }
       return categoriesNewsArray;
@@ -167,13 +165,12 @@ async function onCategoryClick(e) {
       addActiveBtn(dropdownBtn);
       newsApi.searchSection = e.target.textContent.toLowerCase();
       newsApi.fetchOnSection().then(data => {
-        console.log("2", data.results);
         if (data.results === null) {
           const img = new URL('../img/not-found-desktop.jpg', import.meta.url);
           const markupWithNotFoundImg = `<img src="${img}" alt="We not found news at your request">`;
           ref.cardList.innerHTML = markupWithNotFoundImg;
         } else {
-          categoriesNewsArray = data.result;
+          categoriesNewsArray = data.results;
           const list = data.results.map(item => createMarkupForCard(newsAdapter(item)))
             .join('');
 
@@ -291,7 +288,7 @@ export function newsAdapter(item) {
   };
 }
 
-function clearActiveBtn() {
+export function clearActiveBtn() {
   const allBtns = document.querySelectorAll('.category_btn-active');
   if (allBtns.length !== 0) {
     allBtns.forEach((btn) => btn.classList.remove('category_btn-active'))
@@ -302,5 +299,4 @@ function addActiveBtn(btn) {
   btn.classList.add('category_btn-active');
 }
 
-console.log(categoriesNewsArray);
 export { categoriesNewsArray }
