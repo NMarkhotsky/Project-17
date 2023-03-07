@@ -147,7 +147,6 @@ async function onClick(e) {
           .join('');
         ref.cardList.innerHTML = list;
       }
-      console.log("category-in-category-func", categoriesNewsArray);
       return categoriesNewsArray;
     });
   } catch (error) {
@@ -300,5 +299,4 @@ function addActiveBtn(btn) {
   btn.classList.add('category_btn-active');
 }
 
-console.log("category-in-category-general", categoriesNewsArray);
 export { categoriesNewsArray }

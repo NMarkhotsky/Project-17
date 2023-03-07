@@ -10,7 +10,6 @@ const CALENDAR_ICON = document.querySelector('.calendar__button--left');
 const CARDS_LIST = document.querySelector('.cards__list--home');
 const ICONS_URL = new URL('../img/symbol-defs.svg', import.meta.url);
 
-
 const DATEPICKER_OPTIONS = {
   wrap: true,
   maxDate: 'today',
@@ -21,7 +20,12 @@ const DATEPICKER_OPTIONS = {
   monthSelectorType: 'static',
   onOpen() {
     changeBtnStyles();
-    document.querySelector(".flatpickr-icon--next").classList.add("is-hidden");
+    document.querySelector('.flatpickr-icon--next').classList.add('is-hidden');
+  },
+  onMonthChange() {
+    document
+      .querySelector('.flatpickr-icon--next')
+      .classList.remove('is-hidden');
   },
   onClose(dateObj) {
     changeBtnStyles();
@@ -29,13 +33,13 @@ const DATEPICKER_OPTIONS = {
       const filterDate = formatFilterDate(dateObj);
       if (!categoriesNewsArray) {
         // console.log('popular-in-calendar', popularNewsArray);
-        const filtredArticles = filterByDate(filterDate, popularNewsArray);
-        renderFiltredMarkup(filtredArticles);
+        const filtredArticles = filterByDatePopular(filterDate, popularNewsArray);
+        renderFiltredMarkupPopular(filtredArticles);
         clearActiveBtn();
       } else {
         // console.log('categories-in-calendar', categoriesNewsArray);
-        const filtredArticles = filterByDateCategory(filterDate, categoriesNewsArray);
-        renderFiltredMarkup(filtredArticles);
+        const filtredArticles = filterByDateCategory(filterDate,categoriesNewsArray);
+        renderFiltredMarkupCategory(filtredArticles);
       }
       const requestDate = formatRequestDate(dateObj);
     }
@@ -70,7 +74,7 @@ function formatFilterDate(dateObj) {
   return filterDate;
 }
 
-function filterByDate(filterDate, articlesArray) {
+function filterByDatePopular(filterDate, articlesArray) {
   const filtredArticles = articlesArray.filter(
     article => article.published_date === filterDate
   );
@@ -79,14 +83,28 @@ function filterByDate(filterDate, articlesArray) {
 
 function filterByDateCategory(filterDate, articlesArray) {
   const filtredArticles = articlesArray.filter(
-    article => article.published_date.slice(0, 10) === filterDate);
+    article => article.published_date.slice(0, 10) === filterDate
+  );
   return filtredArticles;
 }
 
-function renderFiltredMarkup(filtredArticles) {
+function renderFiltredMarkupPopular(filtredArticles) {
   if (filtredArticles.length === 0) {
     const img = new URL('../img/not-found-desktop.jpg', import.meta.url);
-    const markupWithNotFoundImg = `<div class="no-news"><p class="no-news__text">We haven't found news for this date</p><img class="no-news__img" src="${img}" alt="No news found"></div>`;
+    const markupWithNotFoundImg = `<div class="no-news"><p class="no-news__text">We haven't found any popular news for this date. Try searching by key word</p><img class="no-news__img" src="${img}" alt="No news found"></div>`;
+    CARDS_LIST.innerHTML = markupWithNotFoundImg;
+  } else {
+    const list = filtredArticles
+      .map(item => createMarkupForCard(newsAdapter(item)))
+      .join('');
+    CARDS_LIST.innerHTML = list;
+  }
+}
+
+function renderFiltredMarkupCategory(filtredArticles) {
+  if (filtredArticles.length === 0) {
+    const img = new URL('../img/not-found-desktop.jpg', import.meta.url);
+    const markupWithNotFoundImg = `<div class="no-news"><p class="no-news__text">We haven't found any news from this category for this date. Try searching by key word</p><img class="no-news__img" src="${img}" alt="No news found"></div>`;
     CARDS_LIST.innerHTML = markupWithNotFoundImg;
   } else {
     const list = filtredArticles

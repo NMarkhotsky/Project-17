@@ -268,20 +268,24 @@ position: relative;
 
 .no-news {
   width: 100%;
+  padding-left: 16px;
+  padding-right: 16px;
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  text-align: center;
   gap: 20px;
   font-weight: 500;
-  font-size: 36px;
+  font-size: 18px;
   @include tablet {
+    font-size: 28px;
     width: 700px;
   }
 }
 
-// .input[type="date"] {
-//   -webkit-appearance: none;
-//   -moz-appearance: none;
-//   appearance: none;
-// }
+.input[type="date"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
