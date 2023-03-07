@@ -5,26 +5,34 @@
   background: $accent-color;
   mix-blend-mode: normal;
   border-radius: 4px;
+  position: absolute;
+  top: 40;
+  right: 16;
+  z-index: 1;
   @include tablet {
     padding: 40px 32px;
     width: 353px;
     height: 675px;
+    top: 48;
+    right: 16.5;
   }
   @include desktop {
     padding: 40px 32px;
     width: 395px;
+    top: 59;
+    right: 17.5;
   }
 }
 
 .weather_error {
-    display: block;
-    margin: 50px 10px;
-    text-align: center;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 2;
-    color: $light-text-color;
-      @include tablet {
+  display: block;
+  margin: 50px 10px;
+  text-align: center;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 2;
+  color: $light-text-color;
+  @include tablet {
     font-size: 20px;
   }
 }

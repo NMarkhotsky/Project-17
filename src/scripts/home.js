@@ -10,15 +10,15 @@ let popularNewsArray;
 
 newsApi.fetchPopularNews().then(data => {
   const favorite = getFavorite();
-  articlesArray = data.results;
-  const list = articlesArray
+  popularNewsArray = data.results;
+  const list = data.results
     .map(item => {
       const inFavourite = Boolean(favorite?.hasOwnProperty(item.id));
       return createMarkupForCard(newsAdapter(item), inFavourite);
     })
     .join('');
   refs.cardList.innerHTML = list;
-  return data.results;
+  return popularNewsArray;
 });
 
 export { popularNewsArray };
