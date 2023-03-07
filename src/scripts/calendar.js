@@ -21,6 +21,7 @@ const DATEPICKER_OPTIONS = {
   dateFormat: 'd/m/Y',
   position: 'below right',
   monthSelectorType: 'static',
+  altInput: "false",
   onOpen() {
     changeBtnStyles();
     document.querySelector('.flatpickr-icon--next').classList.add('is-hidden');

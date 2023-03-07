@@ -284,8 +284,16 @@ position: relative;
   }
 }
 
-.input[type="date"] {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
+// input[type="date"] {
+//   -webkit-appearance: none !important;
+//   -moz-appearance: none !important;
+//   appearance: none !important;
+//   opacity: 0 !important;
+// }
+
+input[type="hidden"]{
+  -webkit-appearance: auto !important;
+  -moz-appearance: auto !important;
+  appearance: auto !important;
+  opacity: 1 !important;
 }
