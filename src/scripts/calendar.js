@@ -10,6 +10,9 @@ const CALENDAR_ICON = document.querySelector('.calendar__button--left');
 const CARDS_LIST = document.querySelector('.cards__list--home');
 const ICONS_URL = new URL('../img/symbol-defs.svg', import.meta.url);
 
+let requestDate;
+let filterDate;
+
 const DATEPICKER_OPTIONS = {
   wrap: true,
   maxDate: 'today',
@@ -30,7 +33,7 @@ const DATEPICKER_OPTIONS = {
   onClose(dateObj) {
     changeBtnStyles();
     if (dateObj) {
-      const filterDate = formatFilterDate(dateObj);
+      filterDate = formatFilterDate(dateObj);
       if (!categoriesNewsArray) {
         // console.log('popular-in-calendar', popularNewsArray);
         const filtredArticles = filterByDatePopular(filterDate, popularNewsArray);
@@ -41,7 +44,7 @@ const DATEPICKER_OPTIONS = {
         const filtredArticles = filterByDateCategory(filterDate,categoriesNewsArray);
         renderFiltredMarkupCategory(filtredArticles);
       }
-      const requestDate = formatRequestDate(dateObj);
+      requestDate = formatRequestDate(dateObj);
     }
     return requestDate;
   },
