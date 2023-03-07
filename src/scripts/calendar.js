@@ -3,12 +3,11 @@ import { popularNewsArray } from './home';
 import { categoriesNewsArray } from './category';
 import { newsAdapter, createMarkupForCard } from './card-item';
 
-console.log("calendar",categoriesNewsArray);
-
 const FLATPICKR_INPUT = document.querySelector('.flatpickr-input');
 const ARROW_BTN_DOWN = document.querySelector('.arrow-down');
 const ARROW_BTN_UP = document.querySelector('.arrow-up');
 const CALENDAR_ICON = document.querySelector('.calendar__button--left');
+const CARDS_LIST = document.querySelector('.cards__list--home');
 const ICONS_URL = new URL('../img/symbol-defs.svg', import.meta.url);
 let requestDate;
 let filterDate;
@@ -16,16 +15,17 @@ let filterDate;
 const DATEPICKER_OPTIONS = {
   wrap: true,
   maxDate: 'today',
-  closeOnSelect: false,
   nextArrow: `<svg class="flatpickr-icon flatpickr-icon--next"><use href="${ICONS_URL}#icon-arrow-up"></use><svg>`,
   prevArrow: `<svg class="flatpickr-icon flatpickr-icon--prev"><use href="${ICONS_URL}#icon-arrow-down"></use><svg>`,
   dateFormat: 'd/m/Y',
   position: 'below right',
-  monthSelectorType: "static",
+  monthSelectorType: 'static',
+  altInput: false,
   onOpen() {
     changeBtnStyles();
   },
   onClose(dateObj) {
+    console.log('calendar', categoriesNewsArray);
     changeBtnStyles();
     if (dateObj) {
       formatFilterDate(dateObj);
@@ -34,8 +34,8 @@ const DATEPICKER_OPTIONS = {
         renderFiltredMarkup(filtredArticles);
       }
       if (!categoriesNewsArray) {
-      const filtredArticles = filterByDate(filterDate, popularNewsArray);
-      renderFiltredMarkup(filtredArticles);
+        const filtredArticles = filterByDate(filterDate, popularNewsArray);
+        renderFiltredMarkup(filtredArticles);
       }
       const requestDate = formatRequestDate(dateObj);
     }
@@ -81,13 +81,13 @@ function renderFiltredMarkup(filtredArticles) {
   if (filtredArticles.length === 0) {
     const img = new URL('../img/not-found-desktop.jpg', import.meta.url);
     const markupWithNotFoundImg = `<div class="no-news"><p class="no-news__text">We haven't found news for this date</p><img class="no-news__img" src="${img}" alt="No news found"></div>`;
-    document.querySelector('.cards__list--home').innerHTML = markupWithNotFoundImg;
+    CARDS_LIST.innerHTML = markupWithNotFoundImg;
   } else {
-    list = filtredArticles
+    const list = filtredArticles
       .map(item => createMarkupForCard(newsAdapter(item)))
       .join('');
-    document.querySelector('.cards__list--home').innerHTML = list;
+    CARDS_LIST.innerHTML = list;
   }
 }
 
-export {requestDate}
+export { requestDate };
