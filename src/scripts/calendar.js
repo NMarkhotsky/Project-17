@@ -12,6 +12,10 @@ const ICONS_URL = new URL('../img/symbol-defs.svg', import.meta.url);
 let requestDate;
 let filterDate;
 
+console.log("popular", popularNewsArray);
+console.log("category", categoriesNewsArray)
+
+
 const DATEPICKER_OPTIONS = {
   wrap: true,
   maxDate: 'today',
@@ -33,7 +37,7 @@ const DATEPICKER_OPTIONS = {
         const filtredArticles = filterByDate(filterDate, categoriesNewsArray);
         renderFiltredMarkup(filtredArticles);
       }
-      if (!categoriesNewsArray) {
+      if (!categoriesNewsArray || categoriesNewsArray.length === 0) {
         const filtredArticles = filterByDate(filterDate, popularNewsArray);
         renderFiltredMarkup(filtredArticles);
       }
