@@ -106,24 +106,31 @@
   align-items: center;
   padding-top: 6px;
   padding-bottom: 6px;
-  padding-left: 16px;
   &:hover {
     background-color: $accent-color;
-    color: #F4F4F4;
+    color: #f4f4f4;
+
+    .mob-menu__icon__right {
+      visibility: visible;
+    }
   }
 }
 
 .mob-menu__icon {
   margin-right: 14px;
   stroke: $light-bg-color;
+  border-radius: 50%;
 }
 
 .mob-menu__icon__right {
   display: block;
   margin-left: auto;
   margin-right: 20px;
-  fill: $light-bg-color;
-  
+  visibility: hidden;
+  // opacity: 0;
+  // &:hover {
+  //   opacity: 1;
+  // }
 }
 
 .menu-container {
@@ -173,15 +180,14 @@
 }
 
 .form {
-  
   @include tablet {
-    margin-left: 32px;
-    // margin-right: 24px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   @include desktop {
-    margin-right: 147px;
-    margin-left: 147px;
+    margin-right: auto;
+    margin-left: auto;
   }
 }
 
@@ -220,7 +226,12 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  left: 12px;
+  @include mobile {
+    left: 155px;
+  }
+  @include tablet {
+    left: 12px;
+  }
 }
 
 .input__open {

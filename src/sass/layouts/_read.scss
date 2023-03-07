@@ -1,0 +1,64 @@
+.button__read {
+  width: 130px;
+  height: 21px;
+  border: none;
+  text-align: start;
+  font-family: 'Manrope';
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  color: #A8A8A8;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+.icon__read{
+  transition-duration: 500ms;
+// transition-property: rotate;
+transition-timing-function: linear;
+// transform: rotatex(180deg);
+}
+
+.section_read {
+  padding: 16px;
+  margin: 0;
+  border-top: 1px solid #929292;
+}
+
+.read__article__container {
+  display: none;
+}
+
+.read__article__container--active {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+
+// .cards {
+//   background-color: #f1b3b3;
+//   width: 395px;
+//   height: 675px;
+//   margin: 0;
+//   padding: 0;
+// }
+
+// .title__read {
+//   margin-bottom: 20px;
+// }
+
+// .text__read {
+//   margin-bottom: 20px;
+// }
+
+// .foto {
+//   margin-bottom: 20px;
+// }
+
+// .date__read {
+//   display: flex;
+//   justify-content: space-between;
+// }

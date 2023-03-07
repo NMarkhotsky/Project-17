@@ -1,21 +1,24 @@
 import NewsApi from './API/newsAPI';
-import { newsAdapter, createMarkupForCard } from './card-item';
+import { newsAdapter, createMarkupForCard, getFavorite } from './card-item';
 
 const refs = {
   cardList: document.querySelector('.cards__list--home'),
 };
 
 const newsApi = new NewsApi();
-let articlesArray;
+let popularNewsArray;
 
 newsApi.fetchPopularNews().then(data => {
-  console.log(data);
-  articlesArray = data.results;
-  const list = articlesArray
-    .map(item => createMarkupForCard(newsAdapter(item)))
+  const favorite = getFavorite();
+  popularNewsArray = data.results;
+  const list = data.results
+    .map(item => {
+      const inFavourite = Boolean(favorite?.hasOwnProperty(item.id));
+      return createMarkupForCard(newsAdapter(item), inFavourite);
+    })
     .join('');
   refs.cardList.innerHTML = list;
-  return data.results;
+  return popularNewsArray;
 });
 
-export { articlesArray };
+export { popularNewsArray };
