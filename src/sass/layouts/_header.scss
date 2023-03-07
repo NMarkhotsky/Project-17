@@ -235,8 +235,8 @@
 }
 
 .input__open {
-  @include mobile {
-    width: 173px;
-    visibility: visible;
-  }
+    @media screen and (max-width: 767px) {
+      width: 173px;
+      visibility: visible;
+    }
 }
