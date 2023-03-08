@@ -3,7 +3,7 @@ import axios from 'axios';
 const URL_WEATHER_TODAY = 'https://api.openweathermap.org/data/2.5/weather';
 const URL_WEATHER_WEEK = 'https://api.openweathermap.org/data/2.5/forecast';
 const weatherIconSvg = new URL('../img/symbol-defs.svg', import.meta.url);
-
+const bodyEl = document.querySelector('body');
 function weather() {
   let weatherDayNow = '';
   let weatherDayOfWeek = '';
@@ -238,6 +238,13 @@ function createWeatherRendered() {
     } else {
       return;
     }
+    bodyEl.clientWidth <= 767
+      ? cardList.replaceChild(newElement, cardList.children[0])
+      : bodyEl.clientWidth > 767 && bodyEl.clientWidth <= 1279
+      ? cardList.replaceChild(newElement, cardList.children[1])
+      : bodyEl.clientWidth > 1279
+      ? cardList.replaceChild(newElement, cardList.children[2])
+      : null;
 
     weather();
   }, 1);
