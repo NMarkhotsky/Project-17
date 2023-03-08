@@ -79,7 +79,7 @@ export function createMarkupForCard(news, inFavourite, deleteFromDom = false) {
     const btn = document.querySelector(`.button__add-favorite--${id}`);
     btn.onclick = handleFavorite(id, news);
   }, 0);
-  
+
   //===========================================================
   setTimeout(() => {
     const buttonReadMore = document.querySelector(`.button__add-read--${id}`);
@@ -103,9 +103,10 @@ export function createMarkupForCard(news, inFavourite, deleteFromDom = false) {
         [newsId]: data,
       };
 
-      newRead = { ...read, ...(saveRead + date()) };
+      newRead = { ...read, ...saveRead};
     }
-    console.log(newRead);
+    newRead.currentDate = date();
+
     localStorage.setItem(STORAGE_KEY, JSON.stringify(newRead));
   };
   //===========================================================
