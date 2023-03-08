@@ -22,17 +22,9 @@ newsApi.fetchPopularNews().then(data => {
     .join('');
   refs.cardList.innerHTML = list;
   createWeatherRendered();
+
   return popularNewsArray;
 });
-
 loadMoreSearchPopular();
-
-// function createWeatherRendered() {
-//   const cardList = document.querySelector('.cards__list--home');
-//   const first = cardList.children[0];
-//   const newElement = document.createElement('div');
-//   newElement.classList.add('weather');
-//   cardList.replaceChild(newElement, first);
-// }
 
 export { popularNewsArray };
