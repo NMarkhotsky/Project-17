@@ -52,7 +52,7 @@ export default class NewsApi {
   async fetchOnSection(offset) {
     try {
       const { data } = await axios.get(
-        `${BASE_URL}news/v3/content/inyt/${this.searchSection}.json?offset=${
+        `${BASE_URL}news/v3/content/all/${this.searchSection}.json?offset=${
           offset || this.offset
         }&${KEY2}`
       );
