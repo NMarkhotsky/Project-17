@@ -141,8 +141,8 @@ async function onClick(e) {
     newsApi.searchSection = e.target.textContent.toLowerCase();
     newsApi.fetchOnSection().then(data => {
       const options = {
-        totalItems: 150,
-        itemsPerPage: 0,
+        totalItems: 100,
+        itemsPerPage: 8,
         visiblePages: 3,
         page: 1,
         centerAlign: true,
@@ -204,7 +204,7 @@ async function onCategoryClick(e) {
     newsApi.searchSection = e.target.textContent.toLowerCase();
     newsApi.fetchOnSection().then(data => {
       const options = {
-        totalItems: 150,
+        totalItems: 100,
         itemsPerPage: 8,
         visiblePages: 3,
         page: 1,
