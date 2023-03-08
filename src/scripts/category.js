@@ -141,7 +141,7 @@ async function onClick(e) {
     newsApi.searchSection = e.target.textContent.toLowerCase();
     newsApi.fetchOnSection().then(data => {
       const options = {
-        totalItems: data.num_results,
+        totalItems: 100,
         itemsPerPage: 8,
         visiblePages: 3,
         page: 1,
@@ -204,7 +204,7 @@ async function onCategoryClick(e) {
     newsApi.searchSection = e.target.textContent.toLowerCase();
     newsApi.fetchOnSection().then(data => {
       const options = {
-        totalItems: data.num_results,
+        totalItems: 100,
         itemsPerPage: 8,
         visiblePages: 3,
         page: 1,
@@ -310,7 +310,7 @@ export function createMarkupForCard(news, inFavourite, deleteFromDom = false) {
     }
     const btn = document.querySelector(`.button__add-favorite--${news.id}`);
     btn.onclick = handleFavorite(news.id, news);
-  }, 0);
+  });
 
   const handleFavorite = (newsId, data) => () => {
     toggleFavourite();
@@ -353,7 +353,7 @@ export function createMarkupForCard(news, inFavourite, deleteFromDom = false) {
       </div>
       <div class="card_item-info">
         <span class="card_item-date">${formatedDate(published_date)}</span>
-        <a class="card__link-btn" href="${url}" data-title="${title}">
+        <a class="card__link-btn" href="${url}" data-title="${title}" target="_blank">
           <button class="button__read-more">
             Read more
           </button>
@@ -370,9 +370,10 @@ export function newsAdapter(item) {
   const newId = url.replace(/[^a-zA-Z0-9 ]/g, '');
   item.id = newId;
 
-  let imageUrl = 'https://via.placeholder.com/300x200';
+  let imageUrl = new URL('../img/not-found-desktop.png', import.meta.url);
+
   let imageCaption = 'No image';
-  if (multimedia.length > 0) {
+  if (multimedia !== null) {
     imageUrl = multimedia[2].url;
   }
 
