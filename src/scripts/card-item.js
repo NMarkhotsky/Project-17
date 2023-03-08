@@ -77,7 +77,7 @@ export function createMarkupForCard(news, inFavourite, deleteFromDom = false) {
   };
 
   return `
-  <div class="card_item card_item-${id}">
+  <div class="card_item card_item-${id}" data-card-item-id=${id} data-published-date=${published_date}>
     <div class="card_item-header">
       <img class="card_item-image" src="${imageUrl}" alt="${imageCaption}" loading="lazy" />
       <span class="card_item-section">${section}</span>
