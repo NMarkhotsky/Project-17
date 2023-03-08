@@ -1,12 +1,18 @@
 import axios from 'axios';
 import NewsApi from '../scripts/API/newsAPI';
-const newsApi = new NewsApi();
 import _, { add } from 'lodash';
 import formatedDate from './API/fetchAPI';
+import Pagination from 'tui-pagination';
+import 'tui-pagination/dist/tui-pagination.css';
+import { createWeatherRendered, weather } from './weather';
+
+const newsApi = new NewsApi();
+const containerPagination = document.querySelector('.tui-pagination'); // to refs
 
 const ref = {
-  cardList: document.querySelector('.cards__list'),
+  cardList: document.querySelector('.cards__list--home'),
 };
+
 let categoriesNewsArray;
 
 const dropdownBtn = document.querySelector('.category_btn');
@@ -134,17 +140,72 @@ async function onClick(e) {
     addActiveBtn(e.target);
     newsApi.searchSection = e.target.textContent.toLowerCase();
     newsApi.fetchOnSection().then(data => {
+      const options = {
+        totalItems: data.num_results,
+        itemsPerPage: 8,
+        visiblePages: 3,
+        page: 1,
+        centerAlign: true,
+        firstItemClassName: 'tui-first-child',
+        lastItemClassName: 'tui-last-child',
+        usageStatistics: false,
+        template: {
+          page: '<a href="#" class="tui-page-btn">{{page}}</a>',
+          currentPage:
+            '<strong class="tui-page-btn tui-is-selected">{{page}}</strong>',
+          moveButton:
+            '<a href="#" class="tui-page-btn tui-{{type}}">' +
+            '<span class="tui-ico-{{type}}">{{type}}</span>' +
+            '</a>',
+          disabledMoveButton:
+            '<span class="tui-page-btn tui-is-disabled tui-{{type}}">' +
+            '<span class="tui-ico-{{type}}">{{type}}</span>' +
+            '</span>',
+          moreButton:
+            '<a href="#" class="tui-page-btn tui-{{type}}-is-ellip">' +
+            '<span class="tui-ico-ellip">...</span>' +
+            '</a>',
+        },
+      };
+      const pagination = new Pagination(containerPagination, options);
+      const page = pagination.getCurrentPage();
+
       if (data.results === null) {
         const img = new URL('../img/not-found-desktop.png', import.meta.url);
         const markupWithNotFoundImg = `<img src="${img}" alt="We not found news at your request">`;
         ref.cardList.innerHTML = markupWithNotFoundImg;
+        containerPagination.style = 'display: none';
       } else {
         categoriesNewsArray = data.results;
+        containerPagination.style = 'display: block';
+
         const list = data.results
+          .slice(0, 9)
           .map(item => createMarkupForCard(newsAdapter(item)))
           .join('');
         ref.cardList.innerHTML = list;
+        createWeatherRendered();
+
+        pagination.on('afterMove', async event => {
+          const { page } = event;
+
+          try {
+            const { results } = await newsApi.fetchOnSection(page);
+            const list = results
+              .slice(0, 9)
+              .map(item => createMarkupForCard(newsAdapter(item)))
+              .join('');
+            ref.cardList.innerHTML = list;
+            createWeatherRendered();
+          } catch (error) {
+            console.log(error);
+          }
+        });
       }
+      pagination.on('afterMove', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
       return categoriesNewsArray;
     });
   } catch (error) {
@@ -162,18 +223,75 @@ async function onCategoryClick(e) {
     addActiveBtn(dropdownBtn);
     newsApi.searchSection = e.target.textContent.toLowerCase();
     newsApi.fetchOnSection().then(data => {
+      const options = {
+        totalItems: data.num_results,
+        itemsPerPage: 8,
+        visiblePages: 3,
+        page: 1,
+        centerAlign: true,
+        firstItemClassName: 'tui-first-child',
+        lastItemClassName: 'tui-last-child',
+        usageStatistics: false,
+        template: {
+          page: '<a href="#" class="tui-page-btn">{{page}}</a>',
+          currentPage:
+            '<strong class="tui-page-btn tui-is-selected">{{page}}</strong>',
+          moveButton:
+            '<a href="#" class="tui-page-btn tui-{{type}}">' +
+            '<span class="tui-ico-{{type}}">{{type}}</span>' +
+            '</a>',
+          disabledMoveButton:
+            '<span class="tui-page-btn tui-is-disabled tui-{{type}}">' +
+            '<span class="tui-ico-{{type}}">{{type}}</span>' +
+            '</span>',
+          moreButton:
+            '<a href="#" class="tui-page-btn tui-{{type}}-is-ellip">' +
+            '<span class="tui-ico-ellip">...</span>' +
+            '</a>',
+        },
+      };
+      const pagination = new Pagination(containerPagination, options);
+      const page = pagination.getCurrentPage();
+
       if (data.results === null) {
         const img = new URL('../img/not-found-desktop.png', import.meta.url);
         const markupWithNotFoundImg = `<img src="${img}" alt="We not found news at your request">`;
         ref.cardList.innerHTML = markupWithNotFoundImg;
+        containerPagination.style = 'display: none';
       } else {
         categoriesNewsArray = data.results;
+        containerPagination.style = 'display: block';
+
         const list = data.results
+          .slice(0, 9)
           .map(item => createMarkupForCard(newsAdapter(item)))
           .join('');
 
         ref.cardList.innerHTML = list;
+        createWeatherRendered();
+
+        pagination.on('afterMove', async event => {
+          const { page } = event;
+
+          try {
+            const { results } = await newsApi.fetchOnSection(page);
+            console.log('results: ', results);
+            const list = results
+              .slice(0, 9)
+              .map(item => createMarkupForCard(newsAdapter(item)))
+              .join('');
+            ref.cardList.innerHTML = list;
+            createWeatherRendered();
+          } catch (error) {
+            console.log(error);
+          }
+        });
       }
+
+      pagination.on('afterMove', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
       return categoriesNewsArray;
     });
   } catch (error) {
@@ -213,7 +331,6 @@ export function createMarkupForCard(news) {
     url,
     imageUrl,
     imageCaption,
-    id,
   } = news;
   const newId = url.replace(/[^a-zA-Z0-9 ]/g, '');
   setTimeout(() => {
@@ -255,7 +372,7 @@ export function createMarkupForCard(news) {
       </div>
       <div class="card_item-info">
         <span class="card_item-date">${formatedDate(published_date)}</span>
-        <a class="card__link-btn" href="${url}" data-title="${title}">
+        <a class="card__link-btn" href="${url}" data-title="${title}" target="_blank">
           <button class="button__read-more">
             Read more
           </button>
