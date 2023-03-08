@@ -4,82 +4,80 @@ const BASE_URL = 'https://api.nytimes.com/svc/';
 // Апі ключ
 const KEY = 'api-key=u4NcxmWo2uFBK0OuatwBNClB29lN33d8';
 const KEY1 = 'api-key=sLtf4cvcFr9o8f66KLLXb1LPw0gDwyx2';
+const KEY2 = 'api-key=R59HjC2erMnURMhjtmAzlr6FunAaXg6G';
 
 export default class NewsApi {
   constructor() {
     // Для пошуку за категорією
-    this.searchSection = '';
+    this.searchSection = 'business';
     // Для пошуку за введеним пошуковим значенням
     this.searchQuery = '';
     this.begin_date = '';
     this.end_date = '';
-    // Для пагінації за пошуковим словом
-    this.page = 0;
-    // Для пагінації
+    this.page = 1;
     this.offset = 0;
     // Періоди популярних новин за 1, 7 або 30 днів
     this.period = 1;
-
-    this.total = 0;
-  }
-
-  incrementPage() {
-    return (this.page += 1);
-  }
-
-  dercementPage() {
-    return (this.page -= 1);
-  }
-
-  resetPage() {
-    this.page = 0;
-  }
-
-  getTotal(newTotal) {
-    console.log('newTotal: ', newTotal);
-    return (this.total = newTotal);
-  }
-
-  resetTotal() {
-    return (this.total = 0);
   }
 
   //* Функція запиту категорій
   async fetchSectionList() {
-    const {
-      data: { results },
-    } = await axios.get(`${BASE_URL}news/v3/content/section-list.json?${KEY}`);
-    // console.log(results);
-    return results;
+    try {
+      const {
+        data: { results },
+      } = await axios.get(
+        `${BASE_URL}news/v3/content/section-list.json?${KEY2}`
+      );
+      // console.log(results);
+      return results;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   //* Функція запиту популярних новин
   async fetchPopularNews() {
-    const { data } = await axios.get(
-      `${BASE_URL}mostpopular/v2/viewed/${this.period}.json?${KEY}`
-    );
-    // console.log(data);
-    return data;
+    try {
+      const { data } = await axios.get(
+        `${BASE_URL}mostpopular/v2/viewed/${this.period}.json?${KEY2}`
+      );
+      // console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   //* Функція запиту новин по категорії
-  async fetchOnSection() {
-    const { data } = await axios.get(
-      `${BASE_URL}news/v3/content/inyt/${this.searchSection}.json?offset=${this.offset}&${KEY1}`
-    );
-    // console.log(data);
-    return data;
+  async fetchOnSection(offset) {
+    try {
+      const { data } = await axios.get(
+        `${BASE_URL}news/v3/content/inyt/${this.searchSection}.json?offset=${
+          offset || this.offset
+        }&${KEY2}`
+      );
+      // console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   //* Функція запиту новин по пошуковому значенню
-  async fetchOnSearchQuery() {
-    const {
-      data: { response },
-    } = await axios.get(
-      `${BASE_URL}/search/v2/articlesearch.json?q=${this.searchQuery}&offset=${this.offset}&page=${this.page}&${KEY}`
-    );
-    // console.log(response);
-    return response;
+  async fetchOnSearchQuery(page) {
+    try {
+      const {
+        data: { response },
+      } = await axios.get(
+        `${BASE_URL}/search/v2/articlesearch.json?q=${this.searchQuery}&page=${
+          page || this.page
+        }&${KEY2}`
+      );
+
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async fetchOnSearchQueryByDate() {
