@@ -4,61 +4,66 @@ const URL_WEATHER_TODAY = 'https://api.openweathermap.org/data/2.5/weather';
 const URL_WEATHER_WEEK = 'https://api.openweathermap.org/data/2.5/forecast';
 const weatherIconSvg = new URL('../img/symbol-defs.svg', import.meta.url);
 
-let weatherDayNow = '';
-let weatherDayOfWeek = '';
-let weatherToday = '';
-let weatherPagesToday = true; //true - todey, false - week
+function weather() {
+  let weatherDayNow = '';
+  let weatherDayOfWeek = '';
+  let weatherToday = '';
+  let weatherPagesToday = true; //true - todey, false - week
 
-function infoDay(weatherToday) {
-  weatherDayOfWeek = weatherToday.toLocaleString('en-US', {
-    weekday: 'long',
-  });
-  let weatherTodayOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-  weatherDayNow = weatherToday.toLocaleString('en-GB', weatherTodayOptions);
-}
-
-const weatherContainer = document.querySelector('.weather');
-let latPosition = 0;
-let lonPosition = 0;
-let dataHits = [];
-
-function getCoordinat() {
-  navigator.geolocation.getCurrentPosition(showCoordinat, showError);
-}
-
-function showCoordinat(position) {
-  latPosition = position.coords.latitude;
-  lonPosition = position.coords.longitude;
-  if (weatherPagesToday === true) {
-    parsWeatherToday();
-  } else {
-    parsWeatherWeek();
+  function infoDay(weatherToday) {
+    weatherDayOfWeek = weatherToday.toLocaleString('en-US', {
+      weekday: 'long',
+    });
+    let weatherTodayOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
+    weatherDayNow = weatherToday.toLocaleString('en-GB', weatherTodayOptions);
   }
-}
 
-async function axiosRequestNew(URL) {
-  const params = {
-    lat: latPosition,
-    lon: lonPosition,
-    appid: 'f2ba0fa18561e8523c95662543c65b15',
-    units: 'metric',
-  };
-  try {
-    const response = await axios.get(URL, { params });
-    const data = response.data;
-    return data;
-  } catch (error) {
-    console.log(error);
+  const weatherContainer = document.querySelector('.weather');
+  let latPosition = 0;
+  let lonPosition = 0;
+  let dataHits = [];
+
+  function getCoordinat() {
+    navigator.geolocation.getCurrentPosition(showCoordinat, showError);
   }
-}
 
-function showError(error) {
-  switch (error.code) {
-    case error.PERMISSION_DENIED:
-      // alert('User prohibited from reading location information');
-      weatherContainer.insertAdjacentHTML(
-        'beforeend',
-        `<div class="weather_error">
+  function showCoordinat(position) {
+    latPosition = position.coords.latitude;
+    lonPosition = position.coords.longitude;
+    if (weatherPagesToday === true) {
+      parsWeatherToday();
+    } else {
+      parsWeatherWeek();
+    }
+  }
+
+  async function axiosRequestNew(URL) {
+    const params = {
+      lat: latPosition,
+      lon: lonPosition,
+      appid: 'f2ba0fa18561e8523c95662543c65b15',
+      units: 'metric',
+    };
+    try {
+      const response = await axios.get(URL, { params });
+      const data = response.data;
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  function showError(error) {
+    switch (error.code) {
+      case error.PERMISSION_DENIED:
+        // alert('User prohibited from reading location information');
+        weatherContainer.insertAdjacentHTML(
+          'beforeend',
+          `<div class="weather_error">
             <div>This is where the<br>
             WEATHER FORECAST<br>
             banner is located.<br>
@@ -68,30 +73,30 @@ function showError(error) {
         </div>
         <button class="weather_btn">Connect</button>
   `
-      );
-      const btnErrorConnectEl = document.querySelector('.weather_btn');
-      btnErrorConnectEl.addEventListener('click', returnWeather);
+        );
+        const btnErrorConnectEl = document.querySelector('.weather_btn');
+        btnErrorConnectEl.addEventListener('click', returnWeather);
 
-      break;
-    case error.POSITION_UNAVAILABLE:
-      // alert('The browser was unable to locate');
-      break;
-    case error.TIMEOUT:
-      // alert('Browser has not had time to locate');
-      break;
-    case error.UNKNOWN_ERROR:
-      // alert('An unspecified error has occurred');
-      break;
+        break;
+      case error.POSITION_UNAVAILABLE:
+        // alert('The browser was unable to locate');
+        break;
+      case error.TIMEOUT:
+        // alert('Browser has not had time to locate');
+        break;
+      case error.UNKNOWN_ERROR:
+        // alert('An unspecified error has occurred');
+        break;
+    }
   }
-}
 
-async function parsWeatherToday() {
-  weatherToday = new Date();
-  infoDay(weatherToday);
-  dataHits = await axiosRequestNew(URL_WEATHER_TODAY);
-  weatherContainer.insertAdjacentHTML(
-    'beforeend',
-    `<div class="weather_UI">
+  async function parsWeatherToday() {
+    weatherToday = new Date();
+    infoDay(weatherToday);
+    dataHits = await axiosRequestNew(URL_WEATHER_TODAY);
+    weatherContainer.insertAdjacentHTML(
+      'beforeend',
+      `<div class="weather_UI">
         <div class="weather_info">
           <div class="weather_temperatura">
             <p class="weather_temp"> ${Math.round(dataHits.main.temp)} </p>
@@ -117,66 +122,66 @@ async function parsWeatherToday() {
       </div>
     <button class="weather_btn">weather for week</button>
 `
-  );
-  const btnEl = document.querySelector('.weather_btn');
-  btnEl.addEventListener('click', onClickWeatherBtn);
-}
+    );
+    const btnEl = document.querySelector('.weather_btn');
+    btnEl.addEventListener('click', onClickWeatherBtn);
+  }
 
-//  функция поиска элемента в массиве, с наибольшим вхождением
-function occurrence(arr) {
-  return arr
-    .sort(
-      (a, b) =>
-        arr.filter(v => v === a).length - arr.filter(v => v === b).length
-    )
-    .pop();
-}
+  //  функция поиска элемента в массиве, с наибольшим вхождением
+  function occurrence(arr) {
+    return arr
+      .sort(
+        (a, b) =>
+          arr.filter(v => v === a).length - arr.filter(v => v === b).length
+      )
+      .pop();
+  }
 
-function onClickWeatherBtn() {
-  weatherPagesToday = false;
-  clearWeather();
-  getCoordinat();
-}
+  function onClickWeatherBtn() {
+    weatherPagesToday = false;
+    clearWeather();
+    getCoordinat();
+  }
 
-async function parsWeatherWeek() {
-  let tempsWeatherImgKod = [];
-  let tempsOnDay = [];
-  let arrayData = [];
-  let days = [];
-  let fullDays = [];
-  let dayAndTime = '';
-  dataHits = await axiosRequestNew(URL_WEATHER_WEEK);
-  arrayData = dataHits.list;
-  weatherContainer.insertAdjacentHTML(
-    'beforeend',
-    `<div class="weather_UI_week">
+  async function parsWeatherWeek() {
+    let tempsWeatherImgKod = [];
+    let tempsOnDay = [];
+    let arrayData = [];
+    let days = [];
+    let fullDays = [];
+    let dayAndTime = '';
+    dataHits = await axiosRequestNew(URL_WEATHER_WEEK);
+    arrayData = dataHits.list;
+    weatherContainer.insertAdjacentHTML(
+      'beforeend',
+      `<div class="weather_UI_week">
           <p class="weather_city_week">${dataHits.city.name}</p>
           <div class="weather_info_week">
           </div>
         </div>
       `
-  );
-  const weatherConteinerOneDay = document.querySelector('.weather_info_week');
-  arrayData.forEach(element => {
-    dayAndTime = element.dt_txt.split(' ');
-    fullDays.push(dayAndTime[0]);
-  });
-  days = Array.from(new Set(fullDays));
-  days.forEach(el => {
-    tempsOnDay = [];
-    tempsWeatherImgKod = [];
+    );
+    const weatherConteinerOneDay = document.querySelector('.weather_info_week');
     arrayData.forEach(element => {
-      if (element.dt_txt.split(' ')[0] === el) {
-        tempsOnDay.push(element.main.temp);
-        tempsWeatherImgKod.push(element.weather[0].icon);
-      }
+      dayAndTime = element.dt_txt.split(' ');
+      fullDays.push(dayAndTime[0]);
     });
-    weatherToday = new Date(el);
-    infoDay(weatherToday);
-    let WeatherImgDay = occurrence(tempsWeatherImgKod);
-    weatherConteinerOneDay.insertAdjacentHTML(
-      'beforeend',
-      `<div class="weather_info_day">
+    days = Array.from(new Set(fullDays));
+    days.forEach(el => {
+      tempsOnDay = [];
+      tempsWeatherImgKod = [];
+      arrayData.forEach(element => {
+        if (element.dt_txt.split(' ')[0] === el) {
+          tempsOnDay.push(element.main.temp);
+          tempsWeatherImgKod.push(element.weather[0].icon);
+        }
+      });
+      weatherToday = new Date(el);
+      infoDay(weatherToday);
+      let WeatherImgDay = occurrence(tempsWeatherImgKod);
+      weatherConteinerOneDay.insertAdjacentHTML(
+        'beforeend',
+        `<div class="weather_info_day">
           <p class="weather_dayOfWeek_week">${weatherDayOfWeek}</p>
           <p class="weather_date_week">${weatherDayNow}</p>
           <img class="weather_img_week" src="https://openweathermap.org/img/wn/${WeatherImgDay}@2x.png" alt="weather img">
@@ -199,25 +204,43 @@ async function parsWeatherWeek() {
           </div>
       </div>
 `
+      );
+    });
+    weatherConteinerOneDay.insertAdjacentHTML(
+      'beforeend',
+      `<button class="weather_week_btn">weather for today</button>`
     );
-  });
-  weatherConteinerOneDay.insertAdjacentHTML(
-    'beforeend',
-    `<button class="weather_week_btn">weather for today</button>`
-  );
-  const btnWeekEl = document.querySelector('.weather_week_btn');
-  btnWeekEl.addEventListener('click', returnWeather);
-}
+    const btnWeekEl = document.querySelector('.weather_week_btn');
+    btnWeekEl.addEventListener('click', returnWeather);
+  }
 
-function returnWeather() {
-  weatherPagesToday = true;
-  clearWeather();
+  function returnWeather() {
+    weatherPagesToday = true;
+    clearWeather();
+    getCoordinat();
+  }
+
+  function clearWeather() {
+    weatherContainer.innerHTML = '';
+  }
+
+  // Запуск Геолокации
   getCoordinat();
 }
+function createWeatherRendered() {
+  setTimeout(() => {
+    const cardList = document.querySelector('.cards__list--home');
+    const newElement = document.createElement('div');
+    newElement.classList.add('weather');
+    const first = cardList.children[2];
+    if (cardList.children[2]) {
+      cardList.replaceChild(newElement, first);
+    } else {
+      return;
+    }
 
-function clearWeather() {
-  weatherContainer.innerHTML = '';
+    weather();
+  }, 1);
 }
 
-// Запуск Геолокации
-getCoordinat();
+export { createWeatherRendered };
