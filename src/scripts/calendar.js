@@ -9,6 +9,7 @@ const ARROW_BTN_UP = document.querySelector('.arrow-up');
 const CALENDAR_ICON = document.querySelector('.calendar__button--left');
 const CARDS_LIST = document.querySelector('.cards__list--home');
 const ICONS_URL = new URL('../img/symbol-defs.svg', import.meta.url);
+const containerPagination = document.querySelector('.tui-pagination');
 
 let requestDate;
 let filterDate;
@@ -102,6 +103,7 @@ function renderFiltredMarkupPopular(filtredArticles) {
     const img = new URL('../img/not-found-desktop.png', import.meta.url);
     const markupWithNotFoundImg = `<div class="no-news"><p class="no-news__text">We haven't found any popular news for this date. Try searching by key word</p><img class="no-news__img" src="${img}" alt="No news found"></div>`;
     CARDS_LIST.innerHTML = markupWithNotFoundImg;
+    containerPagination.style = 'display: none';
   } else {
     const list = filtredArticles
       .map(item => createMarkupForCard(newsAdapter(item)))
@@ -115,6 +117,7 @@ function renderFiltredMarkupCategory(filtredArticles) {
     const img = new URL('../img/not-found-desktop.png', import.meta.url);
     const markupWithNotFoundImg = `<div class="no-news"><p class="no-news__text">We haven't found any news from this category for this date. Try searching by key word</p><img class="no-news__img" src="${img}" alt="No news found"></div>`;
     CARDS_LIST.innerHTML = markupWithNotFoundImg;
+    containerPagination.style = 'display: none';
   } else {
     const list = filtredArticles
       .map(item => createMarkupForCard(newsAdapter(item)))

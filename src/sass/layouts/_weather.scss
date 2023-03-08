@@ -5,22 +5,22 @@
   background: $accent-color;
   mix-blend-mode: normal;
   border-radius: 4px;
-  position: absolute;
-  top: 40;
-  right: 16;
-  z-index: 1;
+  // position: absolute;
+  // top: 40;
+  // right: 16;
+  // z-index: 1;
   @include tablet {
     padding: 40px 32px;
     width: 353px;
     height: 675px;
-    top: 48;
-    right: 16.5;
+    // top: 48;
+    // right: 16.5;
   }
   @include desktop {
     padding: 40px 32px;
     width: 395px;
-    top: 59;
-    right: 17.5;
+    // top: 59;
+    // right: 17.5;
   }
 }
 
