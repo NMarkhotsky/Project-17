@@ -216,7 +216,6 @@ export function createMarkupForCard1(news, inFavourite, deleteFromDom = false) {
   } = news;
   const newId = url.replace(/[^a-zA-Z0-9 ]/g, '');
   news.id = newId;
-  console.log(news.id)
 
    const toggleFavourite = () => {
     const btn = document.querySelector(`.button__add-favorite--${news.id}`);
@@ -243,7 +242,6 @@ export function createMarkupForCard1(news, inFavourite, deleteFromDom = false) {
     let newFavourite = favorite;
 
     if (favorite.hasOwnProperty(newsId)) {
-      console.log(newFavourite[newsId])
       delete newFavourite[newsId];
       if (deleteFromDom) {
         const cardElement = document.querySelector(`.card_item-${newsId}`);
