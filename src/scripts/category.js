@@ -322,7 +322,7 @@ const removeFavoriteBtnHTML = `Remove from favorite ${createSvgIcon(
   'icon-heart-full'
 )}`;
 
-export function createMarkupForCard(news) {
+export function createMarkupForCard(news, inFavourite, deleteFromDom = false) {
   const {
     abstract,
     published_date,
@@ -333,35 +333,55 @@ export function createMarkupForCard(news) {
     imageCaption,
   } = news;
   const newId = url.replace(/[^a-zA-Z0-9 ]/g, '');
-  setTimeout(() => {
-    const btn = document.querySelector(`.button__add-favorite--${newId}`);
-    btn.onclick = handleFavorite(newId, news, btn);
-  }, 0);
+  news.id = newId;
 
-  const handleFavorite = (newsId, data, btn) => () => {
+   const toggleFavourite = () => {
+    const btn = document.querySelector(`.button__add-favorite--${news.id}`);
     btn.classList.toggle('button__add-favorite--active');
     if (btn.classList.contains('button__add-favorite--active')) {
       btn.innerHTML = removeFavoriteBtnHTML;
     } else {
       btn.innerHTML = addFavoriteBtnHTML;
     }
+  };
+  
+    setTimeout(() => {
+    if (inFavourite) {
+      toggleFavourite();
+    }
+    const btn = document.querySelector(`.button__add-favorite--${news.id}`);
+    btn.onclick = handleFavorite(news.id, news);
+    }, 0);
+  
+  const handleFavorite = (newsId, data) => () => {
+    toggleFavourite();
     const favorite = getFavorite();
 
-    const saveFavorite = {
-      [newsId]: data,
-    };
+    let newFavourite = favorite;
 
-    const newFavorite = { ...favorite, ...saveFavorite };
+    if (favorite.hasOwnProperty(newsId)) {
+      delete newFavourite[newsId];
+      if (deleteFromDom) {
+        const cardElement = document.querySelector(`.card_item-${newsId}`);
+        cardElement.remove();
+      }
+    } else {
+      const saveFavorite = {
+        [newsId]: data,
+      };
 
-    localStorage.setItem('favorite', JSON.stringify(newFavorite));
+      newFavourite = { ...favorite, ...saveFavorite };
+    }
+
+    localStorage.setItem('favorite', JSON.stringify(newFavourite));
   };
 
   return `
-  <div class="card_item">
+  <div class="card_item card_item-${news.id}">
     <div class="card_item-header">
       <img class="card_item-image" src="${imageUrl}" alt="${imageCaption}" loading="lazy" />
       <span class="card_item-section">${section}</span>
-      <button class="button__add-favorite ${`button__add-favorite--${newId}`}" data-id="${newId}">
+      <button class="button__add-favorite ${`button__add-favorite--${news.id}`}" data-id="${news.id}">
         ${addFavoriteBtnHTML}
       </button>
     </div>
@@ -372,7 +392,7 @@ export function createMarkupForCard(news) {
       </div>
       <div class="card_item-info">
         <span class="card_item-date">${formatedDate(published_date)}</span>
-        <a class="card__link-btn" href="${url}" data-title="${title}" target="_blank">
+        <a class="card__link-btn" href="${url}" data-title="${title}">
           <button class="button__read-more">
             Read more
           </button>
@@ -386,6 +406,9 @@ export function createMarkupForCard(news) {
 export function newsAdapter(item) {
   const { abstract, published_date, section, title, url, multimedia, id } =
     item;
+  const newId = url.replace(/[^a-zA-Z0-9 ]/g, '');
+  item.id = newId;
+
   let imageUrl = 'https://via.placeholder.com/300x200';
   let imageCaption = 'No image';
   if (multimedia.length > 0) {
