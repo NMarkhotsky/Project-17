@@ -48,6 +48,22 @@ body.dark {
     color: $light-bg-color;
     opacity: 0.4;
   }
+
+  .sun {
+    fill: $secondary-text-color;
+  }
+
+  .moon {
+    fill: $accent-color;
+  }
+}
+
+.sun {
+  fill: $accent-color;
+}
+
+.moon {
+  fill: #5f6775;
 }
 
 .menu__theme {
