@@ -4,6 +4,7 @@ import _, { add } from 'lodash';
 import formatedDate from './API/fetchAPI';
 import Pagination from 'tui-pagination';
 import 'tui-pagination/dist/tui-pagination.css';
+import { createWeatherRendered, weather } from './weather';
 
 const newsApi = new NewsApi();
 const containerPagination = document.querySelector('.tui-pagination'); // to refs
@@ -179,10 +180,11 @@ async function onClick(e) {
         containerPagination.style = 'display: block';
 
         const list = data.results
-          .slice(0, 8)
+          .slice(0, 9)
           .map(item => createMarkupForCard(newsAdapter(item)))
           .join('');
         ref.cardList.innerHTML = list;
+        createWeatherRendered();
 
         pagination.on('afterMove', async event => {
           const { page } = event;
@@ -190,10 +192,11 @@ async function onClick(e) {
           try {
             const { results } = await newsApi.fetchOnSection(page);
             const list = results
-              .slice(0, 8)
+              .slice(0, 9)
               .map(item => createMarkupForCard(newsAdapter(item)))
               .join('');
             ref.cardList.innerHTML = list;
+            createWeatherRendered();
           } catch (error) {
             console.log(error);
           }
@@ -260,11 +263,12 @@ async function onCategoryClick(e) {
         containerPagination.style = 'display: block';
 
         const list = data.results
-          .slice(0, 8)
+          .slice(0, 9)
           .map(item => createMarkupForCard(newsAdapter(item)))
           .join('');
 
         ref.cardList.innerHTML = list;
+        createWeatherRendered();
 
         pagination.on('afterMove', async event => {
           const { page } = event;
@@ -273,10 +277,11 @@ async function onCategoryClick(e) {
             const { results } = await newsApi.fetchOnSection(page);
             console.log('results: ', results);
             const list = results
-              .slice(0, 8)
+              .slice(0, 9)
               .map(item => createMarkupForCard(newsAdapter(item)))
               .join('');
             ref.cardList.innerHTML = list;
+            createWeatherRendered();
           } catch (error) {
             console.log(error);
           }

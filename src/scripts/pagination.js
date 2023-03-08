@@ -2,6 +2,7 @@ import Pagination from 'tui-pagination';
 import 'tui-pagination/dist/tui-pagination.css';
 import NewsApi from './API/newsAPI';
 import { newsAdapter, createMarkupForCard } from './card-item';
+import { createWeatherRendered, weather } from './weather';
 
 const newsApi = new NewsApi();
 const containerPagination = document.querySelector('.tui-pagination'); // to refs
@@ -48,6 +49,7 @@ async function loadMoreSearchPopular() {
     try {
       const { results } = await newsApi.fetchPopularNews();
       renderedMarkupPagination(results, page);
+      createWeatherRendered();
     } catch (error) {
       console.log(error);
     }
@@ -61,20 +63,20 @@ async function loadMoreSearchPopular() {
 function renderedMarkupPagination(results, page) {
   if (refs.body.clientWidth <= 767) {
     const list = results
-      .splice(4 * (page - 1), 4)
+      .splice(5 * (page - 1), 5)
 
       .map(item => createMarkupForCard(newsAdapter(item)))
       .join('');
     refs.cardList.innerHTML = list;
   } else if ((refs.body.clientWidth > 767) & (refs.body.clientWidth <= 1279)) {
     const list = results
-      .splice(7 * (page - 1), 7)
+      .splice(8 * (page - 1), 8)
       .map(item => createMarkupForCard(newsAdapter(item)))
       .join('');
     refs.cardList.innerHTML = list;
   } else if (refs.body.clientWidth > 767) {
     const list = results
-      .splice(8 * (page - 1), 8)
+      .splice(9 * (page - 1), 9)
       .map(item => createMarkupForCard(newsAdapter(item)))
       .join('');
     refs.cardList.innerHTML = list;

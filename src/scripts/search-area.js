@@ -2,6 +2,7 @@ import NewsApi from './API/newsAPI';
 import formatedDate from './API/fetchAPI';
 import Pagination from 'tui-pagination';
 import 'tui-pagination/dist/tui-pagination.css';
+import { createWeatherRendered, weather } from './weather';
 
 const refs = {
   form: document.querySelector('.form'),
@@ -69,26 +70,29 @@ async function onSubmit(e) {
       refs.containerPagination.style = 'display: none';
     } else {
       const list = docs
-        .slice(0, 8)
+        .slice(0, 9)
         .map(item => {
           const inFavorite = Boolean(favorite?.hasOwnProperty(item._id));
           return createMarkupForCardOnSearch(item, inFavorite);
         })
         .join('');
       refs.list.innerHTML = list;
+      createWeatherRendered();
+
       pagination.on('afterMove', async event => {
         const { page } = event;
         try {
           const { docs } = await newsApi.fetchOnSearchQuery(page);
 
           const list = docs
-            .slice(0, 8)
+            .slice(0, 9)
             .map(item => {
               const inFavorite = Boolean(favorite?.hasOwnProperty(item._id));
               return createMarkupForCardOnSearch(item, inFavorite);
             })
             .join('');
           refs.list.innerHTML = list;
+          createWeatherRendered();
         } catch (error) {
           console.log(error);
         }
