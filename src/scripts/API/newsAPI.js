@@ -9,7 +9,7 @@ const KEY2 = 'api-key=R59HjC2erMnURMhjtmAzlr6FunAaXg6G';
 export default class NewsApi {
   constructor() {
     // Для пошуку за категорією
-    this.searchSection = 'business';
+    this.searchSection = '';
     // Для пошуку за введеним пошуковим значенням
     this.searchQuery = '';
     this.begin_date = '';
@@ -26,7 +26,7 @@ export default class NewsApi {
       const {
         data: { results },
       } = await axios.get(
-        `${BASE_URL}news/v3/content/section-list.json?${KEY2}`
+        `${BASE_URL}news/v3/content/section-list.json?${KEY}`
       );
       // console.log(results);
       return results;
@@ -73,7 +73,7 @@ export default class NewsApi {
           page || this.page
         }&${KEY2}`
       );
-
+      // console.log(response);
       return response;
     } catch (error) {
       console.log(error);

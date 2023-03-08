@@ -146,26 +146,6 @@ async function onClick(e) {
         visiblePages: 3,
         page: 1,
         centerAlign: true,
-        firstItemClassName: 'tui-first-child',
-        lastItemClassName: 'tui-last-child',
-        usageStatistics: false,
-        template: {
-          page: '<a href="#" class="tui-page-btn">{{page}}</a>',
-          currentPage:
-            '<strong class="tui-page-btn tui-is-selected">{{page}}</strong>',
-          moveButton:
-            '<a href="#" class="tui-page-btn tui-{{type}}">' +
-            '<span class="tui-ico-{{type}}">{{type}}</span>' +
-            '</a>',
-          disabledMoveButton:
-            '<span class="tui-page-btn tui-is-disabled tui-{{type}}">' +
-            '<span class="tui-ico-{{type}}">{{type}}</span>' +
-            '</span>',
-          moreButton:
-            '<a href="#" class="tui-page-btn tui-{{type}}-is-ellip">' +
-            '<span class="tui-ico-ellip">...</span>' +
-            '</a>',
-        },
       };
       const pagination = new Pagination(containerPagination, options);
       const page = pagination.getCurrentPage();
@@ -177,7 +157,7 @@ async function onClick(e) {
         containerPagination.style = 'display: none';
       } else {
         categoriesNewsArray = data.results;
-        containerPagination.style = 'display: block';
+        containerPagination.style = 'display: flex';
 
         const list = data.results
           .slice(0, 9)
@@ -229,26 +209,6 @@ async function onCategoryClick(e) {
         visiblePages: 3,
         page: 1,
         centerAlign: true,
-        firstItemClassName: 'tui-first-child',
-        lastItemClassName: 'tui-last-child',
-        usageStatistics: false,
-        template: {
-          page: '<a href="#" class="tui-page-btn">{{page}}</a>',
-          currentPage:
-            '<strong class="tui-page-btn tui-is-selected">{{page}}</strong>',
-          moveButton:
-            '<a href="#" class="tui-page-btn tui-{{type}}">' +
-            '<span class="tui-ico-{{type}}">{{type}}</span>' +
-            '</a>',
-          disabledMoveButton:
-            '<span class="tui-page-btn tui-is-disabled tui-{{type}}">' +
-            '<span class="tui-ico-{{type}}">{{type}}</span>' +
-            '</span>',
-          moreButton:
-            '<a href="#" class="tui-page-btn tui-{{type}}-is-ellip">' +
-            '<span class="tui-ico-ellip">...</span>' +
-            '</a>',
-        },
       };
       const pagination = new Pagination(containerPagination, options);
       const page = pagination.getCurrentPage();
@@ -260,7 +220,7 @@ async function onCategoryClick(e) {
         containerPagination.style = 'display: none';
       } else {
         categoriesNewsArray = data.results;
-        containerPagination.style = 'display: block';
+        containerPagination.style = 'display: flex';
 
         const list = data.results
           .slice(0, 9)
@@ -275,7 +235,6 @@ async function onCategoryClick(e) {
 
           try {
             const { results } = await newsApi.fetchOnSection(page);
-            console.log('results: ', results);
             const list = results
               .slice(0, 9)
               .map(item => createMarkupForCard(newsAdapter(item)))
@@ -335,7 +294,7 @@ export function createMarkupForCard(news, inFavourite, deleteFromDom = false) {
   const newId = url.replace(/[^a-zA-Z0-9 ]/g, '');
   news.id = newId;
 
-   const toggleFavourite = () => {
+  const toggleFavourite = () => {
     const btn = document.querySelector(`.button__add-favorite--${news.id}`);
     btn.classList.toggle('button__add-favorite--active');
     if (btn.classList.contains('button__add-favorite--active')) {
@@ -344,15 +303,15 @@ export function createMarkupForCard(news, inFavourite, deleteFromDom = false) {
       btn.innerHTML = addFavoriteBtnHTML;
     }
   };
-  
-    setTimeout(() => {
+
+  setTimeout(() => {
     if (inFavourite) {
       toggleFavourite();
     }
     const btn = document.querySelector(`.button__add-favorite--${news.id}`);
     btn.onclick = handleFavorite(news.id, news);
-    }, 0);
-  
+  }, 0);
+
   const handleFavorite = (newsId, data) => () => {
     toggleFavourite();
     const favorite = getFavorite();
@@ -381,7 +340,9 @@ export function createMarkupForCard(news, inFavourite, deleteFromDom = false) {
     <div class="card_item-header">
       <img class="card_item-image" src="${imageUrl}" alt="${imageCaption}" loading="lazy" />
       <span class="card_item-section">${section}</span>
-      <button class="button__add-favorite ${`button__add-favorite--${news.id}`}" data-id="${news.id}">
+      <button class="button__add-favorite ${`button__add-favorite--${news.id}`}" data-id="${
+    news.id
+  }">
         ${addFavoriteBtnHTML}
       </button>
     </div>
