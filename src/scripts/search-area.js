@@ -102,14 +102,6 @@ function date() {
 }
 //----------------------------------------
 
-//-------Возращение данных из localStorage и экспорт---
-export function getRead() {
-  const read = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
-
-  return read;
-}
-//-----------------------------------------------------
-
 export function createMarkupForCardOnSearch(
   news,
   inFavourite,
