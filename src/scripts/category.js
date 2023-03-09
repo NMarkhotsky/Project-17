@@ -163,7 +163,7 @@ async function onClick(e) {
 
         const list = data.results
 
-          .map(item => createMarkupForCards(newsAdapter(item)))
+          .map(item => createMarkupForCards(newsAdapters(item)))
           .join('');
         ref.cardList.innerHTML = list;
         createWeatherRendered();
@@ -175,7 +175,7 @@ async function onClick(e) {
             const { results } = await newsApi.fetchOnSection(page);
             const list = results
 
-              .map(item => createMarkupForCards(newsAdapter(item)))
+              .map(item => createMarkupForCards(newsAdapters(item)))
               .join('');
             ref.cardList.innerHTML = list;
             createWeatherRendered();
@@ -227,7 +227,7 @@ async function onCategoryClick(e) {
 
         const list = data.results
 
-          .map(item => createMarkupForCards(newsAdapter(item)))
+          .map(item => createMarkupForCards(newsAdapters(item)))
           .join('');
 
         ref.cardList.innerHTML = list;
@@ -240,7 +240,7 @@ async function onCategoryClick(e) {
             const { results } = await newsApi.fetchOnSection(page);
             const list = results
 
-              .map(item => createMarkupForCards(newsAdapter(item)))
+              .map(item => createMarkupForCards(newsAdapters(item)))
               .join('');
             ref.cardList.innerHTML = list;
             createWeatherRendered();
@@ -417,7 +417,7 @@ export function createMarkupForCards(news, inFavourite, deleteFromDom = false) {
   `;
 }
 
-export function newsAdapter(item) {
+export function newsAdapters(item) {
   const { abstract, published_date, section, title, url, multimedia, id } =
     item;
   const newId = url.replace(/[^a-zA-Z0-9 ]/g, '');

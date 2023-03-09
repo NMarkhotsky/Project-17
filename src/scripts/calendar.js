@@ -1,7 +1,7 @@
 import flatpickr from 'flatpickr';
-import { newsAdapter, createMarkupForCard } from './card-item';
 import { popularNewsArray } from './home';
-import { categoriesNewsArray, clearActiveBtn } from './category';
+import { categoriesNewsArray, clearActiveBtn, newsAdapters, createMarkupForCards } from './category';
+import { createMarkupForCard, newsAdapter } from './card-item';
 
 const FLATPICKR_INPUT = document.querySelector('.flatpickr-input');
 const ARROW_BTN_DOWN = document.querySelector('.arrow-down');
@@ -20,6 +20,7 @@ const DATEPICKER_OPTIONS = {
   nextArrow: `<svg class="flatpickr-icon flatpickr-icon--next"><use href="${ICONS_URL}#icon-arrow-up"></use><svg>`,
   prevArrow: `<svg class="flatpickr-icon flatpickr-icon--prev"><use href="${ICONS_URL}#icon-arrow-down"></use><svg>`,
   dateFormat: 'd/m/Y',
+  defaultDate: "today",
   position: 'below right',
   monthSelectorType: 'static',
   altInput: "false",
@@ -90,6 +91,7 @@ function filterByDateCategory(filterDate, articlesArray) {
   const filtredArticles = articlesArray.filter(
     article => article.published_date.slice(0, 10) === filterDate
   );
+  // console.log('filtred articles', filtredArticles);
   return filtredArticles;
 }
 
@@ -115,7 +117,7 @@ function renderFiltredMarkupCategory(filtredArticles) {
     containerPagination.style = 'display: none';
   } else {
     const list = filtredArticles
-      .map(item => createMarkupForCard(newsAdapter(item)))
+      .map(item => createMarkupForCards(newsAdapters(item)))
       .join('');
     CARDS_LIST.innerHTML = list;
   }
