@@ -301,14 +301,6 @@ function date() {
 }
 //----------------------------------------
 
-//-------Возращение данных из localStorage и экспорт---
-function getRead() {
-  const read = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
-
-  return read;
-}
-//-----------------------------------------------------
-
 export function createMarkupForCards(news, inFavourite, deleteFromDom = false) {
   const {
     abstract,
