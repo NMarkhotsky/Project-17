@@ -5,6 +5,7 @@ import formatedDate from './API/fetchAPI';
 import Pagination from 'tui-pagination';
 import 'tui-pagination/dist/tui-pagination.css';
 import { createWeatherRendered, weather } from './weather';
+import { getRead } from './card-item';
 
 const newsApi = new NewsApi();
 const containerPagination = document.querySelector('.tui-pagination'); // to refs
@@ -162,7 +163,7 @@ async function onClick(e) {
 
         const list = data.results
 
-          .map(item => createMarkupForCard(newsAdapter(item)))
+          .map(item => createMarkupForCards(newsAdapter(item)))
           .join('');
         ref.cardList.innerHTML = list;
         createWeatherRendered();
@@ -174,7 +175,7 @@ async function onClick(e) {
             const { results } = await newsApi.fetchOnSection(page);
             const list = results
 
-              .map(item => createMarkupForCard(newsAdapter(item)))
+              .map(item => createMarkupForCards(newsAdapter(item)))
               .join('');
             ref.cardList.innerHTML = list;
             createWeatherRendered();
@@ -226,7 +227,7 @@ async function onCategoryClick(e) {
 
         const list = data.results
 
-          .map(item => createMarkupForCard(newsAdapter(item)))
+          .map(item => createMarkupForCards(newsAdapter(item)))
           .join('');
 
         ref.cardList.innerHTML = list;
@@ -239,7 +240,7 @@ async function onCategoryClick(e) {
             const { results } = await newsApi.fetchOnSection(page);
             const list = results
 
-              .map(item => createMarkupForCard(newsAdapter(item)))
+              .map(item => createMarkupForCards(newsAdapter(item)))
               .join('');
             ref.cardList.innerHTML = list;
             createWeatherRendered();
@@ -283,7 +284,24 @@ const removeFavoriteBtnHTML = `Remove from favorite ${createSvgIcon(
   'icon-heart-full'
 )}`;
 
-export function createMarkupForCard(news, inFavourite, deleteFromDom = false) {
+//-------Переменные для localStorage------
+const STORAGE_KEY = 'keyRead';
+const formData = {};
+//----------------------------------------
+//-------Текущая дата---------------------
+function date() {
+  let date = new Date();
+  let output =
+    String(date.getDate()).padStart(2, '0') +
+    '/' +
+    String(date.getMonth() + 1).padStart(2, '0') +
+    '/' +
+    date.getFullYear();
+  return output;
+}
+//----------------------------------------
+
+export function createMarkupForCards(news, inFavourite, deleteFromDom = false) {
   const {
     abstract,
     published_date,
@@ -313,6 +331,39 @@ export function createMarkupForCard(news, inFavourite, deleteFromDom = false) {
     const btn = document.querySelector(`.button__add-favorite--${news.id}`);
     btn.onclick = handleFavorite(news.id, news);
   });
+
+  //===========================================================
+  setTimeout(() => {
+    const buttonReadMore = document.querySelector(
+      `.button__add-read--${news.id}`
+    );
+    buttonReadMore.onclick = handleRead(news.id, news);
+  });
+
+  const handleRead = (newsId, data) => () => {
+    // toggleFavourite();
+    const read = getRead();
+
+    let newRead = read;
+
+    if (read.hasOwnProperty(newsId)) {
+      delete newRead[newsId];
+      if (deleteFromDom) {
+        const cardElement = document.querySelector(`.card_item-${newsId}`);
+        cardElement.remove();
+      }
+    } else {
+      const saveRead = {
+        [newsId]: data,
+      };
+
+      newRead = { ...read, ...saveRead };
+    }
+    // newRead.currentDate = date();
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(newRead));
+  };
+  //===========================================================
 
   const handleFavorite = (newsId, data) => () => {
     toggleFavourite();
@@ -356,7 +407,7 @@ export function createMarkupForCard(news, inFavourite, deleteFromDom = false) {
       <div class="card_item-info">
         <span class="card_item-date">${formatedDate(published_date)}</span>
         <a class="card__link-btn" href="${url}" data-title="${title}" target="_blank">
-          <button class="button__read-more">
+          <button class="button__read-more ${`button__add-read--${news.id}`}">
             Read more
           </button>
         </a>

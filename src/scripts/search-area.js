@@ -3,6 +3,7 @@ import formatedDate from './API/fetchAPI';
 import Pagination from 'tui-pagination';
 import 'tui-pagination/dist/tui-pagination.css';
 import { createWeatherRendered, weather } from './weather';
+import { getRead } from './card-item';
 
 const refs = {
   form: document.querySelector('.form'),
@@ -84,6 +85,23 @@ async function onSubmit(e) {
   });
 }
 
+//-------Переменные для localStorage------
+const STORAGE_KEY = 'keyRead';
+const formData = {};
+//----------------------------------------
+//-------Текущая дата---------------------
+function date() {
+  let date = new Date();
+  let output =
+    String(date.getDate()).padStart(2, '0') +
+    '/' +
+    String(date.getMonth() + 1).padStart(2, '0') +
+    '/' +
+    date.getFullYear();
+  return output;
+}
+//----------------------------------------
+
 export function createMarkupForCardOnSearch(
   news,
   inFavourite,
@@ -129,6 +147,37 @@ export function createMarkupForCardOnSearch(
     btn.onclick = handleFavorite(id, news);
   }, 0);
 
+  //===========================================================
+  setTimeout(() => {
+    const buttonReadMore = document.querySelector(`.button__add-read--${id}`);
+    buttonReadMore.onclick = handleRead(id, news);
+  }, 0);
+
+  const handleRead = (newsId, data) => () => {
+    // toggleFavourite();
+    const read = getRead();
+
+    let newRead = read;
+
+    if (read.hasOwnProperty(newsId)) {
+      delete newRead[newsId];
+      if (deleteFromDom) {
+        const cardElement = document.querySelector(`.card_item-${newsId}`);
+        cardElement.remove();
+      }
+    } else {
+      const saveRead = {
+        [newsId]: data,
+      };
+
+      newRead = { ...read, ...saveRead };
+    }
+    // newRead.currentDate = date();
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(newRead));
+  };
+  //===========================================================
+
   const handleFavorite = (newsId, data) => () => {
     toggleFavourite();
     const favorite = getFavorite();
@@ -167,7 +216,7 @@ export function createMarkupForCardOnSearch(
       <div class="card_item-info">
         <span class="card_item-date">${formatedDate(published_date)}</span>
         <a class="card__link-btn" href="${url}" data-title="${title}" target="_blank">
-          <button class="button__read-more">
+          <button class="button__read-more ${`button__add-read--${id}`}">
             Read more
           </button>
         </a>
