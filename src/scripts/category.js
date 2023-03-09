@@ -1,12 +1,18 @@
 import axios from 'axios';
 import NewsApi from '../scripts/API/newsAPI';
-const newsApi = new NewsApi();
 import _, { add } from 'lodash';
 import formatedDate from './API/fetchAPI';
+import Pagination from 'tui-pagination';
+import 'tui-pagination/dist/tui-pagination.css';
+import { createWeatherRendered, weather } from './weather';
+
+const newsApi = new NewsApi();
+const containerPagination = document.querySelector('.tui-pagination'); // to refs
 
 const ref = {
-  cardList: document.querySelector('.cards__list'),
+  cardList: document.querySelector('.cards__list--home'),
 };
+
 let categoriesNewsArray;
 
 const dropdownBtn = document.querySelector('.category_btn');
@@ -134,17 +140,52 @@ async function onClick(e) {
     addActiveBtn(e.target);
     newsApi.searchSection = e.target.textContent.toLowerCase();
     newsApi.fetchOnSection().then(data => {
+      const options = {
+        totalItems: 100,
+        itemsPerPage: 8,
+        visiblePages: 3,
+        page: 1,
+        centerAlign: true,
+      };
+      const pagination = new Pagination(containerPagination, options);
+      const page = pagination.getCurrentPage();
+
       if (data.results === null) {
         const img = new URL('../img/not-found-desktop.png', import.meta.url);
         const markupWithNotFoundImg = `<img src="${img}" alt="We not found news at your request">`;
         ref.cardList.innerHTML = markupWithNotFoundImg;
+        containerPagination.style = 'display: none';
       } else {
         categoriesNewsArray = data.results;
+        containerPagination.style = 'display: flex';
+
         const list = data.results
+          .slice(0, 9)
           .map(item => createMarkupForCard(newsAdapter(item)))
           .join('');
         ref.cardList.innerHTML = list;
+        createWeatherRendered();
+
+        pagination.on('afterMove', async event => {
+          const { page } = event;
+
+          try {
+            const { results } = await newsApi.fetchOnSection(page);
+            const list = results
+              .slice(0, 9)
+              .map(item => createMarkupForCard(newsAdapter(item)))
+              .join('');
+            ref.cardList.innerHTML = list;
+            createWeatherRendered();
+          } catch (error) {
+            console.log(error);
+          }
+        });
       }
+      pagination.on('afterMove', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
       return categoriesNewsArray;
     });
   } catch (error) {
@@ -162,18 +203,54 @@ async function onCategoryClick(e) {
     addActiveBtn(dropdownBtn);
     newsApi.searchSection = e.target.textContent.toLowerCase();
     newsApi.fetchOnSection().then(data => {
+      const options = {
+        totalItems: 100,
+        itemsPerPage: 8,
+        visiblePages: 3,
+        page: 1,
+        centerAlign: true,
+      };
+      const pagination = new Pagination(containerPagination, options);
+      const page = pagination.getCurrentPage();
+
       if (data.results === null) {
         const img = new URL('../img/not-found-desktop.png', import.meta.url);
         const markupWithNotFoundImg = `<img src="${img}" alt="We not found news at your request">`;
         ref.cardList.innerHTML = markupWithNotFoundImg;
+        containerPagination.style = 'display: none';
       } else {
         categoriesNewsArray = data.results;
+        containerPagination.style = 'display: flex';
+
         const list = data.results
+          .slice(0, 9)
           .map(item => createMarkupForCard(newsAdapter(item)))
           .join('');
 
         ref.cardList.innerHTML = list;
+        createWeatherRendered();
+
+        pagination.on('afterMove', async event => {
+          const { page } = event;
+
+          try {
+            const { results } = await newsApi.fetchOnSection(page);
+            const list = results
+              .slice(0, 9)
+              .map(item => createMarkupForCard(newsAdapter(item)))
+              .join('');
+            ref.cardList.innerHTML = list;
+            createWeatherRendered();
+          } catch (error) {
+            console.log(error);
+          }
+        });
       }
+
+      pagination.on('afterMove', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
       return categoriesNewsArray;
     });
   } catch (error) {
@@ -204,7 +281,7 @@ const removeFavoriteBtnHTML = `Remove from favorite ${createSvgIcon(
   'icon-heart-full'
 )}`;
 
-export function createMarkupForCard(news) {
+export function createMarkupForCard(news, inFavourite, deleteFromDom = false) {
   const {
     abstract,
     published_date,
@@ -213,38 +290,59 @@ export function createMarkupForCard(news) {
     url,
     imageUrl,
     imageCaption,
-    id,
   } = news;
   const newId = url.replace(/[^a-zA-Z0-9 ]/g, '');
-  setTimeout(() => {
-    const btn = document.querySelector(`.button__add-favorite--${newId}`);
-    btn.onclick = handleFavorite(newId, news, btn);
-  }, 0);
+  news.id = newId;
 
-  const handleFavorite = (newsId, data, btn) => () => {
+  const toggleFavourite = () => {
+    const btn = document.querySelector(`.button__add-favorite--${news.id}`);
     btn.classList.toggle('button__add-favorite--active');
     if (btn.classList.contains('button__add-favorite--active')) {
       btn.innerHTML = removeFavoriteBtnHTML;
     } else {
       btn.innerHTML = addFavoriteBtnHTML;
     }
+  };
+
+  setTimeout(() => {
+    if (inFavourite) {
+      toggleFavourite();
+    }
+    const btn = document.querySelector(`.button__add-favorite--${news.id}`);
+    btn.onclick = handleFavorite(news.id, news);
+  });
+
+  const handleFavorite = (newsId, data) => () => {
+    toggleFavourite();
     const favorite = getFavorite();
 
-    const saveFavorite = {
-      [newsId]: data,
-    };
+    let newFavourite = favorite;
 
-    const newFavorite = { ...favorite, ...saveFavorite };
+    if (favorite.hasOwnProperty(newsId)) {
+      delete newFavourite[newsId];
+      if (deleteFromDom) {
+        const cardElement = document.querySelector(`.card_item-${newsId}`);
+        cardElement.remove();
+      }
+    } else {
+      const saveFavorite = {
+        [newsId]: data,
+      };
 
-    localStorage.setItem('favorite', JSON.stringify(newFavorite));
+      newFavourite = { ...favorite, ...saveFavorite };
+    }
+
+    localStorage.setItem('favorite', JSON.stringify(newFavourite));
   };
 
   return `
-  <div class="card_item">
+  <div class="card_item card_item-${news.id}">
     <div class="card_item-header">
       <img class="card_item-image" src="${imageUrl}" alt="${imageCaption}" loading="lazy" />
       <span class="card_item-section">${section}</span>
-      <button class="button__add-favorite ${`button__add-favorite--${newId}`}" data-id="${newId}">
+      <button class="button__add-favorite ${`button__add-favorite--${news.id}`}" data-id="${
+    news.id
+  }">
         ${addFavoriteBtnHTML}
       </button>
     </div>
@@ -255,7 +353,7 @@ export function createMarkupForCard(news) {
       </div>
       <div class="card_item-info">
         <span class="card_item-date">${formatedDate(published_date)}</span>
-        <a class="card__link-btn" href="${url}" data-title="${title}">
+        <a class="card__link-btn" href="${url}" data-title="${title}" target="_blank">
           <button class="button__read-more">
             Read more
           </button>
@@ -269,9 +367,13 @@ export function createMarkupForCard(news) {
 export function newsAdapter(item) {
   const { abstract, published_date, section, title, url, multimedia, id } =
     item;
-  let imageUrl = 'https://via.placeholder.com/300x200';
+  const newId = url.replace(/[^a-zA-Z0-9 ]/g, '');
+  item.id = newId;
+
+  let imageUrl = new URL('../img/not-found-desktop.png', import.meta.url);
+
   let imageCaption = 'No image';
-  if (multimedia.length > 0) {
+  if (multimedia !== null) {
     imageUrl = multimedia[2].url;
   }
 
