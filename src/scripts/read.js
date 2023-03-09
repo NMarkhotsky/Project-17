@@ -1,19 +1,33 @@
 import { createMarkupForCard, getRead } from './card-item';
-import { createMarkupForCardOnSearch } from './search-area';
 
 const refs = {
   cardsRead: document.getElementById('ul-gallery'),
 };
 const readPageCards = getRead();
 
-const list = Object.values(readPageCards)
-  .map(item => {
-    if (Object.keys(item).length !== 8) {
-      return createMarkupForCardOnSearch(item);
-    }
+const listsByDate = Object.keys(readPageCards)
+  .reverse()
+  .map(date => {
+    const list = Object.values(readPageCards[date])
+      .map(item => {
+        return createMarkupForCard(item);
+      })
+      .join('');
 
-    return createMarkupForCard(item);
+    const accordion = `<div class="accordion">
+    <div class="accordion__header">
+      <div class="accordion__header-date">${date}</div>
+      <div class="accordion__header-icon"></div>
+    </div>
+    <div class="accordion__body">
+      <ul class="accordion__list">
+        ${list}
+      </ul>
+    </div>
+  </div>`;
+
+    return accordion;
   })
   .join('');
 
-refs.cardsRead.innerHTML = list;
+refs.cardsRead.innerHTML = listsByDate;
