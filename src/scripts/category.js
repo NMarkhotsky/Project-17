@@ -337,7 +337,6 @@ export function createMarkupForCards(news, inFavourite, deleteFromDom = false) {
     const buttonReadMore = document.querySelector(
       `.button__add-read--${news.id}`
     );
-    console.log(buttonReadMore);
     buttonReadMore.onclick = handleRead(news.id, news);
   });
 
