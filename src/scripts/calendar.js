@@ -1,7 +1,6 @@
 import flatpickr from 'flatpickr';
-import { newsAdapter, createMarkupForCard } from './card-item';
 import { popularNewsArray } from './home';
-import { categoriesNewsArray, clearActiveBtn } from './category';
+import { categoriesNewsArray, clearActiveBtn, newsAdapter, createMarkupForCard } from './category';
 
 const FLATPICKR_INPUT = document.querySelector('.flatpickr-input');
 const ARROW_BTN_DOWN = document.querySelector('.arrow-down');
