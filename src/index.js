@@ -6,4 +6,4 @@ import './scripts/calendar';
 import './scripts/cards-news';
 import './scripts/card-item';
 import './scripts/API/fetchAPI';
-import './scripts/read';
+// import './scripts/read';

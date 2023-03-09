@@ -18,8 +18,6 @@ function createSvgIcon(name) {
   `;
 }
 
-// import NewsApi from './API/newsAPI';
-// const newsApi = new NewsApi();
 //-------Переменные для localStorage------
 const STORAGE_KEY = 'keyRead';
 const formData = {};
@@ -103,9 +101,9 @@ export function createMarkupForCard(news, inFavourite, deleteFromDom = false) {
         [newsId]: data,
       };
 
-      newRead = { ...read, ...saveRead};
+      newRead = { ...read, ...saveRead };
     }
-    newRead.currentDate = date();
+    // newRead.currentDate = date();
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(newRead));
   };
