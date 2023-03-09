@@ -25,12 +25,6 @@ const DATEPICKER_OPTIONS = {
   altInput: "false",
   onOpen() {
     changeBtnStyles();
-    document.querySelector('.flatpickr-icon--next').classList.add('is-hidden');
-  },
-  onMonthChange() {
-    document
-      .querySelector('.flatpickr-icon--next')
-      .classList.remove('is-hidden');
   },
   onClose(dateObj) {
     changeBtnStyles();
