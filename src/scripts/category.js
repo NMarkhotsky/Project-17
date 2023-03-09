@@ -141,7 +141,8 @@ async function onClick(e) {
     newsApi.searchSection = e.target.textContent.toLowerCase();
     newsApi.fetchOnSection().then(data => {
       const options = {
-        totalItems: 100,
+        totalItems:
+          data.results === null || data.results.length <= 3 ? 10 : 100,
         itemsPerPage: 8,
         visiblePages: 3,
         page: 1,
@@ -160,7 +161,7 @@ async function onClick(e) {
         containerPagination.style = 'display: flex';
 
         const list = data.results
-          .slice(0, 9)
+
           .map(item => createMarkupForCard(newsAdapter(item)))
           .join('');
         ref.cardList.innerHTML = list;
@@ -172,7 +173,7 @@ async function onClick(e) {
           try {
             const { results } = await newsApi.fetchOnSection(page);
             const list = results
-              .slice(0, 9)
+
               .map(item => createMarkupForCard(newsAdapter(item)))
               .join('');
             ref.cardList.innerHTML = list;
@@ -204,7 +205,8 @@ async function onCategoryClick(e) {
     newsApi.searchSection = e.target.textContent.toLowerCase();
     newsApi.fetchOnSection().then(data => {
       const options = {
-        totalItems: 100,
+        totalItems:
+          data.results === null || data.results.length <= 3 ? 10 : 100,
         itemsPerPage: 8,
         visiblePages: 3,
         page: 1,
@@ -223,7 +225,7 @@ async function onCategoryClick(e) {
         containerPagination.style = 'display: flex';
 
         const list = data.results
-          .slice(0, 9)
+
           .map(item => createMarkupForCard(newsAdapter(item)))
           .join('');
 
@@ -236,7 +238,7 @@ async function onCategoryClick(e) {
           try {
             const { results } = await newsApi.fetchOnSection(page);
             const list = results
-              .slice(0, 9)
+
               .map(item => createMarkupForCard(newsAdapter(item)))
               .join('');
             ref.cardList.innerHTML = list;

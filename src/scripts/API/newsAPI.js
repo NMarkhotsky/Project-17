@@ -49,10 +49,10 @@ export default class NewsApi {
   }
 
   //* Функція запиту новин по категорії
-  async fetchOnSection(offset = 1) {
+  async fetchOnSection(offset = 0) {
     try {
       const { data } = await axios.get(
-        `${BASE_URL}news/v3/content/all/${this.searchSection}.json?offset=${offset}&${KEY2}`
+        `${BASE_URL}news/v3/content/inyt/${this.searchSection}.json?offset=${offset}&limit=9&${KEY2}`
       );
       // console.log(data);
       return data;
