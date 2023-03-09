@@ -1,1 +1,1 @@
-{"mappings":"oeAAAA,EAAA,S","sources":["src/read-page.js"],"sourcesContent":["import './scripts/API/fetchAPI';\nimport './scripts/header';\nimport './scripts/card-item';\nimport './scripts/theme';\n"],"names":["parcelRequire"],"version":3,"file":"read.766eeb63.js.map"}
+{"mappings":"oeAAAA,EAAA,S","sources":["src/read-page.js"],"sourcesContent":["import './scripts/API/fetchAPI';\nimport './scripts/header';\nimport './scripts/card-item';\nimport './scripts/theme';\nimport './scripts/read';\n"],"names":["parcelRequire"],"version":3,"file":"read.766eeb63.js.map"}
