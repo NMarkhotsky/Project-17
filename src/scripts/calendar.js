@@ -20,6 +20,7 @@ const DATEPICKER_OPTIONS = {
   nextArrow: `<svg class="flatpickr-icon flatpickr-icon--next"><use href="${ICONS_URL}#icon-arrow-up"></use><svg>`,
   prevArrow: `<svg class="flatpickr-icon flatpickr-icon--prev"><use href="${ICONS_URL}#icon-arrow-down"></use><svg>`,
   dateFormat: 'd/m/Y',
+  defaultDate: "today",
   position: 'below right',
   monthSelectorType: 'static',
   altInput: "false",
@@ -90,6 +91,7 @@ function filterByDateCategory(filterDate, articlesArray) {
   const filtredArticles = articlesArray.filter(
     article => article.published_date.slice(0, 10) === filterDate
   );
+  // console.log('filtred articles', filtredArticles);
   return filtredArticles;
 }
 
