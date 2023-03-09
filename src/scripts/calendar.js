@@ -1,6 +1,7 @@
 import flatpickr from 'flatpickr';
 import { popularNewsArray } from './home';
-import { categoriesNewsArray, clearActiveBtn, newsAdapter, createMarkupForCards } from './category';
+import { categoriesNewsArray, clearActiveBtn, newsAdapters, createMarkupForCards } from './category';
+import { createMarkupForCard, newsAdapter } from './card-item';
 
 const FLATPICKR_INPUT = document.querySelector('.flatpickr-input');
 const ARROW_BTN_DOWN = document.querySelector('.arrow-down');
@@ -102,7 +103,7 @@ function renderFiltredMarkupPopular(filtredArticles) {
     containerPagination.style = 'display: none';
   } else {
     const list = filtredArticles
-      .map(item => createMarkupForCards(newsAdapter(item)))
+      .map(item => createMarkupForCard(newsAdapter(item)))
       .join('');
     CARDS_LIST.innerHTML = list;
   }
@@ -116,7 +117,7 @@ function renderFiltredMarkupCategory(filtredArticles) {
     containerPagination.style = 'display: none';
   } else {
     const list = filtredArticles
-      .map(item => createMarkupForCards(newsAdapter(item)))
+      .map(item => createMarkupForCards(newsAdapters(item)))
       .join('');
     CARDS_LIST.innerHTML = list;
   }
