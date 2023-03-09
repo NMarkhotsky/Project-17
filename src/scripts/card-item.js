@@ -29,9 +29,7 @@ function getCurrentDate() {
     '/' +
     String(date.getMonth() + 1).padStart(2, '0') +
     '/' +
-    date.getFullYear() +
-    '/' +
-    String(date.getMinutes()).padStart(2, '0');
+    date.getFullYear();
   return output;
 }
 //----------------------------------------
