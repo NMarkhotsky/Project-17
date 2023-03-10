@@ -27,16 +27,17 @@ const listsByDate = Object.keys(readPageCards)
         this.classList.toggle('active');
         /* Toggle between hiding and showing the active panel */
         var panel = this.nextElementSibling;
-        if (panel.style.display === 'flex') {
-          panel.style.display = 'none';
+        if (panel.style.opacity === '0') {
+          panel.style.opacity = '1';
         } else {
-          panel.style.display = 'flex';
+          panel.style.opacity = '0';
         }
       });
     }, 500);
     const list = Object.values(readPageCards[date])
       .map(item => {
-        if (Object.values(item).length === 8) {
+        console.log(Object.keys(item));
+        if (Object.keys(item).length <= 10) {
           return createMarkupForCard(item);
         }
         return createMarkupForCardOnSearch(item);

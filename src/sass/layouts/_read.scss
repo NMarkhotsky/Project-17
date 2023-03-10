@@ -1,10 +1,11 @@
 .accordion {
-justify-content: center;
-align-items: center;
+  justify-content: center;
+  align-items: center;
 
   border: none;
   border-bottom: 0.1px solid #929292;
-  background-color: $light-text-color;
+  // background-color: $light-text-color;
+  background-color: transparent;
   cursor: pointer;
   padding-bottom: 12px;
   margin-top: 60px;
@@ -15,21 +16,29 @@ align-items: center;
 
   font-family: 'Poppins';
   font-weight: 400;
-font-size: 14px;
+  font-size: 14px;
   line-height: 1.7;
 }
 
 /* Style the accordion panel. Note: hidden by default */
 .panel {
-  display: none;
+  display: flex;
+  // opacity: 0;
   flex-wrap: wrap;
-  background-color: white;
+  // background-color: white;
   overflow: hidden;
   gap: 30px;
   margin-top: 40px;
+  transition: opacity $transition-time;
 }
-.button__arrow-svg{
+.button__arrow-svg {
   width: 15px;
-height: 9px;
-margin-left: 8px;
+  height: 9px;
+  margin-left: 8px;
+  transform: rotate(0deg);
+  transition: transform $transition-time;
+}
+
+.accordion.active .button__arrow-svg {
+  transform: rotate(180deg);
 }

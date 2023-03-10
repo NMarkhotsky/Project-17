@@ -46,6 +46,13 @@
   font-size: 12px;
   line-height: 16px;
   font-family: 'Manrope';
+
+  transition: background-color $transition-time;
+
+  &:hover {
+    background-color: #4b48db;
+    color: #ffffff;
+  }
 }
 
 .category_btn-active {
@@ -79,6 +86,7 @@
   opacity: 0;
   z-index: 888;
   overflow-y: scroll;
+  transition: opacity $transition-time;
 }
 
 .show {
