@@ -4,6 +4,7 @@ import Pagination from 'tui-pagination';
 import 'tui-pagination/dist/tui-pagination.css';
 import { createWeatherRendered, weather } from './weather';
 import { getRead } from './card-item';
+import { handleAddToRead } from './card-item';
 
 const refs = {
   form: document.querySelector('.form'),
@@ -150,7 +151,7 @@ export function createMarkupForCardOnSearch(
   //===========================================================
   setTimeout(() => {
     const buttonReadMore = document.querySelector(`.button__add-read--${id}`);
-    buttonReadMore.onclick = handleRead(id, news);
+    buttonReadMore.onclick = handleAddToRead(id, news);
   }, 0);
 
   const handleRead = (newsId, data) => () => {

@@ -1,4 +1,5 @@
 import { createMarkupForCard, getRead } from './card-item';
+import { createMarkupForCardOnSearch } from './search-area';
 
 const refs = {
   cardsRead: document.getElementById('read__page'),
@@ -32,11 +33,13 @@ const listsByDate = Object.keys(readPageCards)
           panel.style.display = 'flex';
         }
       });
-    }, 1000);
-
+    }, 500);
     const list = Object.values(readPageCards[date])
       .map(item => {
-        return createMarkupForCard(item);
+        if (Object.values(item).length === 8) {
+          return createMarkupForCard(item);
+        }
+        return createMarkupForCardOnSearch(item);
       })
       .join('');
 
