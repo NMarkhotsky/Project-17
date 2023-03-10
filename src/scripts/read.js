@@ -35,8 +35,8 @@ const listsByDate = Object.keys(readPageCards)
       });
     }, 500);
     const list = Object.values(readPageCards[date])
+      .reverse()
       .map(item => {
-        console.log(Object.keys(item));
         if (Object.keys(item).length <= 10) {
           return createMarkupForCard(item);
         }
