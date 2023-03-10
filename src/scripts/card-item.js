@@ -38,8 +38,6 @@ function getCurrentDate() {
 export function getRead() {
   const read = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
 
-  console.log('getRead', read);
-
   return read;
 }
 //-----------------------------------------------------
