@@ -5,7 +5,7 @@ import formatedDate from './API/fetchAPI';
 import Pagination from 'tui-pagination';
 import 'tui-pagination/dist/tui-pagination.css';
 import { createWeatherRendered, weather } from './weather';
-import { getRead } from './card-item';
+import { handleAddToRead } from './card-item';
 
 const newsApi = new NewsApi();
 const containerPagination = document.querySelector('.tui-pagination'); // to refs
@@ -337,32 +337,9 @@ export function createMarkupForCards(news, inFavourite, deleteFromDom = false) {
     const buttonReadMore = document.querySelector(
       `.button__add-read--${news.id}`
     );
-    buttonReadMore.onclick = handleRead(news.id, news);
+    buttonReadMore.onclick = handleAddToRead(news.id, news);
   });
 
-  const handleRead = (newsId, data) => () => {
-    // toggleFavourite();
-    const read = getRead();
-
-    let newRead = read;
-
-    if (read.hasOwnProperty(newsId)) {
-      delete newRead[newsId];
-      if (deleteFromDom) {
-        const cardElement = document.querySelector(`.card_item-${newsId}`);
-        cardElement.remove();
-      }
-    } else {
-      const saveRead = {
-        [newsId]: data,
-      };
-
-      newRead = { ...read, ...saveRead };
-    }
-    // newRead.currentDate = date();
-
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(newRead));
-  };
   //===========================================================
 
   const handleFavorite = (newsId, data) => () => {

@@ -20,10 +20,9 @@ function createSvgIcon(name) {
 
 //-------Переменные для localStorage------
 const STORAGE_KEY = 'keyRead';
-const formData = {};
 //----------------------------------------
 //-------Текущая дата---------------------
-function date() {
+function getCurrentDate() {
   let date = new Date();
   let output =
     String(date.getDate()).padStart(2, '0') +
@@ -39,6 +38,8 @@ function date() {
 export function getRead() {
   const read = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
 
+  console.log('getRead', read);
+
   return read;
 }
 //-----------------------------------------------------
@@ -47,6 +48,32 @@ const addFavoriteBtnHTML = `Add to favorite ${createSvgIcon('icon-heart')}`;
 const removeFavoriteBtnHTML = `Remove from favorite ${createSvgIcon(
   'icon-heart-full'
 )}`;
+
+export const handleAddToRead = (newsId, data) => () => {
+  const currentDate = getCurrentDate();
+  const read = getRead();
+
+  let newRead = read;
+
+  const saveRead = {
+    [newsId]: data,
+  };
+
+  let cleanedRead = { ...read };
+  Object.keys(cleanedRead).forEach(key => {
+    if (cleanedRead[key].hasOwnProperty(newsId)) {
+      delete cleanedRead[key][newsId];
+      cleanedRead = cleanedRead;
+    }
+  });
+
+  newRead = {
+    ...cleanedRead,
+    [currentDate]: { ...(read[currentDate] || {}), ...saveRead },
+  };
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(newRead));
+};
 
 export function createMarkupForCard(news, inFavourite, deleteFromDom = false) {
   const {
@@ -81,32 +108,9 @@ export function createMarkupForCard(news, inFavourite, deleteFromDom = false) {
   //===========================================================
   setTimeout(() => {
     const buttonReadMore = document.querySelector(`.button__add-read--${id}`);
-    buttonReadMore.onclick = handleRead(id, news);
+    buttonReadMore.onclick = handleAddToRead(id, news);
   }, 0);
 
-  const handleRead = (newsId, data) => () => {
-    // toggleFavourite();
-    const read = getRead();
-
-    let newRead = read;
-
-    if (read.hasOwnProperty(newsId)) {
-      delete newRead[newsId];
-      if (deleteFromDom) {
-        const cardElement = document.querySelector(`.card_item-${newsId}`);
-        cardElement.remove();
-      }
-    } else {
-      const saveRead = {
-        [newsId]: data,
-      };
-
-      newRead = { ...read, ...saveRead };
-    }
-    // newRead.currentDate = date();
-
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(newRead));
-  };
   //===========================================================
 
   const handleFavorite = (newsId, data) => () => {
