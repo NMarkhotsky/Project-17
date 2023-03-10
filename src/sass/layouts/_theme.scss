@@ -1,10 +1,10 @@
 body {
-  transition: background-color $transition-time;
+  // transition: background-color $transition-time;
 }
 
 body.dark {
   background-color: $dark-bg-color;
-  transition: background-color $transition-time;
+  // transition: background-color $transition-time;
   .header {
     border-bottom: 1px solid rgba(244, 244, 244, 0.2);
   }
