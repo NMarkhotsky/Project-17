@@ -24,6 +24,7 @@ const DATEPICKER_OPTIONS = {
   position: 'below right',
   monthSelectorType: 'static',
   altInput: "false",
+  disableMobile: 'true',
   onOpen() {
     changeBtnStyles();
   },
@@ -32,7 +33,6 @@ const DATEPICKER_OPTIONS = {
     if (dateObj) {
       filterDate = formatFilterDate(dateObj);
       if (!categoriesNewsArray) {
-        // console.log('popular-in-calendar', popularNewsArray);
         const filtredArticles = filterByDatePopular(
           filterDate,
           popularNewsArray
@@ -40,7 +40,6 @@ const DATEPICKER_OPTIONS = {
         renderFiltredMarkupPopular(filtredArticles);
         clearActiveBtn();
       } else {
-        // console.log('categories-in-calendar', categoriesNewsArray);
         const filtredArticles = filterByDateCategory(
           filterDate,
           categoriesNewsArray
@@ -91,7 +90,6 @@ function filterByDateCategory(filterDate, articlesArray) {
   const filtredArticles = articlesArray.filter(
     article => article.published_date.slice(0, 10) === filterDate
   );
-  // console.log('filtred articles', filtredArticles);
   return filtredArticles;
 }
 
